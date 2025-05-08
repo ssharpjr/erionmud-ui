@@ -5,6 +5,8 @@ Based on the original package: ErionUI 1.0 by Caelinus [(github.com/Caelinus)](g
 
 Erion is an immersive medieval fantasy world since 2005 with a fun and friendly playerbase, challenging quests/missions, and an excellent class/skill system.
 
+<img src="src/resources/images/ui-fullscreen.png" alt="ErionMud UI" width="800"/>
+
 ## Ideas, TODOs, and Known Issues
 
 ### Known Issues
