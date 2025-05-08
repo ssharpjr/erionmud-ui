@@ -4,7 +4,7 @@
     <Script isActive="yes" isFolder="no">
         
       <name>Ideas, TODOs, and Known Issues</name>
-      <script>-- TODO items and ideas
+      <script>-- TODO items and ideas (used as the README.md file)
 -- Format: Markdown
 
 --[[

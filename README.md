@@ -7,6 +7,8 @@ Erion is an immersive medieval fantasy world since 2005 with a fun and friendly 
 
 <img src="src/resources/images/ui-fullscreen.png" alt="ErionMud UI" width="800"/>
 
+This package was built using [Muddler](https://github.com/demonnic/muddler) and [DeMuddler](https://github.com/Edru2/DeMuddler)
+
 ## Ideas, TODOs, and Known Issues
 
 ### Known Issues
