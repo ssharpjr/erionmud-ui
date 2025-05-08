@@ -1,0 +1,20 @@
+[
+       {
+              "name": "Themes",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Theme Erion Green",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Theme Erion Minimal",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       }
+]

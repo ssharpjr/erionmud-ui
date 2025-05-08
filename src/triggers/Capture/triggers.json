@@ -1,0 +1,346 @@
+[
+       {
+              "name": "CopytoBuffer",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "PromptCapture",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^(?'PRE'[^#]+|)#1(?'CHP'[^#]+|)#2(?'MHP'[^#]+|)#3(?'CMP'[^#]+|)#4(?'MMP'[^#]+|)#5(?'THP'[^#]+|)#6(?'TNM'[^#]+|)#7(?'CXP'[^#]+|)#8(?'NXP'[^#]+|)#9(?'GLD'[^#]+|)#10(?'QPS'[^#]+|)#11(?'HPS'[^#]+|)#12(?'RNM'[^#]+|)#13(?'EXT'[^#]+|)#14(?'LVL'[^#]+|)#15(?'FLV'[^#]+|)#16(?'LMP'[^#]+|)#17(?'ANM'[^#]+|)#18(?'RMS'[^#]+|)#19(?'VNM'[^#]+|)#20(?'QTM'[^#]+|)#21(?'ETM'[^#]+|)#22(?'GTM'[^#]+|)#23(?'JTM'[^#]+|)#24(?'XPE'[^#]+|)#25(?'QPE'[^#]+|)#26(?'QTE'[^#]+|)#27(?'MDP'[^#]+|)#28(?'PHP'[^#]+|)#29(?'PLT'[^#]+|)#",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "ChatCapture",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#0c1510",
+              "patterns": [
+                     {
+                            "pattern": "^\\[chat\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[newbie\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[grats\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[music\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[quote\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[roleplay\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[client\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Newbies\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Class\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[COLOSSEUM\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Healers\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(.*) tells you\\,",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(.*) replies to you\\,",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(\\[Fighting\\])?\\s?You tell",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[secrets\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(\\[Fighting\\])?\\s?You reply",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Friend\\)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[faith\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Slayers\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[trivia\\]\\\u003e",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[trivia\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[secrets\\]\\\u003e",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[stream\\]\\\u003e",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[stream\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Reply\\)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Artisans\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[barter\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Alchemist\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Chaos\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Doom\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Luminati\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "\\[Sacellum\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[faith\\]\\\u003e",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Auction\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Auction\\]",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "ChatCaptureOther",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#0c1510",
+              "patterns": [
+                     {
+                            "pattern": "^\\[GUESS\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Quest\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Levels\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Global Quest\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Logout\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Login\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The phrase is",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Achievement\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Rankings\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Expedition\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Suicides\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[SCRAMBLE\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The scrambled phrase is\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Player Deaths\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[NEW Player\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Returned\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Junkyard\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Your personal Guess the Phrase is",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[LEGEND\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Achievement Unlocked \\-\\\u003e",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^RESTART\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^REBIRTH\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^QUEST\\:",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "ExitsCapture",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "(^\\[Exits\\:.+)",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "PlayerCapture",
+              "isActive": "no",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^Logging in as (\\w+)\\.",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       }
+]

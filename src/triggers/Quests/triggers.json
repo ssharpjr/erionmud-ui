@@ -1,0 +1,214 @@
+[
+       {
+              "name": "1 Quest start",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You ask (.*) for a quest\\.$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "2 Quest info capture",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You are on a quest to recover (?\u003ctarget\u003e.*) in (?\u003croom\u003e.*) of (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You are on a quest to slay (?\u003ctarget\u003e.*) in the vicinity of (?\u003croom\u003e.*) of (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You are on a quest to spar with (?\u003ctarget\u003e.*) in the vicinity of (?\u003croom\u003e.*) of (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You are on a quest to spar with (?\u003ctarget\u003e.*) in the vicinity of (?\u003croom\u003e.*) (?:.*?of){2} (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You are on a quest to slay (?\u003ctarget\u003e.*) in the vicinity of (?\u003croom\u003e.*) (?:.*?of){2} (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You are on a quest to recover (?\u003ctarget\u003e.*) in (?\u003croom\u003e.*) (?:.*?of){2} (?\u003carea\u003e.*)\\.$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "3 Quest bonus timer",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^Finish the quest in under (?\u003cmin\u003e\\d+) minute and (?\u003csec\u003e\\d+) seconds for a bonus reward\\.$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "4 Quest info when arrived",
+              "isActive": "no",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You stop running\\.$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "5 Quest end",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You inform (.*) you have completed your quest\\.$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You shamefully fail your quest",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Quest rewards",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^(?\u003ctext\u003e.*) As a reward\\, I am giving you (?\u003cexp\u003e\\d+) experience and (?\u003cgold\u003e\\d+) gold\\.\\'$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(?\u003ctext\u003e.*) As a reward\\, I am giving you (?\u003cqps\u003e\\d+) questpoints and (?\u003cgold\u003e\\d+) gold\\.\\'$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Quest target complete",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "yes",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "transparent",
+              "patterns": [
+                     {
+                            "pattern": "^You have almost completed your QUEST",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Return to (.*) before your time runs out",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Quest bonus remaining",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "transparent",
+              "patterns": [
+                     {
+                            "pattern": "^You still have (.*) to get the reward bonus",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Fabled item",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^\\s+(.*)?\\sfabled\\s(\\w+)(.*)",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       }
+]

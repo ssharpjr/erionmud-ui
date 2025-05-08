@@ -1,0 +1,78 @@
+[
+       {
+              "name": "Weather events",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^The clouds part overhead, revealing a clear, blue sky",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The sun slowly disappears in the west",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Fine drops of rain begin to fall from the sky",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The sun rises in the east",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The stars twinkle into existence",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Moons",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You see the full (?\u003cmoon\u003e\\w+) moon rising in the east",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Time events",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^The new day has begun",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       }
+]

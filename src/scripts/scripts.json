@@ -1,0 +1,26 @@
+[
+       {
+              "name": "Ideas, TODOs, and Known Issues",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "1 UI Start Event",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "2 Init UI",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "3 Set MUD Settings",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       }
+]

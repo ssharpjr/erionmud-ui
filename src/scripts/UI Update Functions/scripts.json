@@ -1,0 +1,32 @@
+[
+       {
+              "name": "UI_UpdateStatus Event (Left)",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "UI_UpdatePrompt Event (Bottom)",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "UI_UpdateMapName Event (Left)",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "UI_ReWrap Event",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "UI_Refresh Event",
+              "isActive": "no",
+              "script": "",
+              "isFolder": "no"
+       }
+]

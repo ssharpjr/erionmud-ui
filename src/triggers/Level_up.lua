@@ -1,0 +1,5 @@
+-- Update stuff when you level (a placeholder for things to come)
+setBgColor(0,85,0)
+send(" ")
+GetClasses()
+UpdateStatus()

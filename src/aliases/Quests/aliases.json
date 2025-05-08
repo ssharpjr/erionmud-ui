@@ -1,0 +1,9 @@
+[
+       {
+              "name": "Runto quest area",
+              "isActive": "yes",
+              "regex": "^rtq$",
+              "script": "",
+              "isFolder": "no"
+       }
+]

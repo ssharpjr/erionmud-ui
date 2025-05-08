@@ -1,0 +1,47 @@
+-- This is the main help file for the Erion UI.
+-- Use this to add help sections.
+-- Put each section in its own script.
+
+function uiHelpMain()
+  cecho("\n<yellow>======================================================================")
+  cecho("\n<green>"..centerText("ErionMud UI Main Help File"))
+  cecho("\n<yellow>======================================================================")
+  echo("\n")
+  cecho("\n<green>ErionMUD UI <cyan>v"..ui.version)
+  cecho("\n<cyan>Author: <yellow>Daikojun (discord) (gitlab.com/ssharpjr, github.com/ssharpjr)")
+  cecho("\n<cyan>Original package: <yellow>ErionUI 1.0 by Caelinus (github.com/Caelinus)")
+  
+  echo("\n")
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<green>Introduction")
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<yellow>This UI was created and themed for <green>ErionMud <yellow>(erionmud.com).")
+  cecho("\n<yellow>An immersive medieval fantasy world since 2005!")
+  echo("\n")
+  
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<green>UI Help Files")
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<cyan>uihelp commands<yellow> - Aliases used with this UI.")
+  cecho("\n<cyan>uihelp features<yellow> - UI features (and WIPs).")
+  cecho("\n<cyan>uihelp technical<yellow> - A technical document on how this UI works.")
+  
+  echo("\n")
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<green>Set Up")
+  cecho("\n<yellow>----------------------------------------------------------------------")
+  cecho("\n<red>NOTE: <yellow>This UI will change your prompt!")
+  cecho("\n<yellow>      Use '<cyan>PROMPT DEFAULT<yellow>' to reset it when you play on")
+  cecho("\n<yellow>      clients other than Mudlet.")
+  --cecho("\n<yellow>")
+  cecho("\n<yellow>The following changes are sent to the MUD:")
+  cecho("\n  <cyan>* <yellow>toggle +tick")
+  cecho("\n  <cyan>* <yellow>toggle +compact")
+  cecho("\n  <red>* <yellow>spam -daycycle (not implemented yet)")
+  echo("\n")
+  cecho("\n<yellow>Some optional packages you can use with this are:")
+  cecho("\n  <cyan>* <green>Highlighter<yellow> - You can find it on packages.mudlet.org")
+  cecho("\n  <red>* <green>ErionMud GamePack<yellow> - (not released just yet)")
+  echo("\n")
+  cecho("\n<yellow>======================================================================")
+end

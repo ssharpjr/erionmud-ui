@@ -1,0 +1,26 @@
+[
+       {
+              "name": "Help main",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Help features",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Help commands",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Help technical",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       }
+]

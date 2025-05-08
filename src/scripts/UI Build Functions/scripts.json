@@ -1,0 +1,26 @@
+[
+       {
+              "name": "Build Left",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Build Top",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Build Bottom",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Build Right",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       }
+]
