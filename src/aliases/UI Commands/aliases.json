@@ -9,14 +9,14 @@
        {
               "name": "Lock containers",
               "isActive": "yes",
-              "regex": "^uilock (?\u003ccon\u003e\\w+)$",
+              "regex": "^uilock\\s?(?\u003ccon\u003e\\w+)$",
               "script": "",
               "isFolder": "no"
        },
        {
               "name": "Unlock containers",
               "isActive": "yes",
-              "regex": "^(uiunlock|uiulock) (?\u003ccon\u003e\\w+)$",
+              "regex": "^(uiunlock|uiulock)\\s?(?\u003ccon\u003e\\w+)$",
               "script": "",
               "isFolder": "no"
        },

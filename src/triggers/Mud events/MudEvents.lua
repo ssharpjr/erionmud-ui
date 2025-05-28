@@ -22,7 +22,7 @@ if string.find(matches.event, expGain2k) or
 end
 if string.find(matches.event, expGain2kEnded) then
   ui.Exp2k = false
-  --tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
+  tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
 end
 
 -- 4X EXP events
@@ -30,7 +30,7 @@ if string.find(matches.event, expGain4k) then
   ui.Exp4k = true
 else
   ui.Exp4k = false
-  --tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
+  tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
 end
 
 

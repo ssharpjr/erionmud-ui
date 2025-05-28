@@ -4,17 +4,16 @@ function UpdatePrompt (event, CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP)
   clearWindow("ui.StatusMC")
 
   -- Convert digit strings to numbers
-  CHP = tonumber(CHP)
-  MHP = tonumber(MHP)
-  CMP = tonumber(CMP)
-  MMP = tonumber(MMP)
-  LMP = tonumber(LMP)
+  CHP = tonumber(CHP) or 0
+  MHP = tonumber(MHP) or 0
+  CMP = tonumber(CMP) or 0
+  MMP = tonumber(MMP) or 0
+  LMP = tonumber(LMP) or 0
 
 
   -- Colorize pet HP
   local php = ColorizePetHP()
   
-
 
   --Prompt Line 1
   cecho("ui.StatusMC","               == [HP: ")
@@ -49,7 +48,6 @@ function UpdatePrompt (event, CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP)
   end
   
   -- Prompt Line 2
-  
   if (TNM == "") then
     cecho("ui.StatusMC", "<grey>               == [Target: <white>None<grey>] ")
   else
@@ -62,6 +60,10 @@ function UpdatePrompt (event, CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP)
   if PHP == "" then
     cecho("ui.StatusMC", "<grey>==\n")
   else
+  
+    -- Prompt Line 3    
+    cecho("ui.StatusMC", "<grey>==")
+    cecho("ui.StatusMC","\n<grey>               == ")
     cecho("ui.StatusMC", "<grey>[Pets: ")
     cecho("ui.StatusMC", "<white>"..php.."<grey>] ==\n")
   end

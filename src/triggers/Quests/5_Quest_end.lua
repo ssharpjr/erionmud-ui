@@ -8,6 +8,7 @@ if Highlighter then
   expandAlias("hl item remove "..ui.questTarget)
 end
 
+ui.onQuest = false
 ui.questArea = nil
 ui.questRoom = nil
 ui.questTarget = nil
@@ -23,7 +24,7 @@ enableTrigger("2 Quest info capture")
 if gp.version then
   cecho("\n<orange_red>Buff trigger activated")
   enableTrigger("Buffs")
-  expandAlias("cr on")
+  --expandAlias("cr on")
 end
 
 ui.TopContainerMC:clear()

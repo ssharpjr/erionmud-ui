@@ -1,6 +1,7 @@
 -- Name: Clear console
 -- Pattern: ^uiclear (\w+)?$
 -- Description: Clear the given console
+
 ui = ui or {}
 
 local top = ui.TopContainerMC

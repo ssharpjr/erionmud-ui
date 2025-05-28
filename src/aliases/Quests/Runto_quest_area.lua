@@ -11,7 +11,7 @@ if ui.questArea then
     disableTrigger("Buffs")
   end
   
-  send("recall;;runto " .. ui.questArea)
+  send("recall;;runto " .. ui.questArea)  -- Most runtos are faster from recall
 else
   uiCecho("<orange_red>Quest Area not set!")
 end

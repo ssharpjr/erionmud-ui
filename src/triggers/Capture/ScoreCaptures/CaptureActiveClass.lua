@@ -1,4 +1,4 @@
--- Get the player name and current class
+-- Get the player's name and current class
 
 ui = ui or {}
 
@@ -9,4 +9,3 @@ end
 ui.ActiveClass = matches.class
 
 disableTrigger("CaptureActiveClass")
---cecho("\n<orange_red>CaptureActiveClass ran")

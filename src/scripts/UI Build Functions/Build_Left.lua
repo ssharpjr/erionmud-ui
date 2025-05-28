@@ -95,7 +95,8 @@ function BuildLeft()
     fontSize = 10,
   }, ui.PlayerInfoLabel)
   
-    
+  ui.PlayerInfoMC:disableScrolling()
+
   
   --Debug
   local debugPlayerInfoLabel = false
@@ -138,6 +139,7 @@ function BuildLeft()
     fontSize = 10
   }, ui.AnsiMapLabel)
   
+  ui.AnsiMapNameMC:disableScrolling()
     
   -- ANSI Map
   ui.AnsiMapMC = Geyser.MiniConsole:new({
@@ -153,6 +155,8 @@ function BuildLeft()
     fontSize = 15,
   }, ui.AnsiMapLabel)
   
+  ui.AnsiMapMC:disableScrolling()
+  
   -- Exits
   ui.ExitsMC = Geyser.MiniConsole:new({
     name = "ui.ExitsMC",
@@ -166,5 +170,7 @@ function BuildLeft()
     --color = "black",
     fontSize = 10,
   }, ui.AnsiMapLabel)  
+  
+  ui.ExitsMC:disableScrolling()
   
 end

@@ -1,10 +1,10 @@
 {
        "package": "ErionMud-UI",
        "title": "A UI for ErionMud (erionmud.com)",
-       "description": "This UI was created and themed for ErionMud, an immersive medieval fantasy world since 2005.",
-       "version": "1.0",
+       "description": "",
+       "version": "v1.1",
        "author": "Daikojun",
-       "icon": "erion-logo.jpg",
+       "icon": "erion-logo-512.jpg",
        "dependencies": "",
-       "outputFile": false
+       "outputFile": true
 }

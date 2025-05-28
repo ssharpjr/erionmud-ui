@@ -1,6 +1,5 @@
 -- Functions to build the bottom UI
 -- The layout is:
--- The layout is:
 -- - A main container at 100% of the needed space.
 -- - A main label for applying stylesheets to the container. 
 --   - This should be slightly smaller than the main container (5px).
@@ -54,6 +53,7 @@ function BuildBottom()
     fontSize = 11,
   }, ui.BottomContainerLabel)
 
+  ui.StatusMC:disableScrolling()
   
   -- Call other functions
   SetCMDStyle()

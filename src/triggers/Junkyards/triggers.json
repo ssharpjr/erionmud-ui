@@ -1,0 +1,122 @@
+[
+       {
+              "name": "1 Junkyard objects start",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You ask The Giver for a junkyard quest",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You have (\\d+) minutes left to gather\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You have (\\d+) minutes and (\\d+) seconds left to gather\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You have (\\d+) hour (\\d+) minutes and (\\d+) seconds left to gather\\:",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "2 Junkyard object capture",
+              "isActive": "no",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "\\[\\s*(?\u003cnum\u003e\\d+)\\]\\s+(?\u003citem\u003e.+?)\\s+in\\s+(?\u003croom\u003e.*?)\\s+in\\s+(?\u003carea\u003e.*)",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Junkyard progress",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You have (?\u003calmost\u003e\\w+) completed your JUNKYARD",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You add another piece of (?\u003ctrash\u003e\\w+) to your junkyard box",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Junkyard end",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You inform The Giver you have finished eliminating hazardous remnants from the world",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You have failed your junkyard quest",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Junkyard rewards",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^(.*) says to you\\, \\'Your reward is (?\u003cexp\u003e\\d+) experience and (?\u003cgold\u003e\\d+) gold\\!\\'$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       }
+]

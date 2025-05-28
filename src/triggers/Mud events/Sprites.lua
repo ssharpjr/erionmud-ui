@@ -1,10 +1,6 @@
--- ^\<\[mudevent\]\> (.*)
+-- Capture sprite events
 
 --[[
-<[mudevent]> A lifestream sprite has been spotted somewhere in Forgotten Fortress!
-<[mudevent]> A lifestream sprite will be departing Forgotten Fortress in 3 minutes!
-<[mudevent]> A lifestream sprite has escaped, vanishing from the realm!
-
 Sprites:
 sunsurge (yellow)
 lifestream (cyan)

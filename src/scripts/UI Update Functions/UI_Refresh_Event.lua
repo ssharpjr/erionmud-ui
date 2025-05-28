@@ -1,31 +1,9 @@
--- -- Does a full UI refresh
--- 
--- function UIRefresh (event)
--- 
-  -- --Left UI
-  -- 
-  -- --SetupGUI() -- Will need to move this
-  -- BuildLeftContainer()
-  -- BuildErionLabel()
-  -- BuildStatsConsole()
-  -- BuildMapNameConsole()
-  -- BuildMapConsole()
-  -- BuildExitsConsole()
-  -- 
-  -- --Right UI
-  -- 
-  -- BuildRightContainer()
-  -- BuildChatConsole()
-  -- 
-  -- --Bottom UI
-  -- 
-  -- BuildStatusBarContainer()
-  -- SetCMDStyle()
-  -- SetBarStyle()
-  -- 
-  -- echo("UI Refreshed!\n")
-  -- 
--- end
--- 
--- registerAnonymousEventHandler("UI_Refresh", "UIRefresh")
--- 
+-- Does a full UI refresh
+
+function UIRefresh (event)
+  InitUI()
+  echo("UI Refreshed!\n")
+end
+
+registerAnonymousEventHandler("UI_Refresh", "UIRefresh")
+

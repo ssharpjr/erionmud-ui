@@ -1,6 +1,8 @@
 -- Lock containers
 -- Options are (all, left, top, right, bottom)
 
+ui = ui or {}
+
 local con = matches.con
 
 if con == "all" then

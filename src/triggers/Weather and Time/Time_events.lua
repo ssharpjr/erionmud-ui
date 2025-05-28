@@ -1,2 +1,2 @@
 -- TODO: Capture time events
-setBgColor(0,50,0)
+setBgColor(0,25,0)

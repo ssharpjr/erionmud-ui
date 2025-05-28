@@ -6,10 +6,9 @@
 -- A UI for Erion Mud (www.erionmud.com)
 --
 -- Authors: 
---   Daikojun (github.com/ssharpjr, gitlab.com/ssharpjr) 
+--   Daikojun (github.com/ssharpjr) 
 --   Many core components and code came from "ErionUI 1.0" by Caelinus
 --     (https://github.com/caelinus/ErionMud-UI)
---     (https://packages.mudlet.org/packages) search for "ErionUI"
 --
 -----------------------------------------------------------------------
 
@@ -18,12 +17,13 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "1.0"
+  ui.version = "v1.1"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()
   
-  uiCecho("ErionMud UI Loaded")
+  uiCecho("ErionMud UI <cyan>"..ui.version.. " <green>Loaded<reset>\n")
+  uiCecho("<yellow>Enter '<cyan>uitheme<yellow>' to change the theme")
   
   -- Set the theme
   if ui.SettingsDB["theme"] then
@@ -49,8 +49,10 @@ function StartUp()
       --echo("\n Match: " .. ConnectType)
       
       tempTimer(1, function()
-        uiCecho("<cyan>Welcome to the <green>ErionMud <cyan>UI!\n")
+        echo("\n\n")
+        uiCecho("<green>ErionMud UI <cyan>"..ui.version.."<reset>\n")
         uiCecho("<yellow>Enter '<cyan>uihelp<yellow>' to access the UI help files\n")
+        uiCecho("<yellow>Enter '<cyan>uitheme<yellow>' to change the theme\n")
         cecho("\n\n<green>*<yellow>*<green>* <white>Vote on TMC   : ")
         cechoLink("<cyan>https://bit.ly/354iWXE <purple><--- click me!)", function() openUrl("https://bit.ly/354iWXE") end, 
           "Vote for Erion on TMC!", true)
@@ -81,7 +83,7 @@ function StartUp()
       tempTimer(3, function()
         -- Send Additional commands on login
         send(" ")
-        send("checkphrase")  -- If you are playing Guess or Unscramble
+        send("mudstats")  -- Get current game stats
         end)
     end, 1)
 end

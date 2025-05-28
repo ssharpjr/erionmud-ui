@@ -53,6 +53,9 @@ function BuildTop()
     fontSize = 9,
   }, ui.TopContainerLabel)
   
+  ui.TopContainerMCTop:disableScrolling()
+
+  
   -- Top info console
   ui.TopContainerMC = Geyser.MiniConsole:new({
     name = "ui.TopContainerMC",
@@ -66,5 +69,6 @@ function BuildTop()
     fontSize = 9,
   }, ui.TopContainerLabel)
   
+  -- ui.TopContainerMC:disableScrolling()  -- This needs to scroll for Junkyards, etc.
    
 end

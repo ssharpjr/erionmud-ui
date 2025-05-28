@@ -43,13 +43,12 @@ deleteLine("MainBuffer")
 ui.RoomVNUM = ""
 ui.RoomVNUM = VNM
 ui.PetsHP = PHP
-ui.TargetName = TNM
+ui.TargetName = TNM or ""
 
 -- Are we fighting?
-if ui.TargetName then
+ui.hasTarget = false
+if string.len(ui.TargetName) ~= 0 then
   ui.hasTarget = true
-else
-  ui.hasTarget = false
 end
 
 raiseEvent("UI_UpdateStatus", LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, JTM, XPE, QPE, QTE, PLT) 

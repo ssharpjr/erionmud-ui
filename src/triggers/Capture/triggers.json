@@ -191,6 +191,14 @@
                      {
                             "pattern": "^\\[Auction\\]",
                             "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Gtell\\)\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003cghouse\\\u003e",
+                            "type": "regex"
                      }
               ],
               "script": ""
@@ -209,14 +217,6 @@
               "highlightBG": "#0c1510",
               "patterns": [
                      {
-                            "pattern": "^\\[GUESS\\]",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\[Quest\\]",
-                            "type": "regex"
-                     },
-                     {
                             "pattern": "^\\[Levels\\]",
                             "type": "regex"
                      },
@@ -233,31 +233,11 @@
                             "type": "regex"
                      },
                      {
-                            "pattern": "^The phrase is",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\[Achievement\\]",
-                            "type": "regex"
-                     },
-                     {
                             "pattern": "^\\[Rankings\\]",
                             "type": "regex"
                      },
                      {
-                            "pattern": "^\\[Expedition\\]",
-                            "type": "regex"
-                     },
-                     {
                             "pattern": "^\\[Suicides\\]",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\[SCRAMBLE\\]",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^The scrambled phrase is\\:",
                             "type": "regex"
                      },
                      {
@@ -277,15 +257,7 @@
                             "type": "regex"
                      },
                      {
-                            "pattern": "^Your personal Guess the Phrase is",
-                            "type": "regex"
-                     },
-                     {
                             "pattern": "^\\[LEGEND\\]",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^Achievement Unlocked \\-\\\u003e",
                             "type": "regex"
                      },
                      {
@@ -297,7 +269,71 @@
                             "type": "regex"
                      },
                      {
+                            "pattern": "^\\[Achievement\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[SCRAMBLE\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The scrambled phrase is\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Quest\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Global Junkyard\\]",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "ChatCaptureNoDelete",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#0c1510",
+              "patterns": [
+                     {
+                            "pattern": "^\\[GUESS\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^The phrase is",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\[Expedition\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Your personal Guess the Phrase is",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Achievement Unlocked \\-\\\u003e",
+                            "type": "regex"
+                     },
+                     {
                             "pattern": "^QUEST\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^EXPEDITION\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^JUNKYARD\\:",
                             "type": "regex"
                      }
               ],

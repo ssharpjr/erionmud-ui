@@ -1,9 +1,10 @@
+<!-- markdownlint-disable MD033 -->
 # ErionMud UI
 
 Erion is an immersive medieval fantasy world since 2005 with a fun and friendly playerbase, challenging quests/missions, and an excellent class/skill system.
 
 This [Mudlet](https://www.mudlet.org) UI was created and themed for [Erion Mud](https://www.erionmud.com).  
-Based on the original package: ErionUI 1.0 by Caelinus [(github.com/Caelinus)](https://www.github.com/Caelinus)
+Based on the original package: ErionUI 1.0 by Caelinus [(github.com/Caelinus/ErionMud-UI)](https://github.com/Caelinus/ErionMud-UI)
 
 See [INSTALL.md](INSTALL.md) for installation details.
 
@@ -21,25 +22,25 @@ This project is completely free and open source. Feel free to clone, copy, and m
 
 ### TODOs
 
-- Make sure all chat channels are properly captured.
+- Make sure all chat channels are properly captured (ongoing).
 - Capture other events (Hero, Legend, etc.)
-- Clean up the top container notifications. Maybe split the top with an HBox?
-  - This would allow for static notifications on the right and quest, etc. stuff on the left.
-- Add expeditions, junkyards, and piligrimage details to the top container.
-- Create a lower right container for weather.
+- Add global quests details to the top container.
 - Add current debuffs to the bottom or right side of the bottom container.
 - Work on UI help files.
-
+- [X] DONE - Add Expedition and Junkyard details to the top container.
 - [X] DONE - Create an echo prefix for information coming from the UI: -=[UI]=-  
-- [X] DONE -  Re-Colorize pet HP.
-- [X] DONE -  Add the rest of the long class/subclass names (>10 chars) to the left container Class section.
-- [X] DONE -  Implement a theming system!
+- [X] DONE - Re-Colorize pet HP.
+- [X] DONE - Add the rest of the long class/subclass names (>10 chars) to the left container Class section.
+- [X] DONE - Implement a theming system!
 
 ### Ideas
 
 - Get the Mudlet mapper setup.
+- Incorporate Waypoints in custom runtos.
 - Track AutoSkill and KillSkill.
 - Add weather and moon cycles to the lower right.
 - Add a Global Quest alert for your level range.
+- Clean up the top container notifications. Maybe split the top with an HBox?
+  - This would allow for static notifications on the right and quest, etc. stuff on the left.
 - Add a spot to list all mobs in a room.
   - Maybe move Events to the top container and use its left space as a mob list?

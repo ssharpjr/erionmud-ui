@@ -15,18 +15,7 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
     end
   end
   
-  -- Correct names (SCORE cuts off at 10 characters)
-  -- TODO: correct any word more than 10 characters
-  --[[
-  1234567890
-  Telekineti c
-  BoneCollec tor
-  Planewalke r
-  Necromance r
-  Elementali st
-  Illusionis t
-  ]]
-  
+  -- Correct names (SCORE cuts off at 10 characters) 
   if ui.SecSubclass == "Beastmaste" then
     ui.SecSubclass = "Beastmaster"
   end
@@ -81,6 +70,16 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
     questBonusTime = ""
   end
   
+  -- Display expedition bonus time (timer created by the trigger: 
+  --  - Expeditions/ExpedTargetCapture/Expedition bonus timer)
+  local expedBonusTime = nil
+  ui.expedBonusTimer = ui.expedBonusTimer or "0"
+  if ui.expedBonusTimer ~= "0" then
+    expedBonusTime = " <yellow>("..round(remainingTime(ui.expedBonusTimer,0))..")"
+  else
+    expedBonusTime = ""
+  end
+  
   -- Set the correct EXP multipler status
   local XpEvent = "2X XP:"  -- Set a default
   if ui.Exp2k then XpEvent = "2x XP:" end
@@ -109,7 +108,7 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
   if QTM == "" then cecho("ui.PlayerInfoMC", "<grey>Quest:<cyan>         Available!\n")
   else cecho("ui.PlayerInfoMC", "<grey>Quest: <white>        "..QTM..questBonusTime.."\n") end
   if ETM == "" then cecho("ui.PlayerInfoMC", "<grey>Expedition:    <cyan>Available!\n")
-  else cecho("ui.PlayerInfoMC", "<grey>Expedition:<white>    "..ETM.."\n") end
+  else cecho("ui.PlayerInfoMC", "<grey>Expedition:<white>    "..ETM..expedBonusTime.."\n") end
   if JTM == "" then cecho("ui.PlayerInfoMC", "<grey>Junkyard:<cyan>      Available!\n")
   else cecho("ui.PlayerInfoMC", "<grey>Junkyard:<white>      "..JTM.."\n") end
   if PLT == "" then cecho("ui.PlayerInfoMC", "<grey>Pilgrimage:<cyan>    Available!\n")
@@ -127,7 +126,7 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
     end
      
     if (QPE ~= "") then
-      cecho("ui.PlayerInfoMC", "<grey>2x QP:<white>        "..QPE.."\n")
+      cecho("ui.PlayerInfoMC", "<black:gold><b>     2x QP:        "..QPE.."     </b>\n")
     end
      
     if (QTE ~= "") then
@@ -135,7 +134,7 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
     end
 
   elseif ui.CurrentEvent then
-    cecho("ui.PlayerInfoMC", "<white:dark_green> Current Event: <b>"..ui.CurrentEvent.."</b> \n")
+    cecho("ui.PlayerInfoMC", "<white:dark_green> Event: <b>"..ui.CurrentEvent.."</b> \n")
      
   else
       cecho("ui.PlayerInfoMC", "<grey>No Events Active.\n")
