@@ -4,6 +4,10 @@
 
 - Move ANSI map to its own console.
 
+## v1.1.1
+
+- Bugfix: Enabled trigger "Expedition end"
+
 ## v1.1
 
 ### Package

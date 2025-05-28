@@ -80,7 +80,7 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "v1.1"
+  ui.version = "v1.1.1"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()
@@ -3777,7 +3777,7 @@ end</script>
         </regexCodePropertyList>
         
       </Trigger>
-      <Trigger isActive="no" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
           
         <name>Expedition end</name>
         <script>-- Name: Expedition end
