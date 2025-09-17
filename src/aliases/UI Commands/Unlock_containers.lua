@@ -1,5 +1,7 @@
--- Unlock containers
--- Options are (all, left, top, right, bottom)
+-- Alias: Unlock containers
+-- Pattern: ^(uiunlock|uiulock)\s?(?<con>\w+)$
+-- Description: Unlock containers
+-- - Options: all, left, top, right, bottom
 
 ui = ui or {}
 

@@ -69,6 +69,6 @@ function BuildTop()
     fontSize = 9,
   }, ui.TopContainerLabel)
   
-  -- ui.TopContainerMC:disableScrolling()  -- This needs to scroll for Junkyards, etc.
+  ui.TopContainerMC:disableScrolling()
    
 end

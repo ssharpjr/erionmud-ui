@@ -27,11 +27,6 @@ This project is completely free and open source. Feel free to clone, copy, and m
 - Add global quests details to the top container.
 - Add current debuffs to the bottom or right side of the bottom container.
 - Work on UI help files.
-- [X] DONE - Add Expedition and Junkyard details to the top container.
-- [X] DONE - Create an echo prefix for information coming from the UI: -=[UI]=-  
-- [X] DONE - Re-Colorize pet HP.
-- [X] DONE - Add the rest of the long class/subclass names (>10 chars) to the left container Class section.
-- [X] DONE - Implement a theming system!
 
 ### Ideas
 
@@ -44,4 +39,5 @@ This project is completely free and open source. Feel free to clone, copy, and m
   - This would allow for static notifications on the right and quest, etc. stuff on the left.
 - Add a spot to list all mobs in a room.
   - Maybe move Events to the top container and use its left space as a mob list?
+
 ]]

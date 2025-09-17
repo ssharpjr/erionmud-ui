@@ -34,35 +34,53 @@ function GetPetHP()
   if t1[19] then table.insert(t2, t1[20]) end
 
   -- Debug
-  --for k, v in ipairs(t2) do
-  --  print(k..":"..v)
-  --end
-
-  return t2
+  -- for k, v in ipairs(t2) do
+   -- print(k..":"..v)
+  -- end
   
+  return t2
 end
 
 
 function ColorizePetHP()
-  -- Add color to the pet HP table depending on value
-  -- 100% = green
-  -- 76%+ = dark_green
-  -- 51%+ = yellow
-  -- 26%+ = orange
-  -- 0%+  = red
+  --[[
+  Add color to the pet HP table depending on value
+  100% = green
+  76%+ = dark_green
+  51%+ = yellow
+  26%+ = orange
+  0%+  = red
+  
+  or (using this right now)
+  >= 66% green
+  >= 33% yellow
+  <= 32% red
+  ]]
   
   local petTab = GetPetHP()
   local t = {}
   local petStr = ""
+  local lowest = math.huge
+  
+  -- Get the lowest pet HP for the status bar.
+  for k, v in ipairs(petTab) do
+    if tonumber(v) < lowest then
+      lowest = tonumber(v)
+    end
+  end
+  ui.lowestPetHP = lowest or 100
   
   -- Add cecho color tags to each value
   for k, v in ipairs(petTab) do
     v = tonumber(v)
-    if v == 100 then table.insert(t, "<green>"..v.."<reset>") end
-    if v >= 76 and v < 100 then table.insert(t, "<dark_green>"..v.."<reset>") end
-    if v >= 51 and v < 76 then table.insert(t, "<yellow>"..v.."<reset>") end
-    if v >= 26 and v < 51 then table.insert(t, "<orange>"..v.."<reset>") end
-    if v >= 0 and v < 26 then table.insert(t, "<red>"..v.."<reset>") end
+    -- if v == 100 then table.insert(t, "<green>"..v.."<reset>") end
+    -- if v >= 76 and v < 100 then table.insert(t, "<dark_green>"..v.."<reset>") end
+    -- if v >= 51 and v < 76 then table.insert(t, "<yellow>"..v.."<reset>") end
+    -- if v >= 26 and v < 51 then table.insert(t, "<orange>"..v.."<reset>") end
+    -- if v >= 0 and v < 26 then table.insert(t, "<red>"..v.."<reset>") end
+    if v >= 66 then table.insert(t, "<green>"..v.."<reset>") end
+    if v <= 66 and v >= 33 then table.insert(t, "<yellow>"..v.."<reset>") end
+    if v < 33 then table.insert(t, "<red>"..v.."<reset>") end
   end
   
   -- Create a new cecho-compatible string

@@ -43,5 +43,5 @@ function uiHelpMain()
   cecho("\n  <cyan>* <green>Highlighter<yellow> - You can find it on packages.mudlet.org")
   cecho("\n  <red>* <green>ErionMud GamePack<yellow> - (not released just yet)")
   echo("\n")
-  cecho("\n<yellow>======================================================================")
+  cecho("\n<yellow>======================================================================\n")
 end

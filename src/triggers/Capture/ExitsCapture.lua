@@ -1,6 +1,0 @@
-clearWindow("ui.ExitsMC")
-selectCurrentLine()
-setBgColor(unpack(ui.BgColorRGB))
-copy()
-ui.ExitsMC:appendBuffer()
-replaceLine("")

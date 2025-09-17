@@ -72,7 +72,7 @@ function BuildLeft()
     x = 5,
     y = "5%+10",
     width = "100%-10",
-    height = "40%",
+    height = "50%",  -- Watch for overlap with AnsiMap label
     color = ui.BgColor,
   }, ui.LeftContainerLabel)
   
@@ -112,9 +112,9 @@ function BuildLeft()
   ui.AnsiMapLabel = Geyser.Label:new({
     name = "ui.AsciiMapLabel",
     x = 5,
-    y = "50%",
+    y = "55%",
     width = "100%-10",
-    height = "50%-5",
+    height = "45%-5",  -- Watch for overlap with Player label
     color = ui.BgColor,
     --color = "black",
   }, ui.LeftContainerLabel)
@@ -145,7 +145,7 @@ function BuildLeft()
   ui.AnsiMapMC = Geyser.MiniConsole:new({
     name = "ui.AnsiMapMC",
     x = ui.AnsiMapLeftMargin,
-    y = "100%-340",
+    y = "100%-315",
     width = ui.AnsiMapWidth,
     height = 265,
     autoWrap = false,
@@ -161,9 +161,9 @@ function BuildLeft()
   ui.ExitsMC = Geyser.MiniConsole:new({
     name = "ui.ExitsMC",
     x = 10,
-    y = "100%-55",
+    y = "100%-40",
     width = "80%",
-    height = 50,
+    height = 35,
     autoWrap = true,
     scrollBar = false,
     color = ui.BgColor,

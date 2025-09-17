@@ -33,7 +33,7 @@
        },
        {
               "name": "2 Junkyard object capture",
-              "isActive": "no",
+              "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
               "multilineDelta": "0",

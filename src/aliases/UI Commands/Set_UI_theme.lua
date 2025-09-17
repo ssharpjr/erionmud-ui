@@ -1,4 +1,4 @@
--- Name: Set UI theme
+-- Alias: Set UI theme
 -- Pattern: ^uitheme\s?(?<theme>\w+)?
 -- Description: Set the UI theme
 

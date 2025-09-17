@@ -1,7 +1,6 @@
--- Name: Expedition end
--- Pattern:
---  (regex): ^You inform (.*) you have completed (\w+) expedition
---  (regex): ^You have failed your expedition
+-- Trigger: Expedition end
+-- Pattern (regex): ^You inform (.*) you have completed (\w+) expedition
+-- Pattern (regex): ^You have failed your expedition
 -- Description: Updates top console and kill timer when expedition is not active.
 
 ui = ui or {}

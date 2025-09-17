@@ -24,39 +24,7 @@
               "script": ""
        },
        {
-              "name": "Sprites",
-              "isActive": "yes",
-              "isFolder": "no",
-              "multiline": "no",
-              "multilineDelta": "0",
-              "matchall": "no",
-              "filter": "no",
-              "fireLength": "0",
-              "highlight": "no",
-              "highlightFG": "#ff0000",
-              "highlightBG": "#ffff00",
-              "patterns": [
-                     {
-                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite has been spotted somewhere in (?\u003clocation\u003e.*)\\!$",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite will be departing (?\u003clocation\u003e.*) in (?\u003ctime\u003e\\d+) minutes\\!$",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite has (?\u003cescaped\u003e\\w+)\\, vanishing from the realm\\!$",
-                            "type": "regex"
-                     },
-                     {
-                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (\\w+) sprite has granted its blessing to (\\w+) and (?\u003cescaped\u003e\\w+) from the realm\\!$",
-                            "type": "regex"
-                     }
-              ],
-              "script": ""
-       },
-       {
-              "name": "MudEvents",
+              "name": "Mud Events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -84,7 +52,7 @@
               "script": ""
        },
        {
-              "name": "Events",
+              "name": "Scheduled Events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -98,6 +66,38 @@
               "patterns": [
                      {
                             "pattern": "^\\*\\s+Event \\'(?\u003cevent\u003e.*)\\' has started\\!\\s+\\*$",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Sprites",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite has been spotted somewhere in (?\u003clocation\u003e.*)\\!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite will be departing (?\u003clocation\u003e.*) in (?\u003ctime\u003e\\d+) minutes\\!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (?\u003csprite\u003e\\w+) sprite has (?\u003cescaped\u003e\\w+)\\, vanishing from the realm\\!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\\u003c\\[mudevent\\]\\\u003e A[n]? (\\w+) sprite has granted its blessing to (\\w+) and (?\u003cescaped\u003e\\w+) from the realm\\!$",
                             "type": "regex"
                      }
               ],

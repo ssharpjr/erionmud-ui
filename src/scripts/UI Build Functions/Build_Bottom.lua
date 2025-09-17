@@ -74,7 +74,7 @@ function SetCMDStyle () --Move Command Line
 end
 
 function SetBarStyle () --Sets bar settings
-  --Health
+  -- Health
   hpbar = Geyser.Gauge:new({
     name="hpbar",
     x = 5,
@@ -95,15 +95,15 @@ function SetBarStyle () --Sets bar settings
   ]])
   hpbar:setAlignment("center")
 
-  --Energy
+  -- Energy
   enbar = Geyser.Gauge:new({
     name="enbar",
     x = 5,
-    y = 20,
+    y = 18,
     width=120, height=15,
   }, ui.StatusMC)
   enbar.front:setStyleSheet([[
-    background-color: #3d85c6;
+    background-color: #0a5293;
     border-radius: 2;
   ]])
   enbar.back:setStyleSheet([[
@@ -115,4 +115,25 @@ function SetBarStyle () --Sets bar settings
     padding-right: 5px;
   ]])
   enbar:setAlignment("center")
+  
+  -- Pet Health
+  phpbar = Geyser.Gauge:new({
+    name="phpbar",
+    x = 5,
+    y = 36,
+    width=120, height=15,
+  }, ui.StatusMC)
+  phpbar.front:setStyleSheet([[
+    background-color: #006600;
+    border-radius: 2;
+  ]])
+  phpbar.back:setStyleSheet([[
+    background-color: #660000;
+    border-radius: 2;
+  ]])
+  phpbar.text:setStyleSheet([[
+    text-align: right;
+    padding-right: 5px;
+  ]])
+  phpbar:setAlignment("center")
 end

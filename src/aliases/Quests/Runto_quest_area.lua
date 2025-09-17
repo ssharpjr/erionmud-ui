@@ -1,4 +1,6 @@
--- Run to the selected area
+-- Alias: Rinto quest area
+-- Pattern: ^rtq$
+-- Description: Run to the selected area
 
 ui = ui or {}
 gp = gp or {}

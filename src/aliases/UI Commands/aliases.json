@@ -47,5 +47,12 @@
               "regex": "^uitheme\\s?(?\u003ctheme\u003e\\w+)?",
               "script": "",
               "isFolder": "no"
+       },
+       {
+              "name": "Get classes",
+              "isActive": "yes",
+              "regex": "^uigetclasses$",
+              "script": "",
+              "isFolder": "no"
        }
 ]

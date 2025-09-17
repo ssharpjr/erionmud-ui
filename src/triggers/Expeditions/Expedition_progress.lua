@@ -1,7 +1,6 @@
--- Name: Expedition progress
--- Pattern:
---  (regex): ^You have completed a part of your EXPEDITION
---  (regex): ^You have almost (?<comp>\w+) your EXPEDITION
+-- Trigger: Expedition progress
+-- Pattern (regex): ^You have completed a part of your EXPEDITION
+-- Pattern (regex): ^You have almost (?<comp>\w+) your EXPEDITION
 -- Description: Updates the top console that all targets have been eliminated.
 
 

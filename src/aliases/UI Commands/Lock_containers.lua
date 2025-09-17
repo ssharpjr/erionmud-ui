@@ -1,5 +1,7 @@
--- Lock containers
--- Options are (all, left, top, right, bottom)
+-- Alias: Lock containers
+-- Pattern: ^uilock\s?(?<con>\w+)$
+-- Description: Lock containers
+-- - Options: all, left, top, right, bottom
 
 ui = ui or {}
 

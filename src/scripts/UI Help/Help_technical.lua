@@ -3,12 +3,12 @@ function uiHelpTechnical()
   cecho("\n<green>"..centerText("ErionMud UI Technical Notes"))
   cecho("\n<yellow>======================================================================")
   echo("\n")
-  cecho("\n<yellow>ErionMud does not fully support MSDP or GMCP. Therefore, all data")
-  cecho("\n<yellow>  is processed using text triggers.")
+  cecho("\n<yellow>ErionMud does not fully support MSDP or GMCP.")
+  cecho("\n<yellow>All data is processed using text triggers.")
   echo("\n")
   cecho("\n<yellow>Nothing really here yet. Check the comments in the scripts for now.")
   echo("\n")
-  cecho("\n<yellow>======================================================================")
+  cecho("\n<yellow>======================================================================\n")
 end
 
 

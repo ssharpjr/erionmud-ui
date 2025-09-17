@@ -1,4 +1,6 @@
--- Capture all junkyard targets
+-- Trigger: 2 Junkyard object capture
+-- Pattern (regex): \[\s*(?<num>\d+)\]\s+(?<item>.+?)\s+in\s+(?<room>.*?)\s+in\s+(?<area>.*)
+-- Description: Capture all junkyard targets
 
 ui = ui or {}
 

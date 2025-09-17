@@ -26,5 +26,5 @@ function uiHelpFeatures()
   cecho("\n<red>  * <yellow>Clickable Exits (from Caelinus's github) (TODO)")
   cecho("\n<red>  * <yellow>A Cortheus-proof bleu cheese filter! (Eh, it's a long shot)")
   echo("\n")
-  cecho("\n<yellow>======================================================================")
+  cecho("\n<yellow>======================================================================\n")
 end

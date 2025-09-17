@@ -1,4 +1,4 @@
--- Name: Save containers
+-- Alias: Save containers
 -- Pattern: ^uisave$
 -- Description: Save all adjustable container states.
 

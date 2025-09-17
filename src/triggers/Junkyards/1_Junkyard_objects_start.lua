@@ -1,9 +1,8 @@
---[[
-You have 30 minutes left to gather:
-[ 1] a smoking wand in Hilly Path in Rambling Roads Highway
-[ 2] a gnarled staff in Blackened Hall in Hell
-[ 3] an ancient relic in In a Giant Natural Botanical Garden in Jungle of Xyzzyxx
-]]
+-- Trigger: 1 Junkyard objects start
+-- Pattern (regex): ^You ask The Giver for a junkyard quest
+-- Pattern (regex): ^You have (\d+) minutes left to gather\:
+-- Pattern (regex): ^You have (\d+) minutes and (\d+) seconds left to gather\:
+-- Pattern (regex): ^You have (\d+) hour (\d+) minutes and (\d+) seconds left to gather\:
 
 ui = ui or {}
 

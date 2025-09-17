@@ -1,3 +1,8 @@
+-- Trigger: Junkyard rewards
+-- Pattern (regex): ^(.*) says to you\, \'Your reward is (?<exp>\d+) experience and (?<gold>\d+) gold\!\'$
+
+ui = ui or {}
+
 if matches.exp then
   echo("\n\n")
   uiCecho("<gold>**************\n")

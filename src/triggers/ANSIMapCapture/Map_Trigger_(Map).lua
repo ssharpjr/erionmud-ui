@@ -1,5 +1,0 @@
-selectCaptureGroup(1)
-setBgColor(unpack(ui.BgColorRGB))
-copy()
-ui.AnsiMapMC:appendBuffer()
-replace()

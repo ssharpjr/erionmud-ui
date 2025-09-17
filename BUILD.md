@@ -64,13 +64,15 @@ At this point, I open this new folder in VSCode. Here I'll add the following fil
 - `CHANGELOG.md`
 - `INSTALL.md`
 - `LICENSE`
-- `README.md` - Remember, this file should have been created based on the text you put in the Description box in the Package Exporter. I usually just update this file after the export from the Scripts/README.lua file I create while in Mudlet.
-- `build/` - This folder is created by the muddler process when exporting the source code in the last step. The `.gitignore` file has entries for this folder.
+- `README.md` - Remember, this file should have been created based on the text you put in the Description box in the Package Exporter. I usually just update this file after the export from the [scripts/README.md.lua](/src/scripts/README.md.lua) file I create while in Mudlet.
 - `mfile` - Yes, this file was created by De-Muddler, but I update it manually.
+- `src/resources/` - This folder contains images, including the package logo.
+- `build/` - This folder is created by the `muddler` process when exporting the source code in the last step. The `.gitignore` file has entries for this folder.
 
-### Update Notes
+### Update Notes (mainly for me to remember)
 
-- Make sure to update the "ui.version" value in "Scripts/ErionMud-UI/1_UI_Start_Event".
+- Make sure to update the `ui.version` value in [1_UI_Start_Event.lua](/src/scripts/1_UI_Start_Event.lua).
+- Make sure to update [scripts/README.md.lua](/src/scripts/README.md.lua) with the contents of [README.md](README.md).
 
 ## Muddling the Final Package
 

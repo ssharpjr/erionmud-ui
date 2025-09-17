@@ -30,11 +30,10 @@ ui.JiggleCounter = false
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
---Buffers for word wrapping
+--Buffers and such
   createBuffer("MainBuffer")
   createBuffer("ChatBuffer")
-  createBuffer("ScoreBuffer")
-
+    
 -- Debugging StyleSheet - show some borders and such
 ui.DebugSS = ([[
     background: black;

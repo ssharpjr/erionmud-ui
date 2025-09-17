@@ -1,4 +1,0 @@
-  selectCurrentLine()
-  copy()
-  appendBuffer("MainBuffer")
-  

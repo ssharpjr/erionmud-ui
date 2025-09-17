@@ -1,4 +1,6 @@
--- Capture sprite events
+-- Trigger: Sprites
+-- Pattern: Various
+-- Description: Capture sprite events and send them to the Events list.
 
 --[[
 Sprites:
@@ -8,7 +10,6 @@ earthguard (green)
 windstrike (sky_blue)
 
 Color logic is applied in Scripts/UI Update Functions/UI_UpdateStatus Event (Left)
-
 ]]
 
 ui = ui or {}

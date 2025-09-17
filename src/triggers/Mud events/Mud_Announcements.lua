@@ -1,22 +1,7 @@
--- Capture MUD announcements
-
---[[
-<[announce]> Copyover Incoming!
-<[announce]> Copyover by Aelyn in 1 minute.
-<[announce]> Copyover by Aelyn in 30 seconds.
-<[announce]> Copyover by Aelyn in 5 seconds.
-<[announce]> Copyover by Aelyn in 4 seconds.
-<[announce]> Copyover by Aelyn in 3 seconds.
-<[announce]> Copyover by Aelyn in 2 seconds.
-<[announce]> Copyover by Aelyn in 1 second.
-
-
-* * * Aelyn has initiated a copyover * * *
-
-The gods attempt to set time in motion...
-
-Time begins to move again.
-]]
+-- Trigger: Mud Announcements
+-- Pattern (regex): \<\[announce\]\> (.*)
+-- Pattern (regex): ^A Legend has been born\!
+-- Description: Capture MUD announcements and send them to the chat and top windows.
 
 ui = ui or {}
 

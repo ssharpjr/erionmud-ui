@@ -1,6 +1,6 @@
 [
        {
-              "name": "Level up",
+              "name": "At character menu",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -13,34 +13,14 @@
               "highlightBG": "#ffff00",
               "patterns": [
                      {
-                            "pattern": "^You are now a level (\\d+) (\\w+)\\!\\!$",
+                            "pattern": "^Welcome to the account menu of (.*)",
                             "type": "regex"
                      }
               ],
               "script": ""
        },
        {
-              "name": "Faux level up",
-              "isActive": "yes",
-              "isFolder": "no",
-              "multiline": "no",
-              "multilineDelta": "0",
-              "matchall": "no",
-              "filter": "no",
-              "fireLength": "0",
-              "highlight": "no",
-              "highlightFG": "#ff0000",
-              "highlightBG": "#ffff00",
-              "patterns": [
-                     {
-                            "pattern": "^You raise a faux level",
-                            "type": "regex"
-                     }
-              ],
-              "script": ""
-       },
-       {
-              "name": "ChangingClassTarget",
+              "name": "Changing class target",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -58,6 +38,38 @@
                      },
                      {
                             "pattern": "^You are now targeting the (?\u003cclass\u003e\\w+) subclass",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^Congratulations\\! You have added the (?\u003cclass\u003e.*) subclass\\!",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You switch into the (\u003cclass\u003e.*) subclass",
+                            "type": "regex"
+                     }
+              ],
+              "script": ""
+       },
+       {
+              "name": "Level up",
+              "isActive": "yes",
+              "isFolder": "no",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": [
+                     {
+                            "pattern": "^You are now a level (\\d+) (\\w+)\\!\\!$",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^You raise a faux level",
                             "type": "regex"
                      }
               ],

@@ -2,9 +2,9 @@
        "package": "ErionMud-UI",
        "title": "A UI for ErionMud (erionmud.com)",
        "description": "",
-       "version": "v1.1",
+       "version": "v1.2",
        "author": "Daikojun",
        "icon": "erion-logo-512.jpg",
        "dependencies": "",
-       "outputFile": true
+       "outputFile": false
 }
