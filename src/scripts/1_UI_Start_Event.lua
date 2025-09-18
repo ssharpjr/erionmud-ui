@@ -17,12 +17,12 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "v1.2"
+  ui.version = "1.2.1"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()  -- Functions/UI Functions
   
-  uiCecho("ErionMud UI <cyan>"..ui.version.. " <green>Loaded<reset>\n")
+  uiCecho("ErionMud UI <cyan>v"..ui.version.. " <green>Loaded<reset>\n")
   uiCecho("<yellow>Enter '<cyan>uitheme<yellow>' to change the theme")
   
   -- Set the theme

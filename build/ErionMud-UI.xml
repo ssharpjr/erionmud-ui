@@ -76,12 +76,12 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "v1.2"
+  ui.version = "1.2.1"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()  -- Functions/UI Functions
   
-  uiCecho("ErionMud UI &lt;cyan&gt;"..ui.version.. " &lt;green&gt;Loaded&lt;reset&gt;\n")
+  uiCecho("ErionMud UI &lt;cyan&gt;v"..ui.version.. " &lt;green&gt;Loaded&lt;reset&gt;\n")
   uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uitheme&lt;yellow&gt;' to change the theme")
   
   -- Set the theme
@@ -279,136 +279,69 @@ registerAnonymousEventHandler("SetDefaultMudSettings", "SetMudSettings")</script
     </Script>
     <ScriptGroup isActive="yes" isFolder="yes">
         
-      <name>UI Themes</name>
-      <script/>
-        
-      <packageName/>
-      
-      <eventHandlerList>
-</eventHandlerList>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Themes</name>
-        <script>-- Themes
--- If you want to add more themes, please following this process:
--- - Create a new "Scripts/UI Themes/Theme..." script with your CSS.
--- - Add your theme name and abbreviation to the comment list below.
--- - Add your theme to the SetTheme() function below.
+      <name>Functions</name>
+      <script>-- Utility Functions
 
---[[
-
-"Erion Green", "er"   - This is the default theme. It's based on the colors from the erionmud.com website.
-"Minimal Black", "mb" - This is close to the original minimal theme by Caelinus.
-
-]]
-
-ui = ui or {}
-
-function ShowThemes()
-  -- List available themes
-  uiCecho("&lt;cyan&gt;Available UI Themes\n")
-  uiCecho("&lt;green&gt;Erion Green    &lt;yellow&gt;[ &lt;cyan&gt;uitheme er &lt;yellow&gt;]\n")
-  uiCecho("&lt;green&gt;Minimal Black  &lt;yellow&gt;[ &lt;cyan&gt;uitheme mb &lt;yellow&gt;]\n")
-  echo("\n")
-end
-
-
-function SetTheme(theme)
-  -- Set the theme requested by "Aliases/Set UI Theme"
-  if theme == "er" then
-    ui.CurrentTheme = "er"
-    ui.CurrentThemeName = "Erion Green"
-    ui.SettingsDB["theme"] = ui.CurrentTheme
-    ui.SettingsDB["theme_name"] = ui.CurrentThemeName
-    SaveUISettings()
-    ThemeErionGreen()
-    InitUI()
-    send(" ")
-    uiCecho("Theme set to: &lt;green&gt;Erion Green")
-  elseif theme == "mb" then
-    ui.CurrentTheme = "mb"
-    ui.CurrentThemeName = "Minimal Black"
-    ui.SettingsDB["theme"] = ui.CurrentTheme
-    ui.SettingsDB["theme_name"] = ui.CurrentThemeName
-    SaveUISettings()
-    ThemeMinimalBlack()
-    InitUI()
-    send(" ")
-    uiCecho("Theme set to: &lt;green&gt;Minimal Black")
-  else
-    -- Back to the default
-    ui.CurrentTheme = "er"
-    ui.SettingsDB["theme"] = ui.CurrentTheme
-    --cecho("\n&lt;orange_red&gt;Theme not recognized.")
-    --ShowThemes()
+-- Commas in large numbers
+function commaValue(n)
+  if n == nil then return "" end
+  if type(n) == "number" then
+    n = tostring(n)
+  elseif type(n) ~= "string" then
+    return tostring(n) -- handle booleans, tables, etc.
   end
 
-end</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Theme Erion Green</name>
-        <script>-- Erion Green Theme
+  -- Try to match "digits with optional prefix/suffix"
+  local left, num, right = n:match("^([^%d]*%d)(%d*)(.-)$")
+  if not left then
+    return n -- if no digits, just return unchanged
+  end
 
-ui = ui or {}
-
-function ThemeErionGreen()
-  ui.BorderColor = "#9f8e3d"  -- Erion Gold
-  ui.BgColor = "#0c1510"      -- Erion Green
-  ui.BgColorRGB = {12,21,16}  -- Erion Green in RGB (unpack(table))
-  ui.LockStyle = "full"  -- Hides all borders. The container must be unlocked with a command.
-  ui.MainStyleSheet = [[
-      background: ]] .. ui.BgColor .. [[ ;
-      border: 3px solid ]] .. ui.BorderColor .. [[ ;
-      border-radius: 10px;
-    ]]
+  return left .. (num:reverse():gsub("(%d%d%d)", "%1,"):reverse()) .. right
 end
-</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Theme Erion Minimal</name>
-        <script>-- Erion Minimal Black Theme
 
-ui = ui or {}
 
-function ThemeMinimalBlack()
-  ui.BorderColor = "black"
-  ui.BgColor = "black"
-  ui.BgColorRGB = {0,0,0}
-  ui.LockStyle = "full"  -- Hides all borders. The container must be unlocked with a command.
-  ui.MainStyleSheet = [[
-      background: ]] .. ui.BgColor .. [[ ;
-      border: 0px solid ]] .. ui.BorderColor .. [[ ;
-      border-radius: 10px;
-    ]]
+function commaValueOriginal(n)
+  -- credit http://richard.warburton.it
+  -- http://lua-users.org/wiki/FormattingNumbers
+  local left, num, right = string.match(n, '^([^%d]*%d)(%d*)(.-)$')
+  return left .. (num:reverse():gsub('(%d%d%d)', '%1,'):reverse()) .. right
 end
-</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      
-    </ScriptGroup>
-    <ScriptGroup isActive="yes" isFolder="yes">
-        
-      <name>UI Help</name>
-      <script/>
+
+
+function firstToUpper(str)
+    -- http://lua-users.org/wiki/StringRecipes
+  return (str:gsub("^%l", string.upper))
+end
+
+
+-- Center a string of text based on a border length
+function centerText(text)
+  local border_length = 70
+  tlen = string.len(text)
+  leading_spaces = ((border_length/2) - (tlen/2))
+  t = string.rep(' ', leading_spaces)..text
+  return t
+end
+
+
+--Rounding Function
+  function round(x, n)
+    n = math.pow(10, n or 0)
+    x = x * n
+    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
+    return x / n
+  end
+
+-- Trim trailing whitespace
+function trim(s)
+  return s:gsub("%s+$", "")
+end
+
+-- Safe value functions. Helps fight errors from blank or nil variables.
+function safe_string(s, default) return (s and s ~= "") and s or default end
+function safe_number(n, default) return tonumber(n) or default end
+function safe_div(numerator, denominator) return (denominator ~= 0) and (numerator/denominator) or 0 end</script>
         
       <packageName/>
       
@@ -416,53 +349,231 @@ end
 </eventHandlerList>
       <Script isActive="yes" isFolder="no">
           
-        <name>Help main</name>
-        <script>-- This is the main help file for the Erion UI.
--- Use this to add help sections.
--- Put each section in its own script.
+        <name>Functions</name>
+        <script>-- Utility Functions
 
-function uiHelpMain()
-  cecho("\n&lt;yellow&gt;======================================================================")
-  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Main Help File"))
-  cecho("\n&lt;yellow&gt;======================================================================")
-  echo("\n")
-  cecho("\n&lt;green&gt;ErionMUD UI &lt;cyan&gt;v"..ui.version)
-  cecho("\n&lt;cyan&gt;Author: &lt;yellow&gt;Daikojun (discord) (gitlab.com/ssharpjr, github.com/ssharpjr)")
-  cecho("\n&lt;cyan&gt;Original package: &lt;yellow&gt;ErionUI 1.0 by Caelinus (github.com/Caelinus)")
+-- Commas in large numbers
+function commaValue(n)
+  if n == nil then return "" end
+  if type(n) == "number" then
+    n = tostring(n)
+  elseif type(n) ~= "string" then
+    return tostring(n) -- handle booleans, tables, etc.
+  end
+
+  -- Try to match "digits with optional prefix/suffix"
+  local left, num, right = n:match("^([^%d]*%d)(%d*)(.-)$")
+  if not left then
+    return n -- if no digits, just return unchanged
+  end
+
+  return left .. (num:reverse():gsub("(%d%d%d)", "%1,"):reverse()) .. right
+end
+
+
+function commaValueOriginal(n)
+  -- credit http://richard.warburton.it
+  -- http://lua-users.org/wiki/FormattingNumbers
+  local left, num, right = string.match(n, '^([^%d]*%d)(%d*)(.-)$')
+  return left .. (num:reverse():gsub('(%d%d%d)', '%1,'):reverse()) .. right
+end
+
+
+function firstToUpper(str)
+    -- http://lua-users.org/wiki/StringRecipes
+  return (str:gsub("^%l", string.upper))
+end
+
+
+-- Center a string of text based on a border length
+function centerText(text)
+  local border_length = 70
+  tlen = string.len(text)
+  leading_spaces = ((border_length/2) - (tlen/2))
+  t = string.rep(' ', leading_spaces)..text
+  return t
+end
+
+
+--Rounding Function
+  function round(x, n)
+    n = math.pow(10, n or 0)
+    x = x * n
+    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
+    return x / n
+  end
+
+-- Trim trailing whitespace
+function trim(s)
+  return s:gsub("%s+$", "")
+end
+
+-- Safe value functions. Helps fight errors from blank or nil variables.
+function safe_string(s, default) return (s and s ~= "") and s or default end
+function safe_number(n, default) return tonumber(n) or default end
+function safe_div(numerator, denominator) return (denominator ~= 0) and (numerator/denominator) or 0 end</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>UI functions</name>
+        <script>-- UI Functions
+
+ui = ui or {}
+
+ui.settingsFile = "/erionmud_ui_settings.db"
+
+-- Create a simple table/DB for saving/loading persistent data.
+function SaveUISettings()
+  --local separator = string.char(getMudletHomeDir():byte()) == "/" and "/" or "\\"
+  --local filename = getMudletHomeDir()..separator.."erionmud_ui_settings.db"
+  local filename = getMudletHomeDir()..ui.settingsFile
+  if ui.SettingsDB then
+    table.save(filename, ui.SettingsDB)
+  else
+    tempTable = {}
+    table.save(filename, tempTable)
+  end
+end
+
+
+function LoadUISettings()
+  local file_exists = io.open(getMudletHomeDir()..ui.settingsFile) ~= nil
+  if file_exists == false then
+    SaveUISettings()
+  end
+  local filename = getMudletHomeDir()..ui.settingsFile
+  ui.SettingsDB = {}
+  table.load(filename, ui.SettingsDB)
+end
+
+
+function uiCecho(text)
+  -- Add the UI prefix "-=[UI]=-" to each echo
   
-  echo("\n")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;green&gt;Introduction")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;yellow&gt;This UI was created and themed for &lt;green&gt;ErionMud &lt;yellow&gt;(erionmud.com).")
-  cecho("\n&lt;yellow&gt;An immersive medieval fantasy world since 2005!")
-  echo("\n")
+  -- This one is brighter
+  cecho("&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;UI&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;- &lt;yellow&gt;"..text.."&lt;reset&gt;")
   
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;green&gt;UI Help Files")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;cyan&gt;uihelp commands&lt;yellow&gt; - Aliases used with this UI.")
-  cecho("\n&lt;cyan&gt;uihelp features&lt;yellow&gt; - UI features (and WIPs).")
-  cecho("\n&lt;cyan&gt;uihelp technical&lt;yellow&gt; - A technical document on how this UI works.")
-  
-  echo("\n")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;green&gt;Set Up")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;red&gt;NOTE: &lt;yellow&gt;This UI will change your prompt!")
-  cecho("\n&lt;yellow&gt;      Use '&lt;cyan&gt;PROMPT DEFAULT&lt;yellow&gt;' to reset it when you play on")
-  cecho("\n&lt;yellow&gt;      clients other than Mudlet.")
-  --cecho("\n&lt;yellow&gt;")
-  cecho("\n&lt;yellow&gt;The following changes are sent to the MUD:")
-  cecho("\n  &lt;cyan&gt;* &lt;yellow&gt;toggle +tick")
-  cecho("\n  &lt;cyan&gt;* &lt;yellow&gt;toggle +compact")
-  cecho("\n  &lt;red&gt;* &lt;yellow&gt;spam -daycycle (not implemented yet)")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;Some optional packages you can use with this are:")
-  cecho("\n  &lt;cyan&gt;* &lt;green&gt;Highlighter&lt;yellow&gt; - You can find it on packages.mudlet.org")
-  cecho("\n  &lt;red&gt;* &lt;green&gt;ErionMud GamePack&lt;yellow&gt; - (not released just yet)")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;======================================================================\n")
+  -- This one is dimmer and more mellow
+  --cecho("&lt;royal_blue&gt;-&lt;forest_green&gt;=&lt;ansi_yellow&gt;[&lt;steel_blue&gt;UI&lt;ansi_yellow&gt;]&lt;forest_green&gt;=&lt;royal_blue&gt;- &lt;reset&gt;"..text)
+end
+
+
+-- Capture and delete a SCORE block silently
+function SilentScoreCapture()
+  if ui.scoreInProgress then
+    -- cecho("&lt;yellow&gt;[WARN] SCORE capture already running; ignored.\n")
+    return
+  end
+
+  ui.scoreInProgress = true
+  ui.scoreStartLine = nil
+
+  enableTrigger("ScoreCaptureStart")
+  send("score", false)
+
+  local footerPattern = [[^For more character information use aff, mults, sigil, worth, and whois\.$]]
+  local endID
+  endID = tempRegexTrigger(footerPattern, function()
+    local startLine = ui.scoreStartLine
+    local endLine = getLineNumber()
+
+    if not startLine or startLine &gt; endLine then
+      -- cecho("&lt;red&gt;[ERROR] SCORE start/end invalid; aborting cleanup.\n")
+    else
+      local block = getLines("main", startLine, endLine)
+
+      -- Parse stats
+      ParseScoreBuffer(block)
+
+      -- Delete captured lines from the main window
+      local n = endLine - startLine + 1
+      for _ = 1, n do
+        moveCursor("main", 1, startLine)
+        deleteLine()
+      end
+
+      -- cecho(f("&lt;green&gt;[DEBUG] SCORE block captured, parsed, and deleted ({n} lines).\n"))
+    end
+
+    if endID then killTrigger(endID) end
+    disableTrigger("ScoreCaptureStart")
+    ui.scoreStartLine  = nil
+    ui.scoreInProgress = false
+  end)
+
+  tempTimer(5, function()
+    if ui.scoreInProgress then
+      -- cecho("&lt;red&gt;[ERROR] SCORE footer not seen; cleaning up.\n")
+      if endID then killTrigger(endID) end
+      disableTrigger("ScoreCaptureStart")
+      ui.scoreStartLine  = nil
+      ui.scoreInProgress = false
+    end
+  end)
+end
+
+
+-- Get/Set stat variables from the captured SCORE output
+function ParseScoreBuffer(block)
+  for _, line in ipairs(block) do
+    -- Player name + active class
+    local player, class = line:match("^%|%s+(%w+) the (%w+)%s+%|")
+    if player and class then
+      -- Player Name should have been captured on login.
+      if ui.PlayerName ~= player then
+        ui.PlayerName  = player
+      end
+      ui.ActiveClass = class
+    end
+
+    -- Alignment
+    local align = line:match("Align%s+:%s+(%w+)%s+%|$")
+    if align then
+      ui.alignment = align
+    end
+
+    -- Primary/Secondary class
+    local pclass, sclass = line:match("Cls%s+:%s+([%w%-]+)%s*,?%s*([%w%-]*)%s*%|$")
+    if pclass then
+      ui.PClass = pclass
+      ui.SecClass = (sclass ~= "" and sclass) or nil
+    end
+
+    -- Primary/Secondary subclass
+    local psub, ssub = line:match("Sub%s+:%s+([%w%-]+)%s*,?%s*([%w%-]*)%s*%|$")
+    if psub then
+      ui.PSubclass = psub
+      ui.SecSubclass = (ssub ~= "" and ssub) or nil
+    end
+
+    -- Active class level (Tnl / Level)
+    local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
+    if tnl and lvl then
+      ui.ActiveClassLevel = tonumber(lvl)
+      ui.Tnl = tonumber(tnl)
+    end
+  end
+end
+
+
+function GetClasses()
+  enableTrigger("ScoreCaptureStart")
+  --send("score", false)
+  SilentScoreCapture()
+end
+
+
+-- Reapply the prompt colors for "pray gods"
+function setPrayGodsColors()
+  -- [&gt;pray gods&lt;]
+  local t = "&lt;ansi_cyan&gt;[&lt;cyan&gt;&gt;&lt;ghost_white&gt;pr&lt;ansi_white&gt;a&lt;dim_gray&gt;y g&lt;ansi_white&gt;o&lt;ghost_white&gt;ds&lt;cyan&gt;&lt;&lt;ansi_cyan&gt;]"
+  return t
 end</script>
           
         <packageName/>
@@ -473,103 +584,104 @@ end</script>
       </Script>
       <Script isActive="yes" isFolder="no">
           
-        <name>Help features</name>
-        <script>function uiHelpFeatures()
-  cecho("\n&lt;yellow&gt;======================================================================")
-  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Features"))
-  cecho("\n&lt;yellow&gt;======================================================================")
-  cecho("\n\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;cyan&gt; Features")
-  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
-  cecho("\n&lt;yellow&gt;This UI is packed with features!")
-  cecho("\n&lt;yellow&gt;")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Selectable UI themes! (check out '&lt;cyan&gt;uitheme&lt;yellow&gt;')")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Clickable 'VOTE on TMC' link")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Chats and notices in the right console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Character stats in the left console (with commas!).")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Class list with active target class marker.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Main class and target class levels.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;MUD Events in the top console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active events and timers in the left console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active quest info in the top console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Quest bonus timer visible beside the quest timer.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Full ANSI map with area info and exits in the left console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Vitals bars and details in the bottom console.")
-  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active Target and pet info in the bottom console.")
-  cecho("\n&lt;yellow&gt;")
-  cecho("\n&lt;yellow&gt;[&lt;cyan&gt;Possible works in Progress&lt;yellow&gt;]")
-  cecho("\n&lt;red&gt;  * &lt;yellow&gt;Active debuffs in the bottom console. (TODO)")
-  cecho("\n&lt;red&gt;  * &lt;yellow&gt;Clickable Exits (from Caelinus's github) (TODO)")
-  cecho("\n&lt;red&gt;  * &lt;yellow&gt;A Cortheus-proof bleu cheese filter! (Eh, it's a long shot)")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;======================================================================\n")
-end</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Help commands</name>
-        <script>function uiHelpCommands()
-  cecho("\n&lt;yellow&gt;======================================================================")
-  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Commands"))
-  cecho("\n&lt;yellow&gt;======================================================================")
-  echo("\n")
-  cecho("\n&lt;cyan&gt;uiclear &lt;top|right|chat&gt;&lt;yellow&gt; - Clears the entered console.")
-  cecho("\n&lt;cyan&gt;uilock &lt;all|left|top|right|bottom&gt;&lt;yellow&gt; - Locks the entered container.")
-  cecho("\n&lt;cyan&gt;uiunlock &lt;all|left|top|right|bottom&gt;&lt;yellow&gt; - Unlocks the entered container.")
-  cecho("\n&lt;cyan&gt;uisave&lt;yellow&gt; - Saves all adjustable container states (as 'custom1').")
-  cecho("\n&lt;cyan&gt;uiload&lt;yellow&gt; - Loads all adjustable container states (as 'custom1').")
-  cecho("\n&lt;cyan&gt;uireset&lt;yellow&gt; - Reset all UI containers to their default states.")
-  cecho("\n&lt;cyan&gt;uigetclasses&lt;yellow&gt; - Refreshes Class information variables.")
-  echo("\n")
-  cecho("\n&lt;cyan&gt;rtq&lt;yellow&gt; - After starting a quest, use this command to 'runto' this area.")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;======================================================================\n")
+        <name>Pet HP</name>
+        <script>-- Re-Colorize Pet HP!
+
+ui = ui or {}
+
+function GetPetHP()
+  -- Create a table of pet HP
+  -- I'm sure there is a cleaner way to do this, but here it is...
+  
+  local t1 = {}
+  local t2 = {}
+  local php = ""
+  
+  
+  -- Clean up data
+  php = ui.PetsHP:gsub("[%%]", "")  -- Remove "%"
+  php = php:gsub("[%|]",":")  -- Replace "|" with ":" so it gets split properly
+  
+  -- Split at the ":"
+  for str in string.gmatch(php, "([^:]+)") do
+    table.insert(t1, str)
+  end
+  -- Returns { "1", "100", "2", "100", "3", "100", "4", "100" }
+  
+  -- Build a new table (max pet count is 10, so 20 entires)
+  if t1[1] then table.insert(t2, t1[2]) end
+  if t1[3] then table.insert(t2, t1[4]) end
+  if t1[5] then table.insert(t2, t1[6]) end
+  if t1[7] then table.insert(t2, t1[8]) end
+  if t1[9] then table.insert(t2, t1[10]) end
+  if t1[11] then table.insert(t2, t1[12]) end
+  if t1[13] then table.insert(t2, t1[14]) end
+  if t1[15] then table.insert(t2, t1[16]) end
+  if t1[17] then table.insert(t2, t1[18]) end
+  if t1[19] then table.insert(t2, t1[20]) end
+
+  -- Debug
+  -- for k, v in ipairs(t2) do
+   -- print(k..":"..v)
+  -- end
+  
+  return t2
+end
+
+
+function ColorizePetHP()
+  --[[
+  Add color to the pet HP table depending on value
+  100% = green
+  76%+ = dark_green
+  51%+ = yellow
+  26%+ = orange
+  0%+  = red
+  
+  or (using this right now)
+  &gt;= 66% green
+  &gt;= 33% yellow
+  &lt;= 32% red
+  ]]
+  
+  local petTab = GetPetHP()
+  local t = {}
+  local petStr = ""
+  local lowest = math.huge
+  
+  -- Get the lowest pet HP for the status bar.
+  for k, v in ipairs(petTab) do
+    if tonumber(v) &lt; lowest then
+      lowest = tonumber(v)
+    end
+  end
+  ui.lowestPetHP = lowest or 100
+  
+  -- Add cecho color tags to each value
+  for k, v in ipairs(petTab) do
+    v = tonumber(v)
+    -- if v == 100 then table.insert(t, "&lt;green&gt;"..v.."&lt;reset&gt;") end
+    -- if v &gt;= 76 and v &lt; 100 then table.insert(t, "&lt;dark_green&gt;"..v.."&lt;reset&gt;") end
+    -- if v &gt;= 51 and v &lt; 76 then table.insert(t, "&lt;yellow&gt;"..v.."&lt;reset&gt;") end
+    -- if v &gt;= 26 and v &lt; 51 then table.insert(t, "&lt;orange&gt;"..v.."&lt;reset&gt;") end
+    -- if v &gt;= 0 and v &lt; 26 then table.insert(t, "&lt;red&gt;"..v.."&lt;reset&gt;") end
+    if v &gt;= 66 then table.insert(t, "&lt;green&gt;"..v.."&lt;reset&gt;") end
+    if v &lt;= 66 and v &gt;= 33 then table.insert(t, "&lt;yellow&gt;"..v.."&lt;reset&gt;") end
+    if v &lt; 33 then table.insert(t, "&lt;red&gt;"..v.."&lt;reset&gt;") end
+  end
+  
+  -- Create a new cecho-compatible string
+  -- Format: 1:100%|2:100%|3:100%|4:100%
+  --petStr = "&lt;white&gt;"
+  for k, v in ipairs(t) do
+    petStr = petStr.."&lt;white&gt;"..k..":"..v.."&lt;white&gt;%|"
+  end
+  
+  --cecho(petStr)
+  return petStr
+
 end
 </script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Help technical</name>
-        <script>function uiHelpTechnical()
-  cecho("\n&lt;yellow&gt;======================================================================")
-  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Technical Notes"))
-  cecho("\n&lt;yellow&gt;======================================================================")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;ErionMud does not fully support MSDP or GMCP.")
-  cecho("\n&lt;yellow&gt;All data is processed using text triggers.")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;Nothing really here yet. Check the comments in the scripts for now.")
-  echo("\n")
-  cecho("\n&lt;yellow&gt;======================================================================\n")
-end
-
-
--- Technical Notes
-
---[[
-# Triggers
-
-## ScoreCaptures 
-
-CaptureActiveClass - captures the current character name and class
-CaptureClass - captures the primary and secondary classes
-CaptureSubclass - captures the primary and secondary subclasses
-CaptureActiveClassLevel - captures the active class level
-
-
-]]</script>
           
         <packageName/>
         
@@ -1067,6 +1179,308 @@ function BuildRight()
 end
 
 
+</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      
+    </ScriptGroup>
+    <ScriptGroup isActive="yes" isFolder="yes">
+        
+      <name>UI Help</name>
+      <script/>
+        
+      <packageName/>
+      
+      <eventHandlerList>
+</eventHandlerList>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Help main</name>
+        <script>-- This is the main help file for the Erion UI.
+-- Use this to add help sections.
+-- Put each section in its own script.
+
+function uiHelpMain()
+  cecho("\n&lt;yellow&gt;======================================================================")
+  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Main Help File"))
+  cecho("\n&lt;yellow&gt;======================================================================")
+  echo("\n")
+  cecho("\n&lt;green&gt;ErionMUD UI &lt;cyan&gt;v"..ui.version)
+  cecho("\n&lt;cyan&gt;Author: &lt;yellow&gt;Daikojun (discord) (gitlab.com/ssharpjr, github.com/ssharpjr)")
+  cecho("\n&lt;cyan&gt;Original package: &lt;yellow&gt;ErionUI 1.0 by Caelinus (github.com/Caelinus)")
+  
+  echo("\n")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;green&gt;Introduction")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;yellow&gt;This UI was created and themed for &lt;green&gt;ErionMud &lt;yellow&gt;(erionmud.com).")
+  echo("\n")
+  
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;green&gt;UI Help Files")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;cyan&gt;uihelp commands&lt;yellow&gt; - Aliases used with this UI.")
+  cecho("\n&lt;cyan&gt;uihelp features&lt;yellow&gt; - UI features (and WIPs).")
+  cecho("\n&lt;cyan&gt;uihelp technical&lt;yellow&gt; - A technical document on how this UI works.")
+  
+  echo("\n")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;green&gt;Set Up")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;red&gt;NOTE: &lt;yellow&gt;This UI will change your prompt!")
+  cecho("\n&lt;yellow&gt;      Use '&lt;cyan&gt;PROMPT ALL&lt;yellow&gt;' to reset it when you play on")
+  cecho("\n&lt;yellow&gt;      clients other than Mudlet.")
+  --cecho("\n&lt;yellow&gt;")
+  cecho("\n&lt;yellow&gt;The following changes are sent to the MUD:")
+  cecho("\n  &lt;cyan&gt;* &lt;yellow&gt;toggle +tick")
+  cecho("\n  &lt;cyan&gt;* &lt;yellow&gt;toggle +compact")
+  cecho("\n  &lt;cyan&gt;* &lt;yellow&gt;toggle +map")
+  cecho("\n  &lt;red&gt;* &lt;yellow&gt;spam -daycycle (not implemented yet)")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;Some optional packages you can use with this are:")
+  cecho("\n  &lt;cyan&gt;* &lt;green&gt;Highlighter&lt;yellow&gt; - You can find it on packages.mudlet.org")
+  cecho("\n  &lt;red&gt;* &lt;green&gt;ErionMud GamePack&lt;yellow&gt; - (not released just yet)")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;======================================================================\n")
+end</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Help features</name>
+        <script>function uiHelpFeatures()
+  cecho("\n&lt;yellow&gt;======================================================================")
+  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Features"))
+  cecho("\n&lt;yellow&gt;======================================================================")
+  cecho("\n\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;cyan&gt; Features")
+  cecho("\n&lt;yellow&gt;----------------------------------------------------------------------")
+  cecho("\n&lt;yellow&gt;This UI is packed with features!")
+  cecho("\n&lt;yellow&gt;")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Selectable UI themes! (check out '&lt;cyan&gt;uitheme&lt;yellow&gt;')")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Clickable 'VOTE on TMC' link")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Chats and notices in the right console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Character stats in the left console (with commas!).")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Class list with active target class marker.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Main class and target class levels.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;MUD Events in the top console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active events and timers in the left console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active quest info in the top console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Quest bonus timer visible beside the quest timer.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Full ANSI map with area info and exits in the left console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Vitals bars and details in the bottom console.")
+  cecho("\n&lt;cyan&gt;  * &lt;yellow&gt;Active Target and pet info in the bottom console.")
+  cecho("\n&lt;yellow&gt;")
+  cecho("\n&lt;yellow&gt;[&lt;cyan&gt;Possible works in Progress&lt;yellow&gt;]")
+  cecho("\n&lt;red&gt;  * &lt;yellow&gt;Active debuffs in the bottom console. (TODO)")
+  cecho("\n&lt;red&gt;  * &lt;yellow&gt;Clickable Exits (from Caelinus's github) (TODO)")
+  cecho("\n&lt;red&gt;  * &lt;yellow&gt;A Cortheus-proof bleu cheese filter! (Eh, it's a long shot)")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;======================================================================\n")
+end</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Help commands</name>
+        <script>function uiHelpCommands()
+  cecho("\n&lt;yellow&gt;======================================================================")
+  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Commands"))
+  cecho("\n&lt;yellow&gt;======================================================================")
+  echo("\n")
+  cecho("\n&lt;cyan&gt;uiclear &lt;top|right|chat&gt;&lt;yellow&gt; - Clears the entered console.")
+  cecho("\n&lt;cyan&gt;uilock &lt;all|left|top|right|bottom&gt;&lt;yellow&gt; - Locks the entered container.")
+  cecho("\n&lt;cyan&gt;uiunlock &lt;all|left|top|right|bottom&gt;&lt;yellow&gt; - Unlocks the entered container.")
+  cecho("\n&lt;cyan&gt;uisave&lt;yellow&gt; - Saves all adjustable container states (as 'custom1').")
+  cecho("\n&lt;cyan&gt;uiload&lt;yellow&gt; - Loads all adjustable container states (as 'custom1').")
+  cecho("\n&lt;cyan&gt;uireset&lt;yellow&gt; - Reset all UI containers to their default states.")
+  cecho("\n&lt;cyan&gt;uigetclasses&lt;yellow&gt; - Refreshes Class information variables.")
+  echo("\n")
+  cecho("\n&lt;cyan&gt;rtq&lt;yellow&gt; - After starting a quest, use this command to 'runto' this area.")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;======================================================================\n")
+end
+</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Help technical</name>
+        <script>function uiHelpTechnical()
+  cecho("\n&lt;yellow&gt;======================================================================")
+  cecho("\n&lt;green&gt;"..centerText("ErionMud UI Technical Notes"))
+  cecho("\n&lt;yellow&gt;======================================================================")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;ErionMud does not fully support MSDP or GMCP.")
+  cecho("\n&lt;yellow&gt;All data is processed using text triggers.")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;Nothing really here yet. Check the comments in the scripts for now.")
+  echo("\n")
+  cecho("\n&lt;yellow&gt;======================================================================\n")
+end
+
+
+-- Technical Notes
+
+--[[
+# Triggers
+
+## ScoreCaptures 
+
+CaptureActiveClass - captures the current character name and class
+CaptureClass - captures the primary and secondary classes
+CaptureSubclass - captures the primary and secondary subclasses
+CaptureActiveClassLevel - captures the active class level
+
+
+]]</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      
+    </ScriptGroup>
+    <ScriptGroup isActive="yes" isFolder="yes">
+        
+      <name>UI Themes</name>
+      <script/>
+        
+      <packageName/>
+      
+      <eventHandlerList>
+</eventHandlerList>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Themes</name>
+        <script>-- Themes
+-- If you want to add more themes, please following this process:
+-- - Create a new "Scripts/UI Themes/Theme..." script with your CSS.
+-- - Add your theme name and abbreviation to the comment list below.
+-- - Add your theme to the SetTheme() function below.
+
+--[[
+
+"Erion Green", "er"   - This is the default theme. It's based on the colors from the erionmud.com website.
+"Minimal Black", "mb" - This is close to the original minimal theme by Caelinus.
+
+]]
+
+ui = ui or {}
+
+function ShowThemes()
+  -- List available themes
+  uiCecho("&lt;cyan&gt;Available UI Themes\n")
+  uiCecho("&lt;green&gt;Erion Green    &lt;yellow&gt;[ &lt;cyan&gt;uitheme er &lt;yellow&gt;]\n")
+  uiCecho("&lt;green&gt;Minimal Black  &lt;yellow&gt;[ &lt;cyan&gt;uitheme mb &lt;yellow&gt;]\n")
+  echo("\n")
+end
+
+
+function SetTheme(theme)
+  -- Set the theme requested by "Aliases/Set UI Theme"
+  if theme == "er" then
+    ui.CurrentTheme = "er"
+    ui.CurrentThemeName = "Erion Green"
+    ui.SettingsDB["theme"] = ui.CurrentTheme
+    ui.SettingsDB["theme_name"] = ui.CurrentThemeName
+    SaveUISettings()
+    ThemeErionGreen()
+    InitUI()
+    send(" ")
+    uiCecho("Theme set to: &lt;green&gt;Erion Green")
+  elseif theme == "mb" then
+    ui.CurrentTheme = "mb"
+    ui.CurrentThemeName = "Minimal Black"
+    ui.SettingsDB["theme"] = ui.CurrentTheme
+    ui.SettingsDB["theme_name"] = ui.CurrentThemeName
+    SaveUISettings()
+    ThemeMinimalBlack()
+    InitUI()
+    send(" ")
+    uiCecho("Theme set to: &lt;green&gt;Minimal Black")
+  else
+    -- Back to the default
+    ui.CurrentTheme = "er"
+    ui.SettingsDB["theme"] = ui.CurrentTheme
+    --cecho("\n&lt;orange_red&gt;Theme not recognized.")
+    --ShowThemes()
+  end
+
+end</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Theme Erion Green</name>
+        <script>-- Erion Green Theme
+
+ui = ui or {}
+
+function ThemeErionGreen()
+  ui.BorderColor = "#9f8e3d"  -- Erion Gold
+  ui.BgColor = "#0c1510"      -- Erion Green
+  ui.BgColorRGB = {12,21,16}  -- Erion Green in RGB (unpack(table))
+  ui.LockStyle = "full"  -- Hides all borders. The container must be unlocked with a command.
+  ui.MainStyleSheet = [[
+      background: ]] .. ui.BgColor .. [[ ;
+      border: 3px solid ]] .. ui.BorderColor .. [[ ;
+      border-radius: 10px;
+    ]]
+end
+</script>
+          
+        <packageName/>
+        
+        <eventHandlerList>
+</eventHandlerList>
+        
+      </Script>
+      <Script isActive="yes" isFolder="no">
+          
+        <name>Theme Erion Minimal</name>
+        <script>-- Erion Minimal Black Theme
+
+ui = ui or {}
+
+function ThemeMinimalBlack()
+  ui.BorderColor = "black"
+  ui.BgColor = "black"
+  ui.BgColorRGB = {0,0,0}
+  ui.LockStyle = "full"  -- Hides all borders. The container must be unlocked with a command.
+  ui.MainStyleSheet = [[
+      background: ]] .. ui.BgColor .. [[ ;
+      border: 0px solid ]] .. ui.BorderColor .. [[ ;
+      border-radius: 10px;
+    ]]
+end
 </script>
           
         <packageName/>
@@ -1621,420 +2035,6 @@ registerAnonymousEventHandler("UI_Refresh", "UIRefresh")
       </Script>
       
     </ScriptGroup>
-    <ScriptGroup isActive="yes" isFolder="yes">
-        
-      <name>Functions</name>
-      <script>-- Utility Functions
-
--- Commas in large numbers
-function commaValue(n)
-  if n == nil then return "" end
-  if type(n) == "number" then
-    n = tostring(n)
-  elseif type(n) ~= "string" then
-    return tostring(n) -- handle booleans, tables, etc.
-  end
-
-  -- Try to match "digits with optional prefix/suffix"
-  local left, num, right = n:match("^([^%d]*%d)(%d*)(.-)$")
-  if not left then
-    return n -- if no digits, just return unchanged
-  end
-
-  return left .. (num:reverse():gsub("(%d%d%d)", "%1,"):reverse()) .. right
-end
-
-
-function commaValueOriginal(n)
-  -- credit http://richard.warburton.it
-  -- http://lua-users.org/wiki/FormattingNumbers
-  local left, num, right = string.match(n, '^([^%d]*%d)(%d*)(.-)$')
-  return left .. (num:reverse():gsub('(%d%d%d)', '%1,'):reverse()) .. right
-end
-
-
-function firstToUpper(str)
-    -- http://lua-users.org/wiki/StringRecipes
-  return (str:gsub("^%l", string.upper))
-end
-
-
--- Center a string of text based on a border length
-function centerText(text)
-  local border_length = 70
-  tlen = string.len(text)
-  leading_spaces = ((border_length/2) - (tlen/2))
-  t = string.rep(' ', leading_spaces)..text
-  return t
-end
-
-
---Rounding Function
-  function round(x, n)
-    n = math.pow(10, n or 0)
-    x = x * n
-    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
-    return x / n
-  end
-
--- Trim trailing whitespace
-function trim(s)
-  return s:gsub("%s+$", "")
-end
-
--- Safe value functions. Helps fight errors from blank or nil variables.
-function safe_string(s, default) return (s and s ~= "") and s or default end
-function safe_number(n, default) return tonumber(n) or default end
-function safe_div(numerator, denominator) return (denominator ~= 0) and (numerator/denominator) or 0 end</script>
-        
-      <packageName/>
-      
-      <eventHandlerList>
-</eventHandlerList>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Functions</name>
-        <script>-- Utility Functions
-
--- Commas in large numbers
-function commaValue(n)
-  if n == nil then return "" end
-  if type(n) == "number" then
-    n = tostring(n)
-  elseif type(n) ~= "string" then
-    return tostring(n) -- handle booleans, tables, etc.
-  end
-
-  -- Try to match "digits with optional prefix/suffix"
-  local left, num, right = n:match("^([^%d]*%d)(%d*)(.-)$")
-  if not left then
-    return n -- if no digits, just return unchanged
-  end
-
-  return left .. (num:reverse():gsub("(%d%d%d)", "%1,"):reverse()) .. right
-end
-
-
-function commaValueOriginal(n)
-  -- credit http://richard.warburton.it
-  -- http://lua-users.org/wiki/FormattingNumbers
-  local left, num, right = string.match(n, '^([^%d]*%d)(%d*)(.-)$')
-  return left .. (num:reverse():gsub('(%d%d%d)', '%1,'):reverse()) .. right
-end
-
-
-function firstToUpper(str)
-    -- http://lua-users.org/wiki/StringRecipes
-  return (str:gsub("^%l", string.upper))
-end
-
-
--- Center a string of text based on a border length
-function centerText(text)
-  local border_length = 70
-  tlen = string.len(text)
-  leading_spaces = ((border_length/2) - (tlen/2))
-  t = string.rep(' ', leading_spaces)..text
-  return t
-end
-
-
---Rounding Function
-  function round(x, n)
-    n = math.pow(10, n or 0)
-    x = x * n
-    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
-    return x / n
-  end
-
--- Trim trailing whitespace
-function trim(s)
-  return s:gsub("%s+$", "")
-end
-
--- Safe value functions. Helps fight errors from blank or nil variables.
-function safe_string(s, default) return (s and s ~= "") and s or default end
-function safe_number(n, default) return tonumber(n) or default end
-function safe_div(numerator, denominator) return (denominator ~= 0) and (numerator/denominator) or 0 end</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>UI functions</name>
-        <script>-- UI Functions
-
-ui = ui or {}
-
-ui.settingsFile = "/erionmud_ui_settings.db"
-
--- Create a simple table/DB for saving/loading persistent data.
-function SaveUISettings()
-  --local separator = string.char(getMudletHomeDir():byte()) == "/" and "/" or "\\"
-  --local filename = getMudletHomeDir()..separator.."erionmud_ui_settings.db"
-  local filename = getMudletHomeDir()..ui.settingsFile
-  if ui.SettingsDB then
-    table.save(filename, ui.SettingsDB)
-  else
-    tempTable = {}
-    table.save(filename, tempTable)
-  end
-end
-
-
-function LoadUISettings()
-  local file_exists = io.open(getMudletHomeDir()..ui.settingsFile) ~= nil
-  if file_exists == false then
-    SaveUISettings()
-  end
-  local filename = getMudletHomeDir()..ui.settingsFile
-  ui.SettingsDB = {}
-  table.load(filename, ui.SettingsDB)
-end
-
-
-function uiCecho(text)
-  -- Add the UI prefix "-=[UI]=-" to each echo
-  
-  -- This one is brighter
-  cecho("&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;UI&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;- &lt;yellow&gt;"..text.."&lt;reset&gt;")
-  
-  -- This one is dimmer and more mellow
-  --cecho("&lt;royal_blue&gt;-&lt;forest_green&gt;=&lt;ansi_yellow&gt;[&lt;steel_blue&gt;UI&lt;ansi_yellow&gt;]&lt;forest_green&gt;=&lt;royal_blue&gt;- &lt;reset&gt;"..text)
-end
-
-
--- Capture and delete a SCORE block silently
-function SilentScoreCapture()
-  if ui.scoreInProgress then
-    -- cecho("&lt;yellow&gt;[WARN] SCORE capture already running; ignored.\n")
-    return
-  end
-
-  ui.scoreInProgress = true
-  ui.scoreStartLine = nil
-
-  enableTrigger("ScoreCaptureStart")
-  send("score", false)
-
-  local footerPattern = [[^For more character information use aff, mults, sigil, worth, and whois\.$]]
-  local endID
-  endID = tempRegexTrigger(footerPattern, function()
-    local startLine = ui.scoreStartLine
-    local endLine = getLineNumber()
-
-    if not startLine or startLine &gt; endLine then
-      -- cecho("&lt;red&gt;[ERROR] SCORE start/end invalid; aborting cleanup.\n")
-    else
-      local block = getLines("main", startLine, endLine)
-
-      -- Parse stats
-      ParseScoreBuffer(block)
-
-      -- Delete captured lines from the main window
-      local n = endLine - startLine + 1
-      for _ = 1, n do
-        moveCursor("main", 1, startLine)
-        deleteLine()
-      end
-
-      -- cecho(f("&lt;green&gt;[DEBUG] SCORE block captured, parsed, and deleted ({n} lines).\n"))
-    end
-
-    if endID then killTrigger(endID) end
-    disableTrigger("ScoreCaptureStart")
-    ui.scoreStartLine  = nil
-    ui.scoreInProgress = false
-  end)
-
-  tempTimer(5, function()
-    if ui.scoreInProgress then
-      -- cecho("&lt;red&gt;[ERROR] SCORE footer not seen; cleaning up.\n")
-      if endID then killTrigger(endID) end
-      disableTrigger("ScoreCaptureStart")
-      ui.scoreStartLine  = nil
-      ui.scoreInProgress = false
-    end
-  end)
-end
-
-
--- Get/Set stat variables from the captured SCORE output
-function ParseScoreBuffer(block)
-  for _, line in ipairs(block) do
-    -- Player name + active class
-    local player, class = line:match("^%|%s+(%w+) the (%w+)%s+%|")
-    if player and class then
-      -- Player Name should have been captured on login.
-      if ui.PlayerName ~= player then
-        ui.PlayerName  = player
-      end
-      ui.ActiveClass = class
-    end
-
-    -- Alignment
-    local align = line:match("Align%s+:%s+(%w+)%s+%|$")
-    if align then
-      ui.alignment = align
-    end
-
-    -- Primary/Secondary class
-    local pclass, sclass = line:match("Cls%s+:%s+([%w%-]+)%s*,?%s*([%w%-]*)%s*%|$")
-    if pclass then
-      ui.PClass = pclass
-      ui.SecClass = (sclass ~= "" and sclass) or nil
-    end
-
-    -- Primary/Secondary subclass
-    local psub, ssub = line:match("Sub%s+:%s+([%w%-]+)%s*,?%s*([%w%-]*)%s*%|$")
-    if psub then
-      ui.PSubclass = psub
-      ui.SecSubclass = (ssub ~= "" and ssub) or nil
-    end
-
-    -- Active class level (Tnl / Level)
-    local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
-    if tnl and lvl then
-      ui.ActiveClassLevel = tonumber(lvl)
-      ui.Tnl = tonumber(tnl)
-    end
-  end
-end
-
-
-function GetClasses()
-  enableTrigger("ScoreCaptureStart")
-  --send("score", false)
-  SilentScoreCapture()
-end
-
-
--- Reapply the prompt colors for "pray gods"
-function setPrayGodsColors()
-  -- [&gt;pray gods&lt;]
-  local t = "&lt;ansi_cyan&gt;[&lt;cyan&gt;&gt;&lt;ghost_white&gt;pr&lt;ansi_white&gt;a&lt;dim_gray&gt;y g&lt;ansi_white&gt;o&lt;ghost_white&gt;ds&lt;cyan&gt;&lt;&lt;ansi_cyan&gt;]"
-  return t
-end</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      <Script isActive="yes" isFolder="no">
-          
-        <name>Pet HP</name>
-        <script>-- Re-Colorize Pet HP!
-
-ui = ui or {}
-
-function GetPetHP()
-  -- Create a table of pet HP
-  -- I'm sure there is a cleaner way to do this, but here it is...
-  
-  local t1 = {}
-  local t2 = {}
-  local php = ""
-  
-  
-  -- Clean up data
-  php = ui.PetsHP:gsub("[%%]", "")  -- Remove "%"
-  php = php:gsub("[%|]",":")  -- Replace "|" with ":" so it gets split properly
-  
-  -- Split at the ":"
-  for str in string.gmatch(php, "([^:]+)") do
-    table.insert(t1, str)
-  end
-  -- Returns { "1", "100", "2", "100", "3", "100", "4", "100" }
-  
-  -- Build a new table (max pet count is 10, so 20 entires)
-  if t1[1] then table.insert(t2, t1[2]) end
-  if t1[3] then table.insert(t2, t1[4]) end
-  if t1[5] then table.insert(t2, t1[6]) end
-  if t1[7] then table.insert(t2, t1[8]) end
-  if t1[9] then table.insert(t2, t1[10]) end
-  if t1[11] then table.insert(t2, t1[12]) end
-  if t1[13] then table.insert(t2, t1[14]) end
-  if t1[15] then table.insert(t2, t1[16]) end
-  if t1[17] then table.insert(t2, t1[18]) end
-  if t1[19] then table.insert(t2, t1[20]) end
-
-  -- Debug
-  -- for k, v in ipairs(t2) do
-   -- print(k..":"..v)
-  -- end
-  
-  return t2
-end
-
-
-function ColorizePetHP()
-  --[[
-  Add color to the pet HP table depending on value
-  100% = green
-  76%+ = dark_green
-  51%+ = yellow
-  26%+ = orange
-  0%+  = red
-  
-  or (using this right now)
-  &gt;= 66% green
-  &gt;= 33% yellow
-  &lt;= 32% red
-  ]]
-  
-  local petTab = GetPetHP()
-  local t = {}
-  local petStr = ""
-  local lowest = math.huge
-  
-  -- Get the lowest pet HP for the status bar.
-  for k, v in ipairs(petTab) do
-    if tonumber(v) &lt; lowest then
-      lowest = tonumber(v)
-    end
-  end
-  ui.lowestPetHP = lowest or 100
-  
-  -- Add cecho color tags to each value
-  for k, v in ipairs(petTab) do
-    v = tonumber(v)
-    -- if v == 100 then table.insert(t, "&lt;green&gt;"..v.."&lt;reset&gt;") end
-    -- if v &gt;= 76 and v &lt; 100 then table.insert(t, "&lt;dark_green&gt;"..v.."&lt;reset&gt;") end
-    -- if v &gt;= 51 and v &lt; 76 then table.insert(t, "&lt;yellow&gt;"..v.."&lt;reset&gt;") end
-    -- if v &gt;= 26 and v &lt; 51 then table.insert(t, "&lt;orange&gt;"..v.."&lt;reset&gt;") end
-    -- if v &gt;= 0 and v &lt; 26 then table.insert(t, "&lt;red&gt;"..v.."&lt;reset&gt;") end
-    if v &gt;= 66 then table.insert(t, "&lt;green&gt;"..v.."&lt;reset&gt;") end
-    if v &lt;= 66 and v &gt;= 33 then table.insert(t, "&lt;yellow&gt;"..v.."&lt;reset&gt;") end
-    if v &lt; 33 then table.insert(t, "&lt;red&gt;"..v.."&lt;reset&gt;") end
-  end
-  
-  -- Create a new cecho-compatible string
-  -- Format: 1:100%|2:100%|3:100%|4:100%
-  --petStr = "&lt;white&gt;"
-  for k, v in ipairs(t) do
-    petStr = petStr.."&lt;white&gt;"..k..":"..v.."&lt;white&gt;%|"
-  end
-  
-  --cecho(petStr)
-  return petStr
-
-end
-</script>
-          
-        <packageName/>
-        
-        <eventHandlerList>
-</eventHandlerList>
-        
-      </Script>
-      
-    </ScriptGroup>
     
   </ScriptPackage>
   <AliasPackage>
@@ -2248,48 +2248,6 @@ GetClasses()</script>
     </AliasGroup>
     <AliasGroup isActive="yes" isFolder="yes">
         
-      <name>Quests</name>
-      <script/>
-        
-      <command/>
-        
-      <packageName/>
-        
-      <regex/>
-      <Alias isActive="yes" isFolder="no">
-          
-        <name>Runto quest area</name>
-        <script>-- Alias: Rinto quest area
--- Pattern: ^rtq$
--- Description: Run to the selected area
-
-ui = ui or {}
-gp = gp or {}
-
-if ui.questArea then
-  
-  -- Optional from the ErionMud Game Pack
-  if gp.version then
-    expandAlias("cr off")
-    disableTrigger("Buffs")
-  end
-  
-  send("recall;;runto " .. ui.questArea)  -- Most runtos are faster from recall
-else
-  uiCecho("&lt;orange_red&gt;Quest Area not set!")
-end</script>
-          
-        <command/>
-          
-        <packageName/>
-          
-        <regex>^rtq$</regex>
-        
-      </Alias>
-      
-    </AliasGroup>
-    <AliasGroup isActive="yes" isFolder="yes">
-        
       <name>Help</name>
       <script/>
         
@@ -2360,6 +2318,48 @@ uiHelpTechnical()</script>
         <packageName/>
           
         <regex>^uihelp (t|tech|technical)$</regex>
+        
+      </Alias>
+      
+    </AliasGroup>
+    <AliasGroup isActive="yes" isFolder="yes">
+        
+      <name>Quests</name>
+      <script/>
+        
+      <command/>
+        
+      <packageName/>
+        
+      <regex/>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Runto quest area</name>
+        <script>-- Alias: Rinto quest area
+-- Pattern: ^rtq$
+-- Description: Run to the selected area
+
+ui = ui or {}
+gp = gp or {}
+
+if ui.questArea then
+  
+  -- Optional from the ErionMud Game Pack
+  if gp.version then
+    expandAlias("cr off")
+    disableTrigger("Buffs")
+  end
+  
+  send("recall;;runto " .. ui.questArea)  -- Most runtos are faster from recall
+else
+  uiCecho("&lt;orange_red&gt;Quest Area not set!")
+end</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^rtq$</regex>
         
       </Alias>
       
@@ -2532,7 +2532,7 @@ tempTimer(5, function() GetClasses() end)</script>
     </Trigger>
     <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
         
-      <name>Expeditions</name>
+      <name>ANSI Map Capture</name>
       <script/>
         
       <triggerType>0</triggerType>
@@ -2545,7 +2545,7 @@ tempTimer(5, function() GetClasses() end)</script>
         
       <packageName/>
         
-      <path>Expeditions/Exped Target Capture</path>
+      <path>ANSI Map Capture</path>
         
       <mFgColor>#ff0000</mFgColor>
         
@@ -2560,737 +2560,36 @@ tempTimer(5, function() GetClasses() end)</script>
 </regexCodeList>
       <regexCodePropertyList>
 </regexCodePropertyList>
-      <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Exped Target Capture</name>
-        <script/>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Expeditions/Exped Target Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-</regexCodeList>
-        <regexCodePropertyList>
-</regexCodePropertyList>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>1 Expedition targets start</name>
-          <script>-- Trigger: 1 Expedition targets start
--- Pattern (substring): -------------------[ Expedition Targets ]-------------------
--- Description: Start capturing expedition targets.
-
-ui = ui or {}
-
-ui.eTargets = {}
-ui.capturingExpedTargets = true
-ui.onExpedition = true
-
--- Optional stuff from the ErionMud GamePack
-if gp.version then
-  disableTrigger("Buffs")
-  expandAlias("cr off")
-end</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Expeditions/Exped Target Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>-------------------[ Expedition Targets ]-------------------</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>0</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>2 Expedition targets capture</name>
-          <script>-- Trigger: 2 Expedition targets capture
--- Pattern (regex): ^Find and (kill|spar with) (?&lt;target&gt;.*) in (?&lt;area&gt;.*)\.
--- Description: Capture all lines with the given prefix and write them to a table with color.
-
-ui = ui or {}
-
-if ui.capturingExpedTargets then
-  local t = ("&lt;green&gt;"..matches.target.." &lt;white&gt;in &lt;yellow&gt;"..matches.area)
-  table.insert(ui.eTargets, t)
-end</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Expeditions/Exped Target Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^Find and (kill|spar with) (?&lt;target&gt;.*) in (?&lt;area&gt;.*)\.</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>3 Expedition bonus timer</name>
-          <script>-- Trigger: 3 Expedition bonus timer
--- Pattern (regex): ^Finish the expedition in under (?&lt;min&gt;\d+) minutes and (?&lt;sec&gt;\d+) seconds for a bonus reward
--- Pattern (regex): ^Finish the expedition in under (?&lt;min&gt;\d+) minutes for a bonus reward
--- Description: Create an expedition bonus timer.
-
-ui = ui or {}
-
-ui.expedBonusTimerMin = matches.min
-ui.expedBonusTimerSec = matches.sec or 0
-ui.expedBonusTimerTotal = ((matches.min * 60) + matches.sec)
-ui.expedBonusTimer = tempTimer(ui.expedBonusTimerTotal, function() ui.expedBonusTimer = "0" end)</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Expeditions/Exped Target Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^Finish the expedition in under (?&lt;min&gt;\d+) minutes and (?&lt;sec&gt;\d+) seconds for a bonus reward</string>
-            
-            <string>^Finish the expedition in under (?&lt;min&gt;\d+) minutes for a bonus reward</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>4 Expedition targets end</name>
-          <script>-- Trigger: 4 Expedition targets end
--- Pattern (substring): ------------------------------------------------------------
--- Description: Write target and area to the top console in 2 rows.
-
-ui = ui or {}
-
-if ui.capturingExpedTargets then
-  ui.capturingExpedTargets = false
-  
-  -- Clear the header and footer if it was captured
-  if ui.eTargets == "-------------------[ Expedition Targets ]-------------------" then
-    table.remove(eTargets, 1)  -- Pop the first entry
-  end
-  if ui.eTargets == "------------------------------------------------------------" then
-    table.remove(eTargets, #eTargets)  -- Pop the last entry
-  end
-    
-  ui.TopContainerMC:clear()
-  ui.TopContainerMC:cecho("&lt;orange_red&gt;EXPEDITION!---------------------------------------------------------------------------\n")
-  
-  for i = 1, #ui.eTargets, 2 do
-    local first = ui.eTargets[i] or ""
-    local second = ui.eTargets[i + 1] or ""
-    ui.TopContainerMC:cecho(string.format("%-65s %s\n", first, second))  -- string.format adds spacing.
-  end
-end</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Expeditions/Exped Target Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>------------------------------------------------------------</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>0</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        
-      </TriggerGroup>
       <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
           
-        <name>Expedition progress</name>
-        <script>-- Trigger: Expedition progress
--- Pattern (regex): ^You have completed a part of your EXPEDITION
--- Pattern (regex): ^You have almost (?&lt;comp&gt;\w+) your EXPEDITION
--- Description: Updates the top console that all targets have been eliminated.
-
+        <name>Map Trigger (Border)</name>
+        <script>-- Trigger: Map Trigger (Border)
+-- Pattern (regex): (^\+-{9}\+\s{2})
 
 ui = ui or {}
 
-if matches.comp then
-  ui.TopContainerMC:clear()
-  ui.TopContainerMC:cecho("&lt;orange_red&gt;EXPEDITION!---------------------------------------------------------------------------\n")
-  ui.TopContainerMC:cecho("&lt;green&gt;Complete! Return to the Expedition Giver!\n")
+if CMap == 0 then
+  ui.AnsiMapMC:clear()
+  selectCaptureGroup(1)
+  setBgColor(unpack(ui.BgColorRGB))
+  copy()
+  ui.AnsiMapMC:appendBuffer()
+  replace()
+  
+  CMap = 1
 else
-  send("expedition info")
-end</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Expeditions</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^You have completed a part of your EXPEDITION</string>
-          
-          <string>^You have almost (?&lt;comp&gt;\w+) your EXPEDITION</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Expedition end</name>
-        <script>-- Trigger: Expedition end
--- Pattern (regex): ^You inform (.*) you have completed (\w+) expedition
--- Pattern (regex): ^You have failed your expedition
--- Description: Updates top console and kill timer when expedition is not active.
-
-ui = ui or {}
-
-ui.TopContainerMC:clear()
-killTimer(ui.expedBonusTimer)
-ui.expedBonusTimer = "0"
-
--- Optional stuff from the ErionMud GamePack
-if gp.version then
-  cecho("\n&lt;orange_red&gt;Buff trigger activated")
-  enableTrigger("Buffs")
-  expandAlias("cr on")
-end</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Expeditions</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^You inform (.*) you have completed (\w+) expedition</string>
-          
-          <string>^You have failed your expedition</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      
-    </TriggerGroup>
-    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-        
-      <name>Quests</name>
-      <script/>
-        
-      <triggerType>0</triggerType>
-        
-      <conditonLineDelta>0</conditonLineDelta>
-        
-      <mStayOpen>0</mStayOpen>
-        
-      <mCommand/>
-        
-      <packageName/>
-        
-      <path>Quests/Quest Objective Capture</path>
-        
-      <mFgColor>#ff0000</mFgColor>
-        
-      <mBgColor>#ffff00</mBgColor>
-        
-      <mSoundFile/>
-        
-      <colorTriggerFgColor>#000000</colorTriggerFgColor>
-        
-      <colorTriggerBgColor>#000000</colorTriggerBgColor>
-      <regexCodeList>
-</regexCodeList>
-      <regexCodePropertyList>
-</regexCodePropertyList>
-      <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Quest Objective Capture</name>
-        <script/>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Quests/Quest Objective Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-</regexCodeList>
-        <regexCodePropertyList>
-</regexCodePropertyList>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>1 Quest start</name>
-          <script>-- Trigger: 1 Quest start
--- Pattern (regex): ^You ask (.*) for a quest\.$
--- Description: Starting a quest
-
-ui = ui or {}
-ui.onQuest = true
-
--- Optional stuff from the ErionMud GamePack
-if gp.version then
-  disableTrigger("Buffs")
-  expandAlias("cr off")
+  selectCaptureGroup(1)
+  setBgColor(unpack(ui.BgColorRGB))
+  copy()
+  ui.AnsiMapMC:appendBuffer()
+  replace()
+  CMap = 2
 end
 
-send("quest info")  -- Inform the player and feed the triggers.
-</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Quests/Quest Objective Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^You ask (.*) for a quest\.$</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>2 Quest info capture</name>
-          <script>-- Trigger: 2 Quest info capture
--- Pattern: Various
--- Description: Capture quest details
--- Note: I struggled with the regex to capture areas with "of" in the name, so I just added them all. :)
-
-ui = ui or {}
-
-ui.questArea = matches.area
-ui.questRoom = matches.room
-ui.questTarget = matches.target
-
--- Write quest report to the top console
-ui.TopContainerMC:clear()
-ui.TopContainerMC:cecho("&lt;yellow&gt;QUEST!----------------------------------------")
-ui.TopContainerMC:cecho("\n&lt;orange_red&gt;  Target: &lt;green&gt;" .. ui.questTarget)
-ui.TopContainerMC:cecho("\n&lt;orange_red&gt;    Area: &lt;yellow&gt;" .. ui.questArea)
-ui.TopContainerMC:cecho("\n&lt;orange_red&gt;    Room: &lt;cyan&gt;" .. ui.questRoom)
-ui.TopContainerMC:cecho("\n&lt;yellow&gt;----------------------------------------------\n")
-
-echo("\n\n")
-uiCecho("&lt;yellow&gt;--------------------------------------------\n")
-uiCecho("&lt;orange_red&gt;Use: &lt;green&gt;rtq &lt;orange_red&gt;to runto &lt;yellow&gt;" .. matches.area .. "\n")
-uiCecho("&lt;yellow&gt;--------------------------------------------\n\n")
-
--- Optional: Add a highlight using the 'Highlighter' package
-if Highlighter then
-  expandAlias("hl item add quest#"..ui.questTarget)
-end</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Quests/Quest Objective Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;The Forest of Ancient Guardians)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Town of Bandell)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Tree of Pixies II)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;High Tower of Sorcery)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Jungle of Xyzzyxx)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Avenue of the Ancients Highway)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;City of Illyria)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Field of Dreams Highway)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Realms of Enchantment)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Land of the Lost Elves)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Isle of the Dead)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Chasm of Mayhem Highway)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Castle of Darkness)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;City of Tanaria)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Paths to Ancient Legends Highway)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Kextra\'s Legendary Land of Myth)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Jungle of Artemisia)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Tree of Pixies)\.$</string>
-            
-            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;.*)\.$</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>3 Quest bonus timer</name>
-          <script>-- Trigger: 3 Quest bonus timer
--- Pattern (regex): ^Finish the quest in under (?&lt;min&gt;\d+) (minutes|minute) and (?&lt;sec&gt;\d+) seconds for a bonus reward\.$
--- Description: Start a bonus timer.
-
-ui = ui or {}
-
-ui.questBonusTimerMin = matches.min
-ui.questBonusTimerSec = matches.sec or 0
-ui.questBonusTimerTotal = ((matches.min * 60) + matches.sec)
-
-
--- Creates a timer that is used by the UI.
-if (ui.questBonusTimer == "0") or (ui.questBonusTimer == nil) then
-  -- Don't create multiple timers
-  ui.questBonusTimer = tempTimer(ui.questBonusTimerTotal, function() ui.questBonusTimer = "0" end)
+if CMap == 2 then
+  CMap = 0
 end
 </script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Quests/Quest Objective Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^Finish the quest in under (?&lt;min&gt;\d+) (minutes|minute) and (?&lt;sec&gt;\d+) seconds for a bonus reward\.$</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-            
-          <name>4 Quest end</name>
-          <script>-- Trigger: 4 Quest end
--- Pattern (regex): ^You inform (.*) you have completed your quest\.$
--- Pattern (regex): ^You shamefully fail your quest
--- Description: Clear variables
-
-ui = ui or {}
-gp = gp or {}
-
--- Optional highlight from the Highlighter package
-if Highlighter then
-  expandAlias("hl item remove "..ui.questTarget)
-end
-
-ui.onQuest = false
-ui.questArea = nil
-ui.questRoom = nil
-ui.questTarget = nil
-
--- Kill the timer if needed
-killTimer(ui.questBonusTimer)
-ui.questBonusTimer = "0"
-
--- Reset some settings
-cecho("\n&lt;orange_red&gt;Quest variables cleared")
-
--- Optional stuff from the ErionMud GamePack
-if gp.version then
-  cecho("\n&lt;orange_red&gt;Buff trigger activated")
-  enableTrigger("Buffs")
-  -- expandAlias("cr on")
-end
-
-ui.TopContainerMC:clear()</script>
-            
-          <triggerType>0</triggerType>
-            
-          <conditonLineDelta>0</conditonLineDelta>
-            
-          <mStayOpen>0</mStayOpen>
-            
-          <mCommand/>
-            
-          <packageName/>
-            
-          <path>Quests/Quest Objective Capture</path>
-            
-          <mFgColor>#ff0000</mFgColor>
-            
-          <mBgColor>#ffff00</mBgColor>
-            
-          <mSoundFile/>
-            
-          <colorTriggerFgColor>#000000</colorTriggerFgColor>
-            
-          <colorTriggerBgColor>#000000</colorTriggerBgColor>
-          <regexCodeList>
-            
-            <string>^You inform (.*) you have completed your quest\.$</string>
-            
-            <string>^You shamefully fail your quest</string>
-          </regexCodeList>
-          <regexCodePropertyList>
-            
-            <integer>1</integer>
-            
-            <integer>1</integer>
-          </regexCodePropertyList>
-          
-        </Trigger>
-        
-      </TriggerGroup>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Fabled item</name>
-        <script>-- Trigger: Fabled item
--- Pattern (regex): ^\s+(.*)?\sfabled\s(\w+)(.*)
--- Description: Highlighter
-
-setBgColor(170,0,0)
-setFgColor(255,255,255)
-resetFormat()</script>
           
         <triggerType>0</triggerType>
           
@@ -3302,7 +2601,7 @@ resetFormat()</script>
           
         <packageName/>
           
-        <path>Quests</path>
+        <path>ANSI Map Capture</path>
           
         <mFgColor>#ff0000</mFgColor>
           
@@ -3315,7 +2614,7 @@ resetFormat()</script>
         <colorTriggerBgColor>#000000</colorTriggerBgColor>
         <regexCodeList>
           
-          <string>^\s+(.*)?\sfabled\s(\w+)(.*)</string>
+          <string>(^\+-{9}\+\s{2})</string>
         </regexCodeList>
         <regexCodePropertyList>
           
@@ -3325,76 +2624,17 @@ resetFormat()</script>
       </Trigger>
       <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
           
-        <name>Quest rewards</name>
-        <script>-- Trigger: Quest rewards
--- Pattern (regex): ^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\.\'$
--- Pattern (regex): ^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;qps&gt;\d+) questpoints and (?&lt;gold&gt;\d+) gold\.\'$
--- Description: Show rewards
-
-if matches.exp then
-  echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
-end
-
-if matches.qps then
-  echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
-end</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Quests</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\.\'$</string>
-          
-          <string>^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;qps&gt;\d+) questpoints and (?&lt;gold&gt;\d+) gold\.\'$</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Quest target complete</name>
-        <script>-- Trigger: Quest target complete
--- Pattern: Various
+        <name>Map Trigger (Map)</name>
+        <script>-- Trigger: Map Trigger (Map)
+-- Pattern (regex): (^\|.{9}\|\s{2})
 
 ui = ui or {}
 
-ui.TopContainerMC:clear()
-ui.TopContainerMC:cecho("&lt;yellow&gt;QUEST!----------------------------------------")
-ui.TopContainerMC:cecho("\n&lt;green&gt;Complete! Return to the Quest Giver!")
-
-setBgColor(0,0,127)
+selectCaptureGroup(1)
+setBgColor(unpack(ui.BgColorRGB))
+copy()
+ui.AnsiMapMC:appendBuffer()
+replace("")
 </script>
           
         <triggerType>0</triggerType>
@@ -3407,7 +2647,7 @@ setBgColor(0,0,127)
           
         <packageName/>
           
-        <path>Quests</path>
+        <path>ANSI Map Capture</path>
           
         <mFgColor>#ff0000</mFgColor>
           
@@ -3420,13 +2660,9 @@ setBgColor(0,0,127)
         <colorTriggerBgColor>#000000</colorTriggerBgColor>
         <regexCodeList>
           
-          <string>^You have almost completed your QUEST</string>
-          
-          <string>^You have found your quest item</string>
+          <string>(^\|.{9}\|\s{2})</string>
         </regexCodeList>
         <regexCodePropertyList>
-          
-          <integer>1</integer>
           
           <integer>1</integer>
         </regexCodePropertyList>
@@ -3434,12 +2670,12 @@ setBgColor(0,0,127)
       </Trigger>
       <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
           
-        <name>Quest bonus remaining</name>
-        <script>-- Trigger: Quest bonus remaining
--- Pattern (regex): ^You still have (.*) to get the reward bonus
+        <name>Map Cleaner</name>
+        <script>-- Trigger: Map Cleaner
+-- Pattern (regex): (^ {13})
 
-selectCurrentLine()
-setBgColor(0,0,170)</script>
+selectCaptureGroup(1)
+replace("")</script>
           
         <triggerType>0</triggerType>
           
@@ -3451,7 +2687,7 @@ setBgColor(0,0,170)</script>
           
         <packageName/>
           
-        <path>Quests</path>
+        <path>ANSI Map Capture</path>
           
         <mFgColor>#ff0000</mFgColor>
           
@@ -3464,7 +2700,48 @@ setBgColor(0,0,170)</script>
         <colorTriggerBgColor>#000000</colorTriggerBgColor>
         <regexCodeList>
           
-          <string>^You still have (.*) to get the reward bonus</string>
+          <string>(^ {13})</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Map Spacer</name>
+        <script>-- Trigger: Map Spacer
+-- Pattern (regex): (\(Id .+[^)]\))
+
+echo("\n  ")
+selectCaptureGroup(1)
+replace("")</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>ANSI Map Capture</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>(\(Id .+[^)]\))</string>
         </regexCodeList>
         <regexCodePropertyList>
           
@@ -4317,8 +3594,774 @@ end
     </TriggerGroup>
     <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
         
-      <name>Mud events</name>
+      <name>Expeditions</name>
       <script/>
+        
+      <triggerType>0</triggerType>
+        
+      <conditonLineDelta>0</conditonLineDelta>
+        
+      <mStayOpen>0</mStayOpen>
+        
+      <mCommand/>
+        
+      <packageName/>
+        
+      <path>Expeditions\Exped Target Capture</path>
+        
+      <mFgColor>#ff0000</mFgColor>
+        
+      <mBgColor>#ffff00</mBgColor>
+        
+      <mSoundFile/>
+        
+      <colorTriggerFgColor>#000000</colorTriggerFgColor>
+        
+      <colorTriggerBgColor>#000000</colorTriggerBgColor>
+      <regexCodeList>
+</regexCodeList>
+      <regexCodePropertyList>
+</regexCodePropertyList>
+      <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Exped Target Capture</name>
+        <script/>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Expeditions\Exped Target Capture</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+</regexCodeList>
+        <regexCodePropertyList>
+</regexCodePropertyList>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>1 Expedition targets start</name>
+          <script>-- Trigger: 1 Expedition targets start
+-- Pattern (substring): -------------------[ Expedition Targets ]-------------------
+-- Description: Start capturing expedition targets.
+
+ui = ui or {}
+
+ui.eTargets = {}
+ui.capturingExpedTargets = true
+ui.onExpedition = true
+
+-- Optional stuff from the ErionMud GamePack
+if gp.version then
+  disableTrigger("Buffs")
+  expandAlias("cr off")
+end</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Expeditions\Exped Target Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>-------------------[ Expedition Targets ]-------------------</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>0</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>2 Expedition targets capture</name>
+          <script>-- Trigger: 2 Expedition targets capture
+-- Pattern (regex): ^Find and (kill|spar with) (?&lt;target&gt;.*) in (?&lt;area&gt;.*)\.
+-- Description: Capture all lines with the given prefix and write them to a table with color.
+
+ui = ui or {}
+
+if ui.capturingExpedTargets then
+  local t = ("&lt;green&gt;"..matches.target.." &lt;white&gt;in &lt;yellow&gt;"..matches.area)
+  table.insert(ui.eTargets, t)
+end</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Expeditions\Exped Target Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^Find and (kill|spar with) (?&lt;target&gt;.*) in (?&lt;area&gt;.*)\.</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>3 Expedition bonus timer</name>
+          <script>-- Trigger: 3 Expedition bonus timer
+-- Pattern (regex): ^Finish the expedition in under (?&lt;min&gt;\d+) minutes and (?&lt;sec&gt;\d+) seconds for a bonus reward
+-- Pattern (regex): ^Finish the expedition in under (?&lt;min&gt;\d+) minutes for a bonus reward
+-- Description: Create an expedition bonus timer.
+
+ui = ui or {}
+
+ui.expedBonusTimerMin = matches.min
+ui.expedBonusTimerSec = matches.sec or 0
+ui.expedBonusTimerTotal = ((matches.min * 60) + matches.sec)
+ui.expedBonusTimer = tempTimer(ui.expedBonusTimerTotal, function() ui.expedBonusTimer = "0" end)</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Expeditions\Exped Target Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^Finish the expedition in under (?&lt;min&gt;\d+) minutes and (?&lt;sec&gt;\d+) seconds for a bonus reward</string>
+            
+            <string>^Finish the expedition in under (?&lt;min&gt;\d+) minutes for a bonus reward</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>4 Expedition targets end</name>
+          <script>-- Trigger: 4 Expedition targets end
+-- Pattern (substring): ------------------------------------------------------------
+-- Description: Write target and area to the top console in 2 rows.
+
+ui = ui or {}
+
+if ui.capturingExpedTargets then
+  ui.capturingExpedTargets = false
+  
+  -- Clear the header and footer if it was captured
+  if ui.eTargets == "-------------------[ Expedition Targets ]-------------------" then
+    table.remove(eTargets, 1)  -- Pop the first entry
+  end
+  if ui.eTargets == "------------------------------------------------------------" then
+    table.remove(eTargets, #eTargets)  -- Pop the last entry
+  end
+    
+  ui.TopContainerMC:clear()
+  ui.TopContainerMC:cecho("&lt;orange_red&gt;EXPEDITION!---------------------------------------------------------------------------\n")
+  
+  for i = 1, #ui.eTargets, 2 do
+    local first = ui.eTargets[i] or ""
+    local second = ui.eTargets[i + 1] or ""
+    ui.TopContainerMC:cecho(string.format("%-65s %s\n", first, second))  -- string.format adds spacing.
+  end
+end</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Expeditions\Exped Target Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>------------------------------------------------------------</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>0</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        
+      </TriggerGroup>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Expedition progress</name>
+        <script>-- Trigger: Expedition progress
+-- Pattern (regex): ^You have completed a part of your EXPEDITION
+-- Pattern (regex): ^You have almost (?&lt;comp&gt;\w+) your EXPEDITION
+-- Description: Updates the top console that all targets have been eliminated.
+
+
+ui = ui or {}
+
+if matches.comp then
+  ui.TopContainerMC:clear()
+  ui.TopContainerMC:cecho("&lt;orange_red&gt;EXPEDITION!---------------------------------------------------------------------------\n")
+  ui.TopContainerMC:cecho("&lt;green&gt;Complete! Return to the Expedition Giver!\n")
+else
+  send("expedition info")
+end</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Expeditions</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You have completed a part of your EXPEDITION</string>
+          
+          <string>^You have almost (?&lt;comp&gt;\w+) your EXPEDITION</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Expedition end</name>
+        <script>-- Trigger: Expedition end
+-- Pattern (regex): ^You inform (.*) you have completed (\w+) expedition
+-- Pattern (regex): ^You have failed your expedition
+-- Description: Updates top console and kill timer when expedition is not active.
+
+ui = ui or {}
+
+ui.TopContainerMC:clear()
+killTimer(ui.expedBonusTimer)
+ui.expedBonusTimer = "0"
+
+-- Optional stuff from the ErionMud GamePack
+if gp.version then
+  cecho("\n&lt;orange_red&gt;Buff trigger activated")
+  enableTrigger("Buffs")
+  expandAlias("cr on")
+end</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Expeditions</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You inform (.*) you have completed (\w+) expedition</string>
+          
+          <string>^You have failed your expedition</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      
+    </TriggerGroup>
+    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+        
+      <name>Junkyards</name>
+      <script/>
+        
+      <triggerType>0</triggerType>
+        
+      <conditonLineDelta>0</conditonLineDelta>
+        
+      <mStayOpen>0</mStayOpen>
+        
+      <mCommand/>
+        
+      <packageName/>
+        
+      <path>Junkyards</path>
+        
+      <mFgColor>#ff0000</mFgColor>
+        
+      <mBgColor>#ffff00</mBgColor>
+        
+      <mSoundFile/>
+        
+      <colorTriggerFgColor>#000000</colorTriggerFgColor>
+        
+      <colorTriggerBgColor>#000000</colorTriggerBgColor>
+      <regexCodeList>
+</regexCodeList>
+      <regexCodePropertyList>
+</regexCodePropertyList>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>1 Junkyard objects start</name>
+        <script>-- Trigger: 1 Junkyard objects start
+-- Pattern (regex): ^You ask The Giver for a junkyard quest
+-- Pattern (regex): ^You have (\d+) minutes left to gather\:
+-- Pattern (regex): ^You have (\d+) minutes and (\d+) seconds left to gather\:
+-- Pattern (regex): ^You have (\d+) hour (\d+) minutes and (\d+) seconds left to gather\:
+
+ui = ui or {}
+
+ui.junkyardObjects = {}
+ui.capturingJunkyardObjects = true
+ui.onJunkyard = true
+enableTrigger("2 Junkyard object capture")
+
+-- Use a timer to disable the capture since we do not have an ending string.
+tempTimer(2, function() 
+  disableTrigger("2 Junkyard object capture")
+  ui.capturingJunkyardObjects = false
+  
+  -- Display the objects in the top console
+  ui.TopContainerMC:clear()
+  ui.TopContainerMC:cecho("&lt;orange_red&gt;JUNKYARD!---------------------------------------------------------------------------\n")
+  
+  for i = 1, #ui.junkyardObjects, 1 do
+    -- local first = ui.junkyardObjects[i] or ""
+    -- local second = ui.junkyardObjects[i + 1] or ""
+    -- ui.TopContainerMC:cecho(string.format("%-65s %s\n", first, second))  -- string.format adds spacing.
+    ui.TopContainerMC:cecho(ui.junkyardObjects[i].."\n")
+  end
+end)
+</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Junkyards</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You ask The Giver for a junkyard quest</string>
+          
+          <string>^You have (\d+) minutes left to gather\:</string>
+          
+          <string>^You have (\d+) minutes and (\d+) seconds left to gather\:</string>
+          
+          <string>^You have (\d+) hour (\d+) minutes and (\d+) seconds left to gather\:</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>2 Junkyard object capture</name>
+        <script>-- Trigger: 2 Junkyard object capture
+-- Pattern (regex): \[\s*(?&lt;num&gt;\d+)\]\s+(?&lt;item&gt;.+?)\s+in\s+(?&lt;room&gt;.*?)\s+in\s+(?&lt;area&gt;.*)
+-- Description: Capture all junkyard targets
+
+ui = ui or {}
+
+local num = matches.num
+local item = matches.item
+local room = matches.room
+local area = matches.area
+
+if ui.capturingJunkyardObjects then
+  if string.find(area, "here") then
+    area = string.sub(area, 1, -7)
+    area = area.."&lt;red&gt;(here)"
+  end
+  local t = "&lt;white&gt;"..num..": &lt;green&gt;"..item.."&lt;gray&gt; in &lt;yellow&gt;"..room.."&lt;gray&gt; in &lt;cyan&gt;"..area
+  table.insert(ui.junkyardObjects, t)
+end
+</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Junkyards</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>\[\s*(?&lt;num&gt;\d+)\]\s+(?&lt;item&gt;.+?)\s+in\s+(?&lt;room&gt;.*?)\s+in\s+(?&lt;area&gt;.*)</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Junkyard progress</name>
+        <script>-- Trigger: Junkyard progress
+-- Pattern (regex): ^You have (?&lt;almost&gt;\w+) completed your JUNKYARD
+-- Pattern (regex): ^You add another piece of (?&lt;trash&gt;\w+) to your junkyard box
+
+ui = ui or {}
+
+if matches.trash then
+  send("junkyard info")
+end
+
+if matches.almost then
+  ui.TopContainerMC:cecho("&lt;orange_red&gt;JUNKYARD!---------------------------------------------------------------------------\n")
+  ui.TopContainerMC:cecho("&lt;green&gt;Complete! Return to the Expedition Giver!\n")
+end</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Junkyards</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You have (?&lt;almost&gt;\w+) completed your JUNKYARD</string>
+          
+          <string>^You add another piece of (?&lt;trash&gt;\w+) to your junkyard box</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Junkyard end</name>
+        <script>-- Trigger: Junkyard end
+-- Pattern (regex): ^You inform The Giver you have finished eliminating hazardous remnants from the world
+-- Pattern (regex): ^You have failed your junkyard quest
+
+ui = ui or {}
+
+ui.TopContainerMC:clear()
+ui.onJunkyard = false</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Junkyards</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You inform The Giver you have finished eliminating hazardous remnants from the world</string>
+          
+          <string>^You have failed your junkyard quest</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Junkyard rewards</name>
+        <script>-- Trigger: Junkyard rewards
+-- Pattern (regex): ^(.*) says to you\, \'Your reward is (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\!\'$
+
+ui = ui or {}
+
+if matches.exp then
+  echo("\n\n")
+  uiCecho("&lt;gold&gt;**************\n")
+  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))).."\n")
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
+  uiCecho("&lt;gold&gt;**************\n\n")
+end
+
+if matches.qps then
+  echo("\n\n")
+  uiCecho("&lt;gold&gt;**************\n")
+  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))).."\n")
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
+  uiCecho("&lt;gold&gt;**************\n\n")
+end</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Junkyards</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^(.*) says to you\, \'Your reward is (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\!\'$</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      
+    </TriggerGroup>
+    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+        
+      <name>Mud events</name>
+      <script>-- Trigger: Mud Events
+-- Pattern: Various
+-- Description: Capture MUD events and send them in the top and right containers
+
+--[[
+Example: &lt;[mudevent]&gt; Experience gains from 2000 Monster Deaths will end in 2 minutes!
+&lt;&lt;&lt; &lt;PLAYER&gt; has killed the 2000th monster! 2x EXP +30 Minutes! &gt;&gt;&gt;
+For the next 30 minutes, experience is quadrupled
+
+]]
+
+ui = ui or {}
+
+-- Try to figure out how much of an EXP boost we're getting
+local expGain2kStarted = "2000th monster"
+local expGain2k = "Experience gains from 2000 Monster Deaths will end"
+local expGain2kEnded = "Experience gains from 2000 Monster Deaths have ended"
+local expGain4k = "quadrupled"
+
+-- 2X EXP events
+if string.find(matches.event, expGain2k) or 
+  string.find(matches.event, expGain2kStarted) then
+  ui.Exp2k = true
+end
+if string.find(matches.event, expGain2kEnded) then
+  ui.Exp2k = false
+  tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
+end
+
+-- 4X EXP events
+if string.find(matches.event, expGain4k) then
+  ui.Exp4k = true
+else
+  ui.Exp4k = false
+  tempTimer(60, [[ ui.TopContainerMCTop:clear() ]])
+end
+
+
+selectCurrentLine()
+setBgColor(unpack(ui.BgColorRGB))
+copy()
+ui.TopContainerMCTop:clear()
+ui.TopContainerMCTop:appendBuffer()
+deleteLine() --Remove Captured Line (Comment out to disable)
+cecho("\n&lt;black:dark_goldenrod&gt;&lt;b&gt;"..matches[1].."&lt;/b&gt;\n\n")
+
+-- Clear the line from the top container after some time
+--tempTimer(10, function() ui.TopContainerMC:clear() end)
+
+moveCursorEnd("MainBuffer")
+selectCurrentLine("MainBuffer")
+deleteLine("MainBuffer")
+
+moveCursorUp(2)
+--selectCurrentLine()
+
+for i = 1, 3, 1 do
+  if getCurrentLine() == "" then
+    --debugc("Deleted: "..getCurrentLine())
+    deleteLine()
+  end
+  moveCursorDown()
+  selectCurrentLine()
+end
+
+
+appendBuffer("ui.ChatMC")
+appendBuffer("ChatBuffer")</script>
         
       <triggerType>0</triggerType>
         
@@ -4667,6 +4710,570 @@ UpdateStatus()</script>
     </TriggerGroup>
     <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
         
+      <name>Quests</name>
+      <script/>
+        
+      <triggerType>0</triggerType>
+        
+      <conditonLineDelta>0</conditonLineDelta>
+        
+      <mStayOpen>0</mStayOpen>
+        
+      <mCommand/>
+        
+      <packageName/>
+        
+      <path>Quests\Quest Objective Capture</path>
+        
+      <mFgColor>#ff0000</mFgColor>
+        
+      <mBgColor>#ffff00</mBgColor>
+        
+      <mSoundFile/>
+        
+      <colorTriggerFgColor>#000000</colorTriggerFgColor>
+        
+      <colorTriggerBgColor>#000000</colorTriggerBgColor>
+      <regexCodeList>
+</regexCodeList>
+      <regexCodePropertyList>
+</regexCodePropertyList>
+      <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Quest Objective Capture</name>
+        <script/>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Quests\Quest Objective Capture</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+</regexCodeList>
+        <regexCodePropertyList>
+</regexCodePropertyList>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>1 Quest start</name>
+          <script>-- Trigger: 1 Quest start
+-- Pattern (regex): ^You ask (.*) for a quest\.$
+-- Description: Starting a quest
+
+ui = ui or {}
+ui.onQuest = true
+
+-- Optional stuff from the ErionMud GamePack
+if gp.version then
+  disableTrigger("Buffs")
+  expandAlias("cr off")
+end
+
+send("quest info")  -- Inform the player and feed the triggers.
+</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Quests\Quest Objective Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^You ask (.*) for a quest\.$</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>2 Quest info capture</name>
+          <script>-- Trigger: 2 Quest info capture
+-- Pattern: Various
+-- Description: Capture quest details
+-- Note: I struggled with the regex to capture areas with "of" in the name, so I just added them all. :)
+
+ui = ui or {}
+
+ui.questArea = matches.area
+ui.questRoom = matches.room
+ui.questTarget = matches.target
+
+-- Write quest report to the top console
+ui.TopContainerMC:clear()
+ui.TopContainerMC:cecho("&lt;yellow&gt;QUEST!----------------------------------------")
+ui.TopContainerMC:cecho("\n&lt;orange_red&gt;  Target: &lt;green&gt;" .. ui.questTarget)
+ui.TopContainerMC:cecho("\n&lt;orange_red&gt;    Area: &lt;yellow&gt;" .. ui.questArea)
+ui.TopContainerMC:cecho("\n&lt;orange_red&gt;    Room: &lt;cyan&gt;" .. ui.questRoom)
+ui.TopContainerMC:cecho("\n&lt;yellow&gt;----------------------------------------------\n")
+
+echo("\n\n")
+uiCecho("&lt;yellow&gt;--------------------------------------------\n")
+uiCecho("&lt;orange_red&gt;Use: &lt;green&gt;rtq &lt;orange_red&gt;to runto &lt;yellow&gt;" .. matches.area .. "\n")
+uiCecho("&lt;yellow&gt;--------------------------------------------\n\n")
+
+-- Optional: Add a highlight using the 'Highlighter' package
+if Highlighter then
+  expandAlias("hl item add quest#"..ui.questTarget)
+end</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Quests\Quest Objective Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;The Forest of Ancient Guardians)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Town of Bandell)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Tree of Pixies II)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;High Tower of Sorcery)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Jungle of Xyzzyxx)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Avenue of the Ancients Highway)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;City of Illyria)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Field of Dreams Highway)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Realms of Enchantment)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Land of the Lost Elves)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Isle of the Dead)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Chasm of Mayhem Highway)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Castle of Darkness)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;City of Tanaria)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Paths to Ancient Legends Highway)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Kextra\'s Legendary Land of Myth)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Jungle of Artemisia)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;Tree of Pixies)\.$</string>
+            
+            <string>^You are on a quest to (slay|recover|spar with) (?&lt;target&gt;.*) in (the vicinity of )?(?&lt;room&gt;.*) of (?&lt;area&gt;.*)\.$</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>3 Quest bonus timer</name>
+          <script>-- Trigger: 3 Quest bonus timer
+-- Pattern (regex): ^Finish the quest in under (?&lt;min&gt;\d+) (minutes|minute) and (?&lt;sec&gt;\d+) seconds for a bonus reward\.$
+-- Description: Start a bonus timer.
+
+ui = ui or {}
+
+ui.questBonusTimerMin = matches.min
+ui.questBonusTimerSec = matches.sec or 0
+ui.questBonusTimerTotal = ((matches.min * 60) + matches.sec)
+
+
+-- Creates a timer that is used by the UI.
+if (ui.questBonusTimer == "0") or (ui.questBonusTimer == nil) then
+  -- Don't create multiple timers
+  ui.questBonusTimer = tempTimer(ui.questBonusTimerTotal, function() ui.questBonusTimer = "0" end)
+end
+</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Quests\Quest Objective Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^Finish the quest in under (?&lt;min&gt;\d+) (minutes|minute) and (?&lt;sec&gt;\d+) seconds for a bonus reward\.$</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+            
+          <name>4 Quest end</name>
+          <script>-- Trigger: 4 Quest end
+-- Pattern (regex): ^You inform (.*) you have completed your quest\.$
+-- Pattern (regex): ^You shamefully fail your quest
+-- Description: Clear variables
+
+ui = ui or {}
+gp = gp or {}
+
+-- Optional highlight from the Highlighter package
+if Highlighter then
+  expandAlias("hl item remove "..ui.questTarget)
+end
+
+ui.onQuest = false
+ui.questArea = nil
+ui.questRoom = nil
+ui.questTarget = nil
+
+-- Kill the timer if needed
+killTimer(ui.questBonusTimer)
+ui.questBonusTimer = "0"
+
+-- Reset some settings
+cecho("\n&lt;orange_red&gt;Quest variables cleared")
+
+-- Optional stuff from the ErionMud GamePack
+if gp.version then
+  cecho("\n&lt;orange_red&gt;Buff trigger activated")
+  enableTrigger("Buffs")
+  -- expandAlias("cr on")
+end
+
+ui.TopContainerMC:clear()</script>
+            
+          <triggerType>0</triggerType>
+            
+          <conditonLineDelta>0</conditonLineDelta>
+            
+          <mStayOpen>0</mStayOpen>
+            
+          <mCommand/>
+            
+          <packageName/>
+            
+          <path>Quests\Quest Objective Capture</path>
+            
+          <mFgColor>#ff0000</mFgColor>
+            
+          <mBgColor>#ffff00</mBgColor>
+            
+          <mSoundFile/>
+            
+          <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            
+          <colorTriggerBgColor>#000000</colorTriggerBgColor>
+          <regexCodeList>
+            
+            <string>^You inform (.*) you have completed your quest\.$</string>
+            
+            <string>^You shamefully fail your quest</string>
+          </regexCodeList>
+          <regexCodePropertyList>
+            
+            <integer>1</integer>
+            
+            <integer>1</integer>
+          </regexCodePropertyList>
+          
+        </Trigger>
+        
+      </TriggerGroup>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Fabled item</name>
+        <script>-- Trigger: Fabled item
+-- Pattern (regex): ^\s+(.*)?\sfabled\s(\w+)(.*)
+-- Description: Highlighter
+
+setBgColor(170,0,0)
+setFgColor(255,255,255)
+resetFormat()</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Quests</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^\s+(.*)?\sfabled\s(\w+)(.*)</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Quest rewards</name>
+        <script>-- Trigger: Quest rewards
+-- Pattern (regex): ^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\.\'$
+-- Pattern (regex): ^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;qps&gt;\d+) questpoints and (?&lt;gold&gt;\d+) gold\.\'$
+-- Description: Show rewards
+
+if matches.exp then
+  echo("\n\n")
+  uiCecho("&lt;gold&gt;**************\n")
+  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))).."\n")
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
+  uiCecho("&lt;gold&gt;**************\n\n")
+end
+
+if matches.qps then
+  echo("\n\n")
+  uiCecho("&lt;gold&gt;**************\n")
+  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))).."\n")
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
+  uiCecho("&lt;gold&gt;**************\n\n")
+end</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Quests</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\.\'$</string>
+          
+          <string>^(?&lt;text&gt;.*) As a reward\, I am giving you (?&lt;qps&gt;\d+) questpoints and (?&lt;gold&gt;\d+) gold\.\'$</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Quest target complete</name>
+        <script>-- Trigger: Quest target complete
+-- Pattern: Various
+
+ui = ui or {}
+
+ui.TopContainerMC:clear()
+ui.TopContainerMC:cecho("&lt;yellow&gt;QUEST!----------------------------------------")
+ui.TopContainerMC:cecho("\n&lt;green&gt;Complete! Return to the Quest Giver!")
+
+setBgColor(0,0,127)
+</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Quests</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You have almost completed your QUEST</string>
+          
+          <string>^You have found your quest item</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+          
+        <name>Quest bonus remaining</name>
+        <script>-- Trigger: Quest bonus remaining
+-- Pattern (regex): ^You still have (.*) to get the reward bonus
+
+selectCurrentLine()
+setBgColor(0,0,170)</script>
+          
+        <triggerType>0</triggerType>
+          
+        <conditonLineDelta>0</conditonLineDelta>
+          
+        <mStayOpen>0</mStayOpen>
+          
+        <mCommand/>
+          
+        <packageName/>
+          
+        <path>Quests</path>
+          
+        <mFgColor>#ff0000</mFgColor>
+          
+        <mBgColor>#ffff00</mBgColor>
+          
+        <mSoundFile/>
+          
+        <colorTriggerFgColor>#000000</colorTriggerFgColor>
+          
+        <colorTriggerBgColor>#000000</colorTriggerBgColor>
+        <regexCodeList>
+          
+          <string>^You still have (.*) to get the reward bonus</string>
+        </regexCodeList>
+        <regexCodePropertyList>
+          
+          <integer>1</integer>
+        </regexCodePropertyList>
+        
+      </Trigger>
+      
+    </TriggerGroup>
+    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
+        
       <name>Weather and Time</name>
       <script/>
         
@@ -4825,546 +5432,6 @@ setBgColor(0,25,0)</script>
         <regexCodeList>
           
           <string>^The new day has begun</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      
-    </TriggerGroup>
-    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-        
-      <name>ANSI Map Capture</name>
-      <script/>
-        
-      <triggerType>0</triggerType>
-        
-      <conditonLineDelta>0</conditonLineDelta>
-        
-      <mStayOpen>0</mStayOpen>
-        
-      <mCommand/>
-        
-      <packageName/>
-        
-      <path>ANSI Map Capture</path>
-        
-      <mFgColor>#ff0000</mFgColor>
-        
-      <mBgColor>#ffff00</mBgColor>
-        
-      <mSoundFile/>
-        
-      <colorTriggerFgColor>#000000</colorTriggerFgColor>
-        
-      <colorTriggerBgColor>#000000</colorTriggerBgColor>
-      <regexCodeList>
-</regexCodeList>
-      <regexCodePropertyList>
-</regexCodePropertyList>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Map Trigger (Border)</name>
-        <script>-- Trigger: Map Trigger (Border)
--- Pattern (regex): (^\+-{9}\+\s{2})
-
-ui = ui or {}
-
-if CMap == 0 then
-  ui.AnsiMapMC:clear()
-  selectCaptureGroup(1)
-  setBgColor(unpack(ui.BgColorRGB))
-  copy()
-  ui.AnsiMapMC:appendBuffer()
-  replace()
-  
-  CMap = 1
-else
-  selectCaptureGroup(1)
-  setBgColor(unpack(ui.BgColorRGB))
-  copy()
-  ui.AnsiMapMC:appendBuffer()
-  replace()
-  CMap = 2
-end
-
-if CMap == 2 then
-  CMap = 0
-end
-</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>ANSI Map Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>(^\+-{9}\+\s{2})</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Map Trigger (Map)</name>
-        <script>-- Trigger: Map Trigger (Map)
--- Pattern (regex): (^\|.{9}\|\s{2})
-
-ui = ui or {}
-
-selectCaptureGroup(1)
-setBgColor(unpack(ui.BgColorRGB))
-copy()
-ui.AnsiMapMC:appendBuffer()
-replace("")
-</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>ANSI Map Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>(^\|.{9}\|\s{2})</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Map Cleaner</name>
-        <script>-- Trigger: Map Cleaner
--- Pattern (regex): (^ {13})
-
-selectCaptureGroup(1)
-replace("")</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>ANSI Map Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>(^ {13})</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Map Spacer</name>
-        <script>-- Trigger: Map Spacer
--- Pattern (regex): (\(Id .+[^)]\))
-
-echo("\n  ")
-selectCaptureGroup(1)
-replace("")</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>ANSI Map Capture</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>(\(Id .+[^)]\))</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      
-    </TriggerGroup>
-    <TriggerGroup isActive="yes" isFolder="yes" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-        
-      <name>Junkyards</name>
-      <script/>
-        
-      <triggerType>0</triggerType>
-        
-      <conditonLineDelta>0</conditonLineDelta>
-        
-      <mStayOpen>0</mStayOpen>
-        
-      <mCommand/>
-        
-      <packageName/>
-        
-      <path>Junkyards</path>
-        
-      <mFgColor>#ff0000</mFgColor>
-        
-      <mBgColor>#ffff00</mBgColor>
-        
-      <mSoundFile/>
-        
-      <colorTriggerFgColor>#000000</colorTriggerFgColor>
-        
-      <colorTriggerBgColor>#000000</colorTriggerBgColor>
-      <regexCodeList>
-</regexCodeList>
-      <regexCodePropertyList>
-</regexCodePropertyList>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>1 Junkyard objects start</name>
-        <script>-- Trigger: 1 Junkyard objects start
--- Pattern (regex): ^You ask The Giver for a junkyard quest
--- Pattern (regex): ^You have (\d+) minutes left to gather\:
--- Pattern (regex): ^You have (\d+) minutes and (\d+) seconds left to gather\:
--- Pattern (regex): ^You have (\d+) hour (\d+) minutes and (\d+) seconds left to gather\:
-
-ui = ui or {}
-
-ui.junkyardObjects = {}
-ui.capturingJunkyardObjects = true
-ui.onJunkyard = true
-enableTrigger("2 Junkyard object capture")
-
--- Use a timer to disable the capture since we do not have an ending string.
-tempTimer(2, function() 
-  disableTrigger("2 Junkyard object capture")
-  ui.capturingJunkyardObjects = false
-  
-  -- Display the objects in the top console
-  ui.TopContainerMC:clear()
-  ui.TopContainerMC:cecho("&lt;orange_red&gt;JUNKYARD!---------------------------------------------------------------------------\n")
-  
-  for i = 1, #ui.junkyardObjects, 1 do
-    -- local first = ui.junkyardObjects[i] or ""
-    -- local second = ui.junkyardObjects[i + 1] or ""
-    -- ui.TopContainerMC:cecho(string.format("%-65s %s\n", first, second))  -- string.format adds spacing.
-    ui.TopContainerMC:cecho(ui.junkyardObjects[i].."\n")
-  end
-end)
-</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Junkyards</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^You ask The Giver for a junkyard quest</string>
-          
-          <string>^You have (\d+) minutes left to gather\:</string>
-          
-          <string>^You have (\d+) minutes and (\d+) seconds left to gather\:</string>
-          
-          <string>^You have (\d+) hour (\d+) minutes and (\d+) seconds left to gather\:</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>2 Junkyard object capture</name>
-        <script>-- Trigger: 2 Junkyard object capture
--- Pattern (regex): \[\s*(?&lt;num&gt;\d+)\]\s+(?&lt;item&gt;.+?)\s+in\s+(?&lt;room&gt;.*?)\s+in\s+(?&lt;area&gt;.*)
--- Description: Capture all junkyard targets
-
-ui = ui or {}
-
-local num = matches.num
-local item = matches.item
-local room = matches.room
-local area = matches.area
-
-if ui.capturingJunkyardObjects then
-  if string.find(area, "here") then
-    area = string.sub(area, 1, -7)
-    area = area.."&lt;red&gt;(here)"
-  end
-  local t = "&lt;white&gt;"..num..": &lt;green&gt;"..item.."&lt;gray&gt; in &lt;yellow&gt;"..room.."&lt;gray&gt; in &lt;cyan&gt;"..area
-  table.insert(ui.junkyardObjects, t)
-end
-</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Junkyards</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>\[\s*(?&lt;num&gt;\d+)\]\s+(?&lt;item&gt;.+?)\s+in\s+(?&lt;room&gt;.*?)\s+in\s+(?&lt;area&gt;.*)</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Junkyard progress</name>
-        <script>-- Trigger: Junkyard progress
--- Pattern (regex): ^You have (?&lt;almost&gt;\w+) completed your JUNKYARD
--- Pattern (regex): ^You add another piece of (?&lt;trash&gt;\w+) to your junkyard box
-
-ui = ui or {}
-
-if matches.trash then
-  send("junkyard info")
-end
-
-if matches.almost then
-  ui.TopContainerMC:cecho("&lt;orange_red&gt;JUNKYARD!---------------------------------------------------------------------------\n")
-  ui.TopContainerMC:cecho("&lt;green&gt;Complete! Return to the Expedition Giver!\n")
-end</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Junkyards</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^You have (?&lt;almost&gt;\w+) completed your JUNKYARD</string>
-          
-          <string>^You add another piece of (?&lt;trash&gt;\w+) to your junkyard box</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Junkyard end</name>
-        <script>-- Trigger: Junkyard end
--- Pattern (regex): ^You inform The Giver you have finished eliminating hazardous remnants from the world
--- Pattern (regex): ^You have failed your junkyard quest
-
-ui = ui or {}
-
-ui.TopContainerMC:clear()
-ui.onJunkyard = false</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Junkyards</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^You inform The Giver you have finished eliminating hazardous remnants from the world</string>
-          
-          <string>^You have failed your junkyard quest</string>
-        </regexCodeList>
-        <regexCodePropertyList>
-          
-          <integer>1</integer>
-          
-          <integer>1</integer>
-        </regexCodePropertyList>
-        
-      </Trigger>
-      <Trigger isActive="yes" isFolder="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isColorTrigger="" isColorTriggerFg="" isColorTriggerBg="">
-          
-        <name>Junkyard rewards</name>
-        <script>-- Trigger: Junkyard rewards
--- Pattern (regex): ^(.*) says to you\, \'Your reward is (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\!\'$
-
-ui = ui or {}
-
-if matches.exp then
-  echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
-end
-
-if matches.qps then
-  echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
-end</script>
-          
-        <triggerType>0</triggerType>
-          
-        <conditonLineDelta>0</conditonLineDelta>
-          
-        <mStayOpen>0</mStayOpen>
-          
-        <mCommand/>
-          
-        <packageName/>
-          
-        <path>Junkyards</path>
-          
-        <mFgColor>#ff0000</mFgColor>
-          
-        <mBgColor>#ffff00</mBgColor>
-          
-        <mSoundFile/>
-          
-        <colorTriggerFgColor>#000000</colorTriggerFgColor>
-          
-        <colorTriggerBgColor>#000000</colorTriggerBgColor>
-        <regexCodeList>
-          
-          <string>^(.*) says to you\, \'Your reward is (?&lt;exp&gt;\d+) experience and (?&lt;gold&gt;\d+) gold\!\'$</string>
         </regexCodeList>
         <regexCodePropertyList>
           

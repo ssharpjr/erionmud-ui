@@ -4,6 +4,12 @@
 
 - Move ANSI map to its own console.
 
+## v1.2.1
+
+- Bugfix: Correct versioning format.
+- Updated package icon.
+- Updated help files.
+
 ## v1.2
 
 Lots of updates!
