@@ -76,14 +76,13 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "1.2.1"
+  ui.version = "1.2.2"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()  -- Functions/UI Functions
   
-  uiCecho("ErionMud UI &lt;cyan&gt;v"..ui.version.. " &lt;green&gt;Loaded&lt;reset&gt;\n")
-  uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uitheme&lt;yellow&gt;' to change the theme")
-  
+  uiCecho("ErionMud UI &lt;cyan&gt;v"..ui.version.. " &lt;green&gt;Loaded&lt;reset&gt;", false, false)
+    
   -- Set the theme
   if ui.SettingsDB["theme"] then
     ui.CurrentTheme = ui.SettingsDB["theme"]
@@ -93,6 +92,7 @@ function StartUp()
     ui.CurrentThemeName = "Erion Green"
   end
   SetTheme(ui.CurrentTheme)
+  uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uitheme&lt;yellow&gt;' to change the theme")
   echo("\n\n")
     
   ui.StartUp = true  -- Hold off certain triggers while this is true
@@ -107,28 +107,28 @@ function StartUp()
       local ConnectType = matches[1]
       --echo("\n Match: " .. ConnectType)
       
-      tempTimer(1, function()
-        echo("\n\n")
-        uiCecho("&lt;green&gt;ErionMud UI &lt;cyan&gt;"..ui.version.."&lt;reset&gt;\n")
-        uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uihelp&lt;yellow&gt;' to access the UI help files\n")
-        uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uitheme&lt;yellow&gt;' to change the theme\n")
-        -- cecho("\n\n&lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;* &lt;white&gt;Vote on TMC   : ")
-        -- cechoLink("&lt;cyan&gt;https://bit.ly/354iWXE &lt;purple&gt;&lt;--- click me!)", function() openUrl("https://bit.ly/354iWXE") end, 
-          -- "Vote for Erion on TMC!", true)
-        -- cecho(" &lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*\n")
-        
-        
-        -- Send to the top container as well
-        -- ui.TopContainerMC:clear()
-        -- cecho("ui.TopContainerMC","&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;Welcome to the &lt;green&gt;ErionMud &lt;cyan&gt;UI!&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;-\n")
-        -- cecho("ui.TopContainerMC","&lt;yellow&gt;Enter '&lt;cyan&gt;uihelp&lt;yellow&gt;' to access the UI help files\n")
-        -- cecho("ui.TopContainerMC","&lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*  &lt;white&gt;Vote for &lt;green&gt;ErionMud &lt;white&gt;on TMC : ")
-        -- cechoLink("ui.TopContainerMC","&lt;cyan&gt;https://bit.ly/354iWXE", function() openUrl("https://bit.ly/354iWXE") end,
-          -- "Vote for Erion on TMC!", true)
-        -- cecho("ui.TopContainerMC","  &lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*")
-        -- cechoLink("ui.TopContainerMC", "  &lt;purple&gt;(Click to clear)", function() ui.TopContainerMC:clear() end,
-          -- "Click to clear this console", true)
-        end)
+      -- tempTimer(1, function()
+        -- echo("\n\n")
+        -- uiCecho("&lt;green&gt;ErionMud UI &lt;cyan&gt;"..ui.version.."&lt;reset&gt;\n")
+        -- uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uihelp&lt;yellow&gt;' to access the UI help files\n")
+        -- uiCecho("&lt;yellow&gt;Enter '&lt;cyan&gt;uitheme&lt;yellow&gt;' to change the theme\n")
+        -- -- cecho("\n\n&lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;* &lt;white&gt;Vote on TMC   : ")
+        -- -- cechoLink("&lt;cyan&gt;https://bit.ly/354iWXE &lt;purple&gt;&lt;--- click me!)", function() openUrl("https://bit.ly/354iWXE") end, 
+          -- -- "Vote for Erion on TMC!", true)
+        -- -- cecho(" &lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*\n")
+        -- 
+        -- 
+        -- -- Send to the top container as well
+        -- -- ui.TopContainerMC:clear()
+        -- -- cecho("ui.TopContainerMC","&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;Welcome to the &lt;green&gt;ErionMud &lt;cyan&gt;UI!&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;-\n")
+        -- -- cecho("ui.TopContainerMC","&lt;yellow&gt;Enter '&lt;cyan&gt;uihelp&lt;yellow&gt;' to access the UI help files\n")
+        -- -- cecho("ui.TopContainerMC","&lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*  &lt;white&gt;Vote for &lt;green&gt;ErionMud &lt;white&gt;on TMC : ")
+        -- -- cechoLink("ui.TopContainerMC","&lt;cyan&gt;https://bit.ly/354iWXE", function() openUrl("https://bit.ly/354iWXE") end,
+          -- -- "Vote for Erion on TMC!", true)
+        -- -- cecho("ui.TopContainerMC","  &lt;green&gt;*&lt;yellow&gt;*&lt;green&gt;*")
+        -- -- cechoLink("ui.TopContainerMC", "  &lt;purple&gt;(Click to clear)", function() ui.TopContainerMC:clear() end,
+          -- -- "Click to clear this console", true)
+        -- end)
       
       if ConnectType == "Reconnecting" then
       tempTimer(1.5, [[
@@ -311,6 +311,7 @@ end
 
 function firstToUpper(str)
     -- http://lua-users.org/wiki/StringRecipes
+    if str == nil then return end
   return (str:gsub("^%l", string.upper))
 end
 
@@ -381,6 +382,7 @@ end
 
 function firstToUpper(str)
     -- http://lua-users.org/wiki/StringRecipes
+    if str == nil then return end
   return (str:gsub("^%l", string.upper))
 end
 
@@ -430,8 +432,6 @@ ui.settingsFile = "/erionmud_ui_settings.db"
 
 -- Create a simple table/DB for saving/loading persistent data.
 function SaveUISettings()
-  --local separator = string.char(getMudletHomeDir():byte()) == "/" and "/" or "\\"
-  --local filename = getMudletHomeDir()..separator.."erionmud_ui_settings.db"
   local filename = getMudletHomeDir()..ui.settingsFile
   if ui.SettingsDB then
     table.save(filename, ui.SettingsDB)
@@ -453,14 +453,21 @@ function LoadUISettings()
 end
 
 
-function uiCecho(text)
-  -- Add the UI prefix "-=[UI]=-" to each echo
-  
-  -- This one is brighter
-  cecho("&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;UI&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;- &lt;yellow&gt;"..text.."&lt;reset&gt;")
-  
-  -- This one is dimmer and more mellow
-  --cecho("&lt;royal_blue&gt;-&lt;forest_green&gt;=&lt;ansi_yellow&gt;[&lt;steel_blue&gt;UI&lt;ansi_yellow&gt;]&lt;forest_green&gt;=&lt;royal_blue&gt;- &lt;reset&gt;"..text)
+-- Add the UI prefix "-=[UI]=-" to each echo
+function uiCecho(text, newlinePrefix, newlineSuffix)
+  newlinePrefix = newlinePrefix or true
+  newlineSuffix = newlineSuffix or false
+  s = "&lt;forest_green&gt;-&lt;green&gt;=&lt;gold&gt;[&lt;cyan&gt;UI&lt;gold&gt;]&lt;green&gt;=&lt;forest_green&gt;- &lt;yellow&gt;"..text.."&lt;reset&gt;"
+    
+  if newlinePrefix and newlineSuffix then
+    s = "\n"..s.."\n"
+  elseif newlinePrefix and not newlineSuffix then
+    s = "\n"..s
+  elseif newlineSuffix and not newlinePrefix then
+  s = s.."\n"
+  end
+
+  cecho(s)
 end
 
 
@@ -525,11 +532,17 @@ function ParseScoreBuffer(block)
     -- Player name + active class
     local player, class = line:match("^%|%s+(%w+) the (%w+)%s+%|")
     if player and class then
-      -- Player Name should have been captured on login.
+      -- Player Name should have been captured on login, but if not, get it here.
       if ui.PlayerName ~= player then
         ui.PlayerName  = player
       end
       ui.ActiveClass = class
+    end
+    
+    -- Level
+    local lvl = tonumber(line:match("Level%s*:%s*(%d+)"))
+    if lvl then
+      ui.ActiveClassLevel = lvl
     end
 
     -- Alignment
@@ -553,7 +566,8 @@ function ParseScoreBuffer(block)
     end
 
     -- Active class level (Tnl / Level)
-    local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
+    -- local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
+    local tnl = line:match("Tnl%s*:%s*(%d+)")
     if tnl and lvl then
       ui.ActiveClassLevel = tonumber(lvl)
       ui.Tnl = tonumber(tnl)
@@ -1392,9 +1406,9 @@ ui = ui or {}
 
 function ShowThemes()
   -- List available themes
-  uiCecho("&lt;cyan&gt;Available UI Themes\n")
-  uiCecho("&lt;green&gt;Erion Green    &lt;yellow&gt;[ &lt;cyan&gt;uitheme er &lt;yellow&gt;]\n")
-  uiCecho("&lt;green&gt;Minimal Black  &lt;yellow&gt;[ &lt;cyan&gt;uitheme mb &lt;yellow&gt;]\n")
+  uiCecho("&lt;cyan&gt;Available UI Themes")
+  uiCecho("&lt;green&gt;Erion Green    &lt;yellow&gt;[ &lt;cyan&gt;uitheme er &lt;yellow&gt;]")
+  uiCecho("&lt;green&gt;Minimal Black  &lt;yellow&gt;[ &lt;cyan&gt;uitheme mb &lt;yellow&gt;]")
   echo("\n")
 end
 
@@ -1673,7 +1687,8 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
 
   -- Update level values
   FLV = tonumber(FLV) or 0
-  if tonumber(LVL) == tonumber(aclvl) then
+  LVL = tonumber(LVL) or 0
+  if LVL == tonumber(aclvl) then
     if FLV == 0 then
       level = LVL
     else
@@ -1869,6 +1884,7 @@ function UpdatePrompt(event, CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP)
       cecho("ui.StatusMC", " &lt;red&gt;"..cpre.." &lt;grey&gt;==\n")
     end
   else
+    -- Damage
     if specDamage ~= 0 and lastDamage ~= 0 then
       cecho("ui.StatusMC", " &lt;grey&gt;[Last Fight Dmg/Sp: &lt;green&gt;"..commaValue(lastDamage).."&lt;grey&gt;/&lt;orange&gt;"..commaValue(specDamage).."&lt;grey&gt;]")
     elseif lastDamage ~= 0 then
@@ -2040,6 +2056,124 @@ registerAnonymousEventHandler("UI_Refresh", "UIRefresh")
   <AliasPackage>
     <AliasGroup isActive="yes" isFolder="yes">
         
+      <name>Quests</name>
+      <script/>
+        
+      <command/>
+        
+      <packageName/>
+        
+      <regex/>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Runto quest area</name>
+        <script>-- Alias: Rinto quest area
+-- Pattern: ^rtq$
+-- Description: Run to the selected area
+
+ui = ui or {}
+gp = gp or {}
+
+if ui.questArea then
+  
+  -- Optional from the ErionMud Game Pack
+  if gp.version then
+    expandAlias("cr off")
+    disableTrigger("Buffs")
+  end
+  
+  send("recall;;runto " .. ui.questArea)  -- Most runtos are faster from recall
+else
+  uiCecho("&lt;orange_red&gt;Quest Area not set!")
+end</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^rtq$</regex>
+        
+      </Alias>
+      
+    </AliasGroup>
+    <AliasGroup isActive="yes" isFolder="yes">
+        
+      <name>Help</name>
+      <script/>
+        
+      <command/>
+        
+      <packageName/>
+        
+      <regex/>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Help main</name>
+        <script>-- Alias: Help main
+-- Pattern: ^uihelp\s?$
+-- Description: Show the main help file
+
+uiHelpMain()</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^uihelp\s?$</regex>
+        
+      </Alias>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Help features</name>
+        <script>-- Alias: Help features
+-- Pattern: ^uihelp (f|feat|feature|features)$
+-- Description: Show the features help file
+
+uiHelpFeatures()</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^uihelp (f|feat|feature|features)$</regex>
+        
+      </Alias>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Help commands</name>
+        <script>-- Alias: Help commands
+-- Pattern: ^uihelp (c|cmd|cmds|com|comm|command|commands)$
+-- Description: Show the commands help file
+
+uiHelpCommands()</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^uihelp (c|cmd|cmds|com|comm|command|commands)$</regex>
+        
+      </Alias>
+      <Alias isActive="yes" isFolder="no">
+          
+        <name>Help technical</name>
+        <script>-- Alias: Help technical
+-- Pattern: ^uihelp (t|tech|technical)$
+-- Description: Show the technical help file
+
+uiHelpTechnical()</script>
+          
+        <command/>
+          
+        <packageName/>
+          
+        <regex>^uihelp (t|tech|technical)$</regex>
+        
+      </Alias>
+      
+    </AliasGroup>
+    <AliasGroup isActive="yes" isFolder="yes">
+        
       <name>UI Commands</name>
       <script/>
         
@@ -2052,9 +2186,9 @@ registerAnonymousEventHandler("UI_Refresh", "UIRefresh")
           
         <name>Clear console</name>
         <script>-- Name: Clear console
--- Pattern: ^uiclear (\w+)?$
+-- Pattern: ^uiclear\s?(\w+)?$
 -- Description: Clear the given console
--- - Options: top, right, chat
+-- - Options: top, toptop, right, chat
 
 ui = ui or {}
 
@@ -2079,7 +2213,7 @@ end</script>
           
         <packageName/>
           
-        <regex>^uiclear (\w+)?$</regex>
+        <regex>^uiclear\s?(\w+)?$</regex>
         
       </Alias>
       <Alias isActive="yes" isFolder="no">
@@ -2214,7 +2348,7 @@ ui = ui or {}
 local theme = matches.theme
 
 if string.len(theme) == 0 then
-  uiCecho("Current theme: &lt;green&gt;"..ui.CurrentThemeName.."\n\n")
+  uiCecho("Current theme: &lt;green&gt;"..ui.CurrentThemeName)
   ShowThemes()
 else
   SetTheme(theme)
@@ -2244,122 +2378,31 @@ GetClasses()</script>
         <regex>^uigetclasses$</regex>
         
       </Alias>
-      
-    </AliasGroup>
-    <AliasGroup isActive="yes" isFolder="yes">
-        
-      <name>Help</name>
-      <script/>
-        
-      <command/>
-        
-      <packageName/>
-        
-      <regex/>
       <Alias isActive="yes" isFolder="no">
           
-        <name>Help main</name>
-        <script>-- Alias: Help main
--- Pattern: ^uihelp$
--- Description: Show the main help file
-
-uiHelpMain()</script>
-          
-        <command/>
-          
-        <packageName/>
-          
-        <regex>^uihelp$</regex>
-        
-      </Alias>
-      <Alias isActive="yes" isFolder="no">
-          
-        <name>Help features</name>
-        <script>-- Alias: Help features
--- Pattern: ^uihelp (f|feat|feature|features)$
--- Description: Show the features help file
-
-uiHelpFeatures()</script>
-          
-        <command/>
-          
-        <packageName/>
-          
-        <regex>^uihelp (f|feat|feature|features)$</regex>
-        
-      </Alias>
-      <Alias isActive="yes" isFolder="no">
-          
-        <name>Help commands</name>
-        <script>-- Alias: Help commands
--- Pattern: ^uihelp (c|cmd|com|comm|command|commands)$
--- Description: Show the commands help file
-
-uiHelpCommands()</script>
-          
-        <command/>
-          
-        <packageName/>
-          
-        <regex>^uihelp (c|cmd|com|comm|command|commands)$</regex>
-        
-      </Alias>
-      <Alias isActive="yes" isFolder="no">
-          
-        <name>Help technical</name>
-        <script>-- Alias: Help technical
--- Pattern: ^uihelp (t|tech|technical)$
--- Description: Show the technical help file
-
-uiHelpTechnical()</script>
-          
-        <command/>
-          
-        <packageName/>
-          
-        <regex>^uihelp (t|tech|technical)$</regex>
-        
-      </Alias>
-      
-    </AliasGroup>
-    <AliasGroup isActive="yes" isFolder="yes">
-        
-      <name>Quests</name>
-      <script/>
-        
-      <command/>
-        
-      <packageName/>
-        
-      <regex/>
-      <Alias isActive="yes" isFolder="no">
-          
-        <name>Runto quest area</name>
-        <script>-- Alias: Rinto quest area
--- Pattern: ^rtq$
--- Description: Run to the selected area
+        <name>Quit</name>
+        <script>-- Alias: Quit
+-- Pattern: ^(quit|qquit)$
+-- Description: Intercept the "quit" command so we can run some commands before quitting.
 
 ui = ui or {}
-gp = gp or {}
 
-if ui.questArea then
-  
-  -- Optional from the ErionMud Game Pack
-  if gp.version then
-    expandAlias("cr off")
-    disableTrigger("Buffs")
-  end
-  
-  send("recall;;runto " .. ui.questArea)  -- Most runtos are faster from recall
+-- Reset the prompt on quit
+uiCecho("Resetting Prompt to ALL\n")
+send("prompt all", false)
+
+if matches[2] == "qquit" then
+  -- Quick Quit (quits to character menu then quits the game).
+  send("quit;;q", false)
 else
-  uiCecho("&lt;orange_red&gt;Quest Area not set!")
+  send("quit", false)
 end</script>
           
         <command/>
           
         <packageName/>
           
-        <regex>^rtq$</regex>
+        <regex>^(quit|qquit)$</regex>
         
       </Alias>
       
@@ -2491,6 +2534,7 @@ UpdateStatus()</script>
 -- Pattern (regex): ^You raise a faux level
 -- Description: Update stuff when you level (a placeholder for things to come)
 
+selectCurrentLine()
 setBgColor(0,80,0)
 
 tempTimer(5, function() GetClasses() end)</script>
@@ -2672,7 +2716,9 @@ replace("")
           
         <name>Map Cleaner</name>
         <script>-- Trigger: Map Cleaner
--- Pattern (regex): (^ {13})
+-- Pattern (regex): (^ {13})(!C|-)
+-- Description: Removes the 13 blank spaces from under the map, bringing the rest of the room description to the left.
+--              The "C" and "-" filters prevent the "TRAIN" output from being affected.
 
 selectCaptureGroup(1)
 replace("")</script>
@@ -2700,7 +2746,7 @@ replace("")</script>
         <colorTriggerBgColor>#000000</colorTriggerBgColor>
         <regexCodeList>
           
-          <string>(^ {13})</string>
+          <string>(^ {13})(!C|-)</string>
         </regexCodeList>
         <regexCodePropertyList>
           
@@ -2798,6 +2844,10 @@ end
 
 if matches[1] == "[secrets]" then
   setFgColor(170, 85, 255)
+end
+
+if matches[1] == "(Gtell):" then
+  setFgColor(255,0,255)
 end
 
 copy()
@@ -3352,7 +3402,12 @@ ui = ui or {}
 if (ui.PlayerName ~= matches[2]) or (ui.PlayerName == nil) or (ui.PlayerName == "") then
   ui.PlayerName = matches[2]
   tempTimer(0.5, function() send("look", false) end)
-end</script>
+end
+
+-- Send/Resend Mud Settings (toggles, prompts, etc.)
+-- echo("\n")
+uiCecho("Updating prompt and toggles")
+raiseEvent("SetDefaultMudSettings")</script>
           
         <triggerType>0</triggerType>
           
@@ -3466,7 +3521,7 @@ end
 -- end
 
 
-raiseEvent("onNewRoom")  -- Trigger the mapper
+-- raiseEvent("onNewRoom")  -- Trigger the mapper
 raiseEvent("UI_UpdateStatus", LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, JTM, XPE, QPE, QTE, PLT, GJY) 
 raiseEvent("UI_UpdatePrompt", CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP) 
 raiseEvent("UI_UpdateMapName", RNM, ANM, RMS, VNM)
@@ -3548,7 +3603,7 @@ raiseEvent("UI_UpdateMapName", RNM, ANM, RMS, VNM)
         <name>ScoreCaptureStart</name>
         <script>-- Trigger: ScoreCaptureStart
 -- Regex: ^\+-{70,}\+$   (matches top/bottom border lines with 70+ dashes)
--- Description: This trigger is enabled by: Scripts/ErionMud-UI/UI Functions/
+-- Description: (Default State: OFF) This trigger is enabled by: Scripts/ErionMud-UI/UI Functions/
 -- - SilentScoreCapture() and GetClasses()
 
 ui = ui or {}
@@ -5131,18 +5186,18 @@ resetFormat()</script>
 
 if matches.exp then
   echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
+  uiCecho("&lt;gold&gt;**************")
+  uiCecho("&lt;green&gt;  EXP: " .. commaValue((tonumber(matches.exp))))
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))))
+  uiCecho("&lt;gold&gt;**************")
 end
 
 if matches.qps then
   echo("\n\n")
-  uiCecho("&lt;gold&gt;**************\n")
-  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))).."\n")
-  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))).."\n")
-  uiCecho("&lt;gold&gt;**************\n\n")
+  uiCecho("&lt;gold&gt;**************")
+  uiCecho("&lt;green&gt;  QPs: " .. commaValue((tonumber(matches.qps))))
+  uiCecho("&lt;yellow&gt; Gold: " .. commaValue((tonumber(matches.gold))))
+  uiCecho("&lt;gold&gt;**************")
 end</script>
           
         <triggerType>0</triggerType>
