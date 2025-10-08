@@ -55,6 +55,8 @@ You will get a new folder in your staging folder.
 
 <img src="./src/resources/images/build_3.png" alt="build_3" />
 
+**NOTE: There is currently a bug in DeMuddler v0.1.3 that will make the icon file have zero bytes. You will need to manually copy your icon file to `PackageName/src/resources/.mudlet/Icon/`.**
+
 ## Updating and Cleaning the Project in an IDE
 
 At this point, I open this new folder in VSCode. Here I'll add the following files and folders. These files are stored outside of this folder initially so they are not overwritten or deleted during the muddling process.
