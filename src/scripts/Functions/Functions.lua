@@ -29,6 +29,7 @@ end
 
 function firstToUpper(str)
     -- http://lua-users.org/wiki/StringRecipes
+    if str == nil then return end
   return (str:gsub("^%l", string.upper))
 end
 

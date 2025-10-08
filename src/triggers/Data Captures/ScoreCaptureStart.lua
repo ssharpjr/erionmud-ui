@@ -1,6 +1,6 @@
 -- Trigger: ScoreCaptureStart
 -- Regex: ^\+-{70,}\+$   (matches top/bottom border lines with 70+ dashes)
--- Description: This trigger is enabled by: Scripts/ErionMud-UI/UI Functions/
+-- Description: (Default State: OFF) This trigger is enabled by: Scripts/ErionMud-UI/UI Functions/
 -- - SilentScoreCapture() and GetClasses()
 
 ui = ui or {}

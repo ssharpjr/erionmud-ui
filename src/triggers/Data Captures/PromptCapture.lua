@@ -76,7 +76,7 @@ end
 -- end
 
 
-raiseEvent("onNewRoom")  -- Trigger the mapper
+-- raiseEvent("onNewRoom")  -- Trigger the mapper
 raiseEvent("UI_UpdateStatus", LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, JTM, XPE, QPE, QTE, PLT, GJY) 
 raiseEvent("UI_UpdatePrompt", CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP) 
 raiseEvent("UI_UpdateMapName", RNM, ANM, RMS, VNM)

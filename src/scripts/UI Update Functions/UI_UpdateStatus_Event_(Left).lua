@@ -168,7 +168,8 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
 
   -- Update level values
   FLV = tonumber(FLV) or 0
-  if tonumber(LVL) == tonumber(aclvl) then
+  LVL = tonumber(LVL) or 0
+  if LVL == tonumber(aclvl) then
     if FLV == 0 then
       level = LVL
     else

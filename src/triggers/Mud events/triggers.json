@@ -34,7 +34,7 @@
               "fireLength": "0",
               "highlight": "no",
               "highlightFG": "#ff0000",
-              "highlightBG": "transparent",
+              "highlightBG": "#ffff00",
               "patterns": [
                      {
                             "pattern": "^\\\u003c\\[mudevent\\]\\\u003e(?\u003cevent\u003e.*)",

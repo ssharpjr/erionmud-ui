@@ -2,7 +2,7 @@
        {
               "name": "Clear console",
               "isActive": "yes",
-              "regex": "^uiclear (\\w+)?$",
+              "regex": "^uiclear\\s?(\\w+)?$",
               "script": "",
               "isFolder": "no"
        },
@@ -52,6 +52,13 @@
               "name": "Get classes",
               "isActive": "yes",
               "regex": "^uigetclasses$",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Quit",
+              "isActive": "yes",
+              "regex": "^(quit|qquit)$",
               "script": "",
               "isFolder": "no"
        }

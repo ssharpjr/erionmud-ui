@@ -6,8 +6,6 @@ ui.settingsFile = "/erionmud_ui_settings.db"
 
 -- Create a simple table/DB for saving/loading persistent data.
 function SaveUISettings()
-  --local separator = string.char(getMudletHomeDir():byte()) == "/" and "/" or "\\"
-  --local filename = getMudletHomeDir()..separator.."erionmud_ui_settings.db"
   local filename = getMudletHomeDir()..ui.settingsFile
   if ui.SettingsDB then
     table.save(filename, ui.SettingsDB)
@@ -29,14 +27,21 @@ function LoadUISettings()
 end
 
 
-function uiCecho(text)
-  -- Add the UI prefix "-=[UI]=-" to each echo
-  
-  -- This one is brighter
-  cecho("<forest_green>-<green>=<gold>[<cyan>UI<gold>]<green>=<forest_green>- <yellow>"..text.."<reset>")
-  
-  -- This one is dimmer and more mellow
-  --cecho("<royal_blue>-<forest_green>=<ansi_yellow>[<steel_blue>UI<ansi_yellow>]<forest_green>=<royal_blue>- <reset>"..text)
+-- Add the UI prefix "-=[UI]=-" to each echo
+function uiCecho(text, newlinePrefix, newlineSuffix)
+  newlinePrefix = newlinePrefix or true
+  newlineSuffix = newlineSuffix or false
+  s = "<forest_green>-<green>=<gold>[<cyan>UI<gold>]<green>=<forest_green>- <yellow>"..text.."<reset>"
+    
+  if newlinePrefix and newlineSuffix then
+    s = "\n"..s.."\n"
+  elseif newlinePrefix and not newlineSuffix then
+    s = "\n"..s
+  elseif newlineSuffix and not newlinePrefix then
+  s = s.."\n"
+  end
+
+  cecho(s)
 end
 
 
@@ -101,11 +106,17 @@ function ParseScoreBuffer(block)
     -- Player name + active class
     local player, class = line:match("^%|%s+(%w+) the (%w+)%s+%|")
     if player and class then
-      -- Player Name should have been captured on login.
+      -- Player Name should have been captured on login, but if not, get it here.
       if ui.PlayerName ~= player then
         ui.PlayerName  = player
       end
       ui.ActiveClass = class
+    end
+    
+    -- Level
+    local lvl = tonumber(line:match("Level%s*:%s*(%d+)"))
+    if lvl then
+      ui.ActiveClassLevel = lvl
     end
 
     -- Alignment
@@ -129,7 +140,8 @@ function ParseScoreBuffer(block)
     end
 
     -- Active class level (Tnl / Level)
-    local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
+    -- local tnl, lvl = line:match("Tnl%s+:%s+(%d+)%s+%(%s*L%.(%d+)%)")
+    local tnl = line:match("Tnl%s*:%s*(%d+)")
     if tnl and lvl then
       ui.ActiveClassLevel = tonumber(lvl)
       ui.Tnl = tonumber(tnl)

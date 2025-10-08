@@ -14,6 +14,10 @@ if matches[1] == "[secrets]" then
   setFgColor(170, 85, 255)
 end
 
+if matches[1] == "(Gtell):" then
+  setFgColor(255,0,255)
+end
+
 copy()
 setBgColor(0,0,0)  -- Reset background color to black
 deleteLine() --Remove Captured Line (Comment out to disable)

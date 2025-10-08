@@ -7,7 +7,7 @@ ui = ui or {}
 local theme = matches.theme
 
 if string.len(theme) == 0 then
-  uiCecho("Current theme: <green>"..ui.CurrentThemeName.."\n\n")
+  uiCecho("Current theme: <green>"..ui.CurrentThemeName)
   ShowThemes()
 else
   SetTheme(theme)

@@ -54,7 +54,7 @@
               "fireLength": "0",
               "highlight": "no",
               "highlightFG": "#ff0000",
-              "highlightBG": "transparent",
+              "highlightBG": "#ffff00",
               "patterns": [
                      {
                             "pattern": "^You have almost completed your QUEST",
@@ -78,7 +78,7 @@
               "fireLength": "0",
               "highlight": "no",
               "highlightFG": "#ff0000",
-              "highlightBG": "transparent",
+              "highlightBG": "#ffff00",
               "patterns": [
                      {
                             "pattern": "^You still have (.*) to get the reward bonus",

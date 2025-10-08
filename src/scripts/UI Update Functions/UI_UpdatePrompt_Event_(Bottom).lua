@@ -60,6 +60,7 @@ function UpdatePrompt(event, CHP, MHP, CMP, MMP, THP, TNM, LMP, PRE, PHP)
       cecho("ui.StatusMC", " <red>"..cpre.." <grey>==\n")
     end
   else
+    -- Damage
     if specDamage ~= 0 and lastDamage ~= 0 then
       cecho("ui.StatusMC", " <grey>[Last Fight Dmg/Sp: <green>"..commaValue(lastDamage).."<grey>/<orange>"..commaValue(specDamage).."<grey>]")
     elseif lastDamage ~= 0 then

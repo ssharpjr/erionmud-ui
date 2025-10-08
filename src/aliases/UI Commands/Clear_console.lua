@@ -1,7 +1,7 @@
 -- Name: Clear console
--- Pattern: ^uiclear (\w+)?$
+-- Pattern: ^uiclear\s?(\w+)?$
 -- Description: Clear the given console
--- - Options: top, right, chat
+-- - Options: top, toptop, right, chat
 
 ui = ui or {}
 

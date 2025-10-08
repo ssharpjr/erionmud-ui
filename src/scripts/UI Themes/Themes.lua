@@ -15,9 +15,9 @@ ui = ui or {}
 
 function ShowThemes()
   -- List available themes
-  uiCecho("<cyan>Available UI Themes\n")
-  uiCecho("<green>Erion Green    <yellow>[ <cyan>uitheme er <yellow>]\n")
-  uiCecho("<green>Minimal Black  <yellow>[ <cyan>uitheme mb <yellow>]\n")
+  uiCecho("<cyan>Available UI Themes")
+  uiCecho("<green>Erion Green    <yellow>[ <cyan>uitheme er <yellow>]")
+  uiCecho("<green>Minimal Black  <yellow>[ <cyan>uitheme mb <yellow>]")
   echo("\n")
 end
 

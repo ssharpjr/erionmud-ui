@@ -8,3 +8,8 @@ if (ui.PlayerName ~= matches[2]) or (ui.PlayerName == nil) or (ui.PlayerName == 
   ui.PlayerName = matches[2]
   tempTimer(0.5, function() send("look", false) end)
 end
+
+-- Send/Resend Mud Settings (toggles, prompts, etc.)
+-- echo("\n")
+uiCecho("Updating prompt and toggles")
+raiseEvent("SetDefaultMudSettings")

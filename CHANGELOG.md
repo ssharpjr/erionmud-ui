@@ -4,6 +4,18 @@
 
 - Move ANSI map to its own console.
 
+## v1.2.2
+
+- Hotfix: The Mud developers updated the SCORE "TNL" section. The TNL and Active Class Level values were being captured from here.
+  - The Regex has been updated. Currently, the Active Class Level will reflect your character's level, not the actual level.
+- Bugfix: Updated the regex for the map capture. It was so greedy that it was affecting the TRAIN output.
+- Corrected various silent errors (see the commit for details).
+- Added a "quit" and "qquit" alias. This alias will reset the PROMPT to ALL (the default) when you log out.
+  - This allows you to play on other clients without having prompt issues.
+  - A trigger was added to reapply the prompt when you log in or change characters.
+- Added some custom chat channel colors. A personal preference, but the code is there if you want to change or augment it.
+- Cleaned up and refactored various functions and updated comments (see the commit for details).
+
 ## v1.2.1
 
 - Bugfix: Correct versioning format.

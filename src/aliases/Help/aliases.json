@@ -2,7 +2,7 @@
        {
               "name": "Help main",
               "isActive": "yes",
-              "regex": "^uihelp$",
+              "regex": "^uihelp\\s?$",
               "script": "",
               "isFolder": "no"
        },
@@ -16,7 +16,7 @@
        {
               "name": "Help commands",
               "isActive": "yes",
-              "regex": "^uihelp (c|cmd|com|comm|command|commands)$",
+              "regex": "^uihelp (c|cmd|cmds|com|comm|command|commands)$",
               "script": "",
               "isFolder": "no"
        },

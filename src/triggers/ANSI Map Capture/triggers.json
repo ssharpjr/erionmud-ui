@@ -53,7 +53,7 @@
               "highlightBG": "#ffff00",
               "patterns": [
                      {
-                            "pattern": "(^ {13})",
+                            "pattern": "(^ {13})(!C|-)",
                             "type": "regex"
                      }
               ],
