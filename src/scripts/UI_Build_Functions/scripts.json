@@ -1,24 +1,24 @@
 [
        {
-              "name": "Help main",
+              "name": "Build_Left",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help features",
+              "name": "Build_Top",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help commands",
+              "name": "Build_Bottom",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help technical",
+              "name": "Build_Right",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"

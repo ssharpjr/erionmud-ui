@@ -6,19 +6,19 @@
               "isFolder": "no"
        },
        {
-              "name": "1 UI Start Event",
+              "name": "1_UI_Start_Event",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "2 Init UI",
+              "name": "2_Init_UI",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "3 Set MUD Settings",
+              "name": "3_Set_MUD_Settings",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"

@@ -1,6 +1,6 @@
 [
        {
-              "name": "Fabled item",
+              "name": "Fabled_item",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -20,7 +20,7 @@
               "script": ""
        },
        {
-              "name": "Quest rewards",
+              "name": "Quest_rewards",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -44,7 +44,7 @@
               "script": ""
        },
        {
-              "name": "Quest target complete",
+              "name": "Quest_target_complete",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -68,7 +68,7 @@
               "script": ""
        },
        {
-              "name": "Quest bonus remaining",
+              "name": "Quest_bonus_remaining",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

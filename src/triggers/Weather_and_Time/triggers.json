@@ -1,6 +1,6 @@
 [
        {
-              "name": "Weather events",
+              "name": "Weather_events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -60,7 +60,7 @@
               "script": ""
        },
        {
-              "name": "Time events",
+              "name": "Time_events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

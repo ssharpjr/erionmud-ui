@@ -1,6 +1,6 @@
 [
        {
-              "name": "1 Expedition targets start",
+              "name": "1_Expedition_targets_start",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -20,7 +20,7 @@
               "script": ""
        },
        {
-              "name": "2 Expedition targets capture",
+              "name": "2_Expedition_targets_capture",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -40,7 +40,7 @@
               "script": ""
        },
        {
-              "name": "3 Expedition bonus timer",
+              "name": "3_Expedition_bonus_timer",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -64,7 +64,7 @@
               "script": ""
        },
        {
-              "name": "4 Expedition targets end",
+              "name": "4_Expedition_targets_end",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

@@ -1,27 +1,27 @@
 [
        {
-              "name": "Help main",
+              "name": "Help_main",
               "isActive": "yes",
               "regex": "^uihelp\\s?$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help features",
+              "name": "Help_features",
               "isActive": "yes",
               "regex": "^uihelp (f|feat|feature|features)$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help commands",
+              "name": "Help_commands",
               "isActive": "yes",
               "regex": "^uihelp (c|cmd|cmds|com|comm|command|commands)$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Help technical",
+              "name": "Help_technical",
               "isActive": "yes",
               "regex": "^uihelp (t|tech|technical)$",
               "script": "",

@@ -1,6 +1,6 @@
 [
        {
-              "name": "At character menu",
+              "name": "At_character_menu",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -20,7 +20,7 @@
               "script": ""
        },
        {
-              "name": "Changing class target",
+              "name": "Changing_class_target",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -52,7 +52,7 @@
               "script": ""
        },
        {
-              "name": "Level up",
+              "name": "Level_up",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

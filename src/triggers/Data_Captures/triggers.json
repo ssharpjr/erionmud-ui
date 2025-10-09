@@ -171,6 +171,22 @@
                      {
                             "pattern": "^\\[flame\\]",
                             "type": "regex"
+                     },
+                     {
+                            "pattern": "^You (?\u003cverb\u003eask|exclaim|say|chuckle|yell)(.*)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(.*) (?\u003cverb\u003easks|exclaims|chuckles|says)\\, (/*)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(.*) (?\u003cverb\u003esays) to you\\, (.*)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^(.*) (?\u003cverb\u003eyells)",
+                            "type": "regex"
                      }
               ],
               "script": ""
@@ -258,6 +274,10 @@
                      },
                      {
                             "pattern": "^\\[Global Junkyard\\]",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Group\\)\\\u003e",
                             "type": "regex"
                      }
               ],

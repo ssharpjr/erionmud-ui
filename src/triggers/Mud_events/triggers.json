@@ -1,6 +1,6 @@
 [
        {
-              "name": "Mud Announcements",
+              "name": "Mud_Announcements",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -24,7 +24,7 @@
               "script": ""
        },
        {
-              "name": "Mud Events",
+              "name": "Mud_Events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -52,7 +52,7 @@
               "script": ""
        },
        {
-              "name": "Scheduled Events",
+              "name": "Scheduled_Events",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

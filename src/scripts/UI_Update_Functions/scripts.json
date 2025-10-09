@@ -1,24 +1,30 @@
 [
        {
-              "name": "Build Left",
+              "name": "UI_UpdateStatus_Event_(Left)",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Build Top",
+              "name": "UI_UpdatePrompt_Event_(Bottom)",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Build Bottom",
+              "name": "UI_UpdateMapName_Event_(Left)",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Build Right",
+              "name": "UI_ReWrap_Event",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "UI_Refresh_Event",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"

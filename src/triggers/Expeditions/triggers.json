@@ -1,6 +1,6 @@
 [
        {
-              "name": "Expedition progress",
+              "name": "Expedition_progress",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -24,7 +24,7 @@
               "script": ""
        },
        {
-              "name": "Expedition end",
+              "name": "Expedition_end",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

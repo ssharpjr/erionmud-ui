@@ -1,6 +1,6 @@
 [
        {
-              "name": "Runto quest area",
+              "name": "Runto_quest_area",
               "isActive": "yes",
               "regex": "^rtq$",
               "script": "",

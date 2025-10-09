@@ -1,6 +1,6 @@
 [
        {
-              "name": "Quests",
+              "name": "UI_Commands",
               "isActive": "yes",
               "script": "",
               "isFolder": "yes"

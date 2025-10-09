@@ -1,18 +1,24 @@
 [
        {
-              "name": "Functions",
+              "name": "Chat_Functions",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "UI functions",
+              "name": "UI_Functions",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Pet HP",
+              "name": "Utility_Functions",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "no"
+       },
+       {
+              "name": "Pet_HP_Functions",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"

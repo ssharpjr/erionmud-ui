@@ -1,55 +1,55 @@
 [
        {
-              "name": "Clear console",
+              "name": "Clear_console",
               "isActive": "yes",
               "regex": "^uiclear\\s?(\\w+)?$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Lock containers",
+              "name": "Lock_containers",
               "isActive": "yes",
               "regex": "^uilock\\s?(?\u003ccon\u003e\\w+)$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Unlock containers",
+              "name": "Unlock_containers",
               "isActive": "yes",
               "regex": "^(uiunlock|uiulock)\\s?(?\u003ccon\u003e\\w+)$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Save containers",
+              "name": "Save_containers",
               "isActive": "yes",
               "regex": "^uisave$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Load containers",
+              "name": "Load_containers",
               "isActive": "yes",
               "regex": "^uiload$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Reset UI to default",
+              "name": "Reset_UI_to_default",
               "isActive": "yes",
               "regex": "^uireset$",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Set UI theme",
+              "name": "Set_UI_theme",
               "isActive": "yes",
               "regex": "^uitheme\\s?(?\u003ctheme\u003e\\w+)?",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "Get classes",
+              "name": "Get_classes",
               "isActive": "yes",
               "regex": "^uigetclasses$",
               "script": "",

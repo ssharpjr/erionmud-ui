@@ -1,30 +1,24 @@
 [
        {
-              "name": "UI_UpdateStatus Event (Left)",
+              "name": "Help_main",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "UI_UpdatePrompt Event (Bottom)",
+              "name": "Help_features",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "UI_UpdateMapName Event (Left)",
+              "name": "Help_commands",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
        },
        {
-              "name": "UI_ReWrap Event",
-              "isActive": "yes",
-              "script": "",
-              "isFolder": "no"
-       },
-       {
-              "name": "UI_Refresh Event",
+              "name": "Help_technical",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"

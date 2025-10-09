@@ -1,6 +1,6 @@
 [
        {
-              "name": "1 Quest start",
+              "name": "1 Quest_start",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -20,7 +20,7 @@
               "script": ""
        },
        {
-              "name": "2 Quest info capture",
+              "name": "2_Quest_info_capture",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -112,7 +112,7 @@
               "script": ""
        },
        {
-              "name": "3 Quest bonus timer",
+              "name": "3_Quest_bonus_timer",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -132,7 +132,7 @@
               "script": ""
        },
        {
-              "name": "4 Quest end",
+              "name": "4_Quest_end",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

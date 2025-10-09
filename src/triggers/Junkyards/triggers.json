@@ -1,6 +1,6 @@
 [
        {
-              "name": "1 Junkyard objects start",
+              "name": "1_Junkyard_objects_start",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -32,7 +32,7 @@
               "script": ""
        },
        {
-              "name": "2 Junkyard object capture",
+              "name": "2_Junkyard_object_capture",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -52,7 +52,7 @@
               "script": ""
        },
        {
-              "name": "Junkyard progress",
+              "name": "Junkyard_progress",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -76,7 +76,7 @@
               "script": ""
        },
        {
-              "name": "Junkyard end",
+              "name": "Junkyard_end",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -100,7 +100,7 @@
               "script": ""
        },
        {
-              "name": "Junkyard rewards",
+              "name": "Junkyard_rewards",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",

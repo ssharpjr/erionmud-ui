@@ -17,7 +17,7 @@ ui = ui or {}
 
 function StartUp()
 -- Set initial variables
-  ui.version = "1.2.2"
+  ui.version = "1.2.3"
   ui.GameName = "ErionMud"
   ui.SettingsDB = {}
   LoadUISettings()  -- Functions/UI Functions
