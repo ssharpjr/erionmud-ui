@@ -1,6 +1,6 @@
 [
        {
-              "name": "Map Trigger (Border)",
+              "name": "Map_Trigger_(Border)",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -20,7 +20,7 @@
               "script": ""
        },
        {
-              "name": "Map Trigger (Map)",
+              "name": "Map_Trigger_(Map)",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -40,7 +40,7 @@
               "script": ""
        },
        {
-              "name": "Map Cleaner",
+              "name": "Map_Cleaner",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
@@ -60,7 +60,7 @@
               "script": ""
        },
        {
-              "name": "Map Spacer",
+              "name": "Map_Spacer",
               "isActive": "yes",
               "isFolder": "no",
               "multiline": "no",
