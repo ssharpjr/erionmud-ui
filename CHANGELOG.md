@@ -4,6 +4,12 @@
 
 - Move ANSI map to its own console.
 
+## v1.2.3
+
+- Corrected semantic version format (again).
+- Updated the chat capturing code to use functions and to be more custom color friendly.
+- Cleaned up and refactored folder and file names. Muddler merged the code with a folder and file with the same name.
+
 ## v1.2.2
 
 - Hotfix: The Mud developers updated the SCORE "TNL" section. The TNL and Active Class Level values were being captured from here.
