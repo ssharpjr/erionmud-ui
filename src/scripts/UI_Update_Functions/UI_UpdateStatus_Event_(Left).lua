@@ -5,13 +5,34 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
 -- Get Status data
 ----------------------------------------------------------------------
 
+  -- Parameter sanity check
+  LVL = safe_number(LVL, "")
+  FLV = safe_number(FLV, "")
+  NXP = safe_number(NXP, "")
+  GLD = safe_number(GLD, "")
+  QPS = safe_number(QPS, "")
+  HPS = safe_number(HPS, "")
+  MDP = safe_number(MDP, "")
+  QTM = safe_number(QTM, "")
+  ETM = safe_number(ETM, "")
+  GTM = safe_number(GTM, "")
+  JTM = safe_number(JTM, "")
+  XPE = safe_number(XPE, "")
+  QPE = safe_number(QPE, "")
+  QTE = safe_number(QTE, "")
+  PLT = safe_number(PLT, "")
+  GJY = safe_number(GJY, "")
+
   -- Get player classes if needed
   if not ui.StartUp then
     if (ui.PlayerName == "") or (ui.PlayerName == nil) or
        (ui.PClass == "") or (ui.PClass == nil) or 
        (ui.ActiveClass == "") or (ui.ActiveClass == nil) or 
        (ui.ActiveClassLevel == "") or (ui.ActiveClassLevel == nil) then
-      GetClasses()
+       -- Don't keep sending SCORE requests if one is already running
+       if not ui.scoreInProgress then
+        GetClasses()
+      end
     end
   end
   
@@ -280,15 +301,15 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
   end
     
   -- Sprites
-  -- if ui.SpriteType then
-    -- if ui.SpriteType == "Sunsurge" then ui.SpriteType = "<yellow>"..ui.SpriteType end
-    -- if ui.SpriteType == "Lifestream" then ui.SpriteType = "<cyan>"..ui.SpriteType end
-    -- if ui.SpriteType == "Earthguard" then ui.SpriteType = "<green>"..ui.SpriteType end
-    -- if ui.SpriteType == "Windstrike" then ui.SpriteType = "<sky_blue>"..ui.SpriteType end
-    -- cecho("ui.PlayerInfoMC", "\n")
-    -- cecho("ui.PlayerInfoMC", ui.SpriteType.."<white> sprite! ~<gold>"..ui.SpriteTimer.."m")
-    -- cecho("ui.PlayerInfoMC", "\n<white> ^-<gold>"..ui.SpriteLocation.."<white>-^<reset>")
-  -- end
+  if ui.SpriteType then
+    if ui.SpriteType == "Sunsurge" then ui.SpriteType = "<yellow>"..ui.SpriteType end
+    if ui.SpriteType == "Lifestream" then ui.SpriteType = "<cyan>"..ui.SpriteType end
+    if ui.SpriteType == "Earthguard" then ui.SpriteType = "<green>"..ui.SpriteType end
+    if ui.SpriteType == "Windstrike" then ui.SpriteType = "<sky_blue>"..ui.SpriteType end
+    cecho("ui.PlayerInfoMC", "\n")
+    cecho("ui.PlayerInfoMC", ui.SpriteType.."<white> sprite! ~<gold>"..ui.SpriteTimer.."m")
+    cecho("ui.PlayerInfoMC", "\n<white> ^-<gold>"..ui.SpriteLocation.."<white>-^<reset>")
+  end
    
 end
 

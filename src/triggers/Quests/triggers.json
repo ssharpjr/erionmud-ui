@@ -86,5 +86,20 @@
                      }
               ],
               "script": ""
+       },
+       {
+              "name": "Quest_Objective_Capture",
+              "isActive": "yes",
+              "isFolder": "yes",
+              "multiline": "no",
+              "multilineDelta": "0",
+              "matchall": "no",
+              "filter": "no",
+              "fireLength": "0",
+              "highlight": "no",
+              "highlightFG": "#ff0000",
+              "highlightBG": "#ffff00",
+              "patterns": null,
+              "script": ""
        }
 ]

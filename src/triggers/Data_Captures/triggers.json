@@ -9,7 +9,7 @@
               "filter": "no",
               "fireLength": "0",
               "highlight": "no",
-              "highlightFG": "transparent",
+              "highlightFG": "#ff0000",
               "highlightBG": "#ffff00",
               "patterns": [
                      {
@@ -153,10 +153,6 @@
                             "type": "regex"
                      },
                      {
-                            "pattern": "^\\(Gtell\\)\\:",
-                            "type": "regex"
-                     },
-                     {
                             "pattern": "^\\\u003cghouse\\\u003e",
                             "type": "regex"
                      },
@@ -201,7 +197,7 @@
               "filter": "no",
               "fireLength": "0",
               "highlight": "no",
-              "highlightFG": "#ff0000",
+              "highlightFG": "transparent",
               "highlightBG": "#ffff00",
               "patterns": [
                      {
@@ -277,7 +273,15 @@
                             "type": "regex"
                      },
                      {
-                            "pattern": "^\\(Group\\)\\\u003e",
+                            "pattern": "^\\(Group\\)",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Gtell\\)\\:",
+                            "type": "regex"
+                     },
+                     {
+                            "pattern": "^\\(Gtell\\)\\\u003e",
                             "type": "regex"
                      }
               ],

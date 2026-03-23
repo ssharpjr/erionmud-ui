@@ -28,8 +28,8 @@ Using the image above as reference, follow these steps.
   - This is why the image above shows that the root folder, "ErionMud-UI", is not checked.
   - So be sure you do NOT select the root folder of your package name or it will be duplicated.
 - Once you have checked all the items you want to export as part of this package, click on the "Describe your package..." button at the bottom to open this section.
-- Enter any information you want. It is highly recommended to add an author, a short description, and a verison at a bare minimum.
-- Anything you enter in the Decscription box will be used to create the README.md file for the package.
+- Enter any information you want. It is highly recommended to add an author, a short description, and a version at a bare minimum.
+- Anything you enter in the Description box will be used to create the README.md file for the package.
 - Select any required packages that are needed for your package to work.
 - Drag-and-drop or click "Select files to include in your package" to add any additional resources your project needs.
 - When done, choose "Select export location" and select where you want the *.mpackage* file to be placed once created.
@@ -55,7 +55,8 @@ You will get a new folder in your staging folder.
 
 <img src="./src/resources/images/build_3.png" alt="build_3" />
 
-**NOTE: There is currently a bug in DeMuddler v0.1.3 that will make the icon file have zero bytes. You will need to manually copy your icon file to `PackageName/src/resources/.mudlet/Icon/`.**
+**NOTE: There is currently a bug in DeMuddler v0.1.3 that will make the icon file have zero bytes. You will need to manually copy your icon file to `PackageName/src/resources/.mudlet/Icon/`.**  
+**UPDATE: This appears to be working properly in v0.1.4.**
 
 ## Updating and Cleaning the Project in an IDE
 
@@ -80,7 +81,7 @@ At this point, I open this new folder in VSCode. Here I'll add the following fil
 
 Download and set up Muddler according to the author's instructions.  
 Muddler: [https://github.com/demonnic/muddler](https://github.com/demonnic/muddler)  
-Muddler: Installation: [https://github.com/demonnic/muddler/wiki/Installation](https://github.com/demonnic/muddler/wiki/Installation)  
+Muddler Installation: [https://github.com/demonnic/muddler/wiki/Installation](https://github.com/demonnic/muddler/wiki/Installation)  
 Muddler Usage: [https://github.com/demonnic/muddler/wiki/Usage](https://github.com/demonnic/muddler/wiki/Usage)  
 
 I installed Muddler locally and added `muddle` to my path. This allows me to run it from any folder on my system.  

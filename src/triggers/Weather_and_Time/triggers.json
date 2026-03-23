@@ -35,6 +35,10 @@
                      {
                             "pattern": "^The sky darkens and begins to downpour",
                             "type": "regex"
+                     },
+                     {
+                            "pattern": "^The wind begins to howl",
+                            "type": "regex"
                      }
               ],
               "script": ""

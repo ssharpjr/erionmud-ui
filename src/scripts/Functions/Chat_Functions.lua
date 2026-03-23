@@ -21,7 +21,7 @@ function ChatCaptures(verb, bDeleteLine)
   
   -- Set some custom colors
   if has_verb(matches.verb) then
-    setFgColor(255,170,255)  -- peachy?
+    setFgColor(255,170,255)  -- peachy? pink? just not white?
   end
   
   if matches[1] == "[mudlet]" then
@@ -32,8 +32,12 @@ function ChatCaptures(verb, bDeleteLine)
     setFgColor(170, 85, 255)  -- purple
   end
   
-  if matches[1] == "(Gtell):" then
+  if matches[1] == "(Gtell):" or matches[1] == "(Gtell)>" then
     setFgColor(255,0,255)  -- magenta
+  end
+  
+  if matches[1] == "[faith]" then
+    setFgColor(0,170,255)  -- medium blue
   end
   
   copy()

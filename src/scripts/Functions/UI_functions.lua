@@ -69,8 +69,9 @@ function SilentScoreCapture()
     else
       local block = getLines("main", startLine, endLine)
 
-      -- Parse stats
+      -- Data capture was successful. Parse stats and clear the retry counter.
       ParseScoreBuffer(block)
+      ui.getClassesRetries = nil
 
       -- Delete captured lines from the main window
       local n = endLine - startLine + 1
@@ -95,6 +96,9 @@ function SilentScoreCapture()
       disableTrigger("ScoreCaptureStart")
       ui.scoreStartLine  = nil
       ui.scoreInProgress = false
+      
+      -- Retry capture again.
+      tempTimer(3, function() GetClasses() end)
     end
   end)
 end
@@ -151,8 +155,19 @@ end
 
 
 function GetClasses()
-  enableTrigger("ScoreCaptureStart")
-  --send("score", false)
+  -- Check the retry counter. We don't want to keep checking if there is an issue.
+  if ui.getClassesRetries == nil then ui.getClassesRetries = 0 end
+  if ui.getClassesRetries >= 3 then
+    ui.getClassesRetries = nil
+    printError("[UI] GetClasses() retries have been exceeded. Stopping attempts.")
+    return
+  end
+  
+  -- Increment the retry counter
+  ui.getClassesRetries = ui.getClassesRetries + 1
+  
+  -- enableTrigger("ScoreCaptureStart")
+  -- send("score", false)
   SilentScoreCapture()
 end
 

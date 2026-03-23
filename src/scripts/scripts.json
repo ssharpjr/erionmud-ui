@@ -1,5 +1,35 @@
 [
        {
+              "name": "Functions",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
+              "name": "UI_Build_Functions",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
+              "name": "UI_Help",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
+              "name": "UI_Themes",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
+              "name": "UI_Update_Functions",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
               "name": "README.md",
               "isActive": "yes",
               "script": "",

@@ -4,5 +4,17 @@
               "isActive": "yes",
               "script": "",
               "isFolder": "yes"
+       },
+       {
+              "name": "Help",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
+       },
+       {
+              "name": "Quests",
+              "isActive": "yes",
+              "script": "",
+              "isFolder": "yes"
        }
 ]

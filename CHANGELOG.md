@@ -1,8 +1,11 @@
 # Changelog
 
-## Unreleased
+## v1.3
 
-- Move ANSI map to its own console.
+- Updated the UI to be more responsive. It will properly resize if you change the window size.
+- Bugfix: Added a timeout to the GetClasses() function chain. There have been reports that the SCORE keeps trying to run. This should (hopefully) fix that.
+- Typo corrections.
+- Continued refactoring.
 
 ## v1.2.3
 

@@ -24,7 +24,7 @@
               "isFolder": "no"
        },
        {
-              "name": "UI_Refresh_Event",
+              "name": "UI_Resize_Event",
               "isActive": "yes",
               "script": "",
               "isFolder": "no"
