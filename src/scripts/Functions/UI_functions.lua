@@ -108,7 +108,7 @@ end
 function ParseScoreBuffer(block)
   for _, line in ipairs(block) do
     -- Player name + active class
-    local player, class = line:match("^%|%s+(%w+) the (%w+)%s+%|")
+    local player, class = line:match("^%|%s*(%S*%s*%w+) the (%w+)%s+%|")
     if player and class then
       -- Player Name should have been captured on login, but if not, get it here.
       if ui.PlayerName ~= player then
