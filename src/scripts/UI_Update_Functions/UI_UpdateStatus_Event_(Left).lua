@@ -13,15 +13,15 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
   QPS = safe_number(QPS, "")
   HPS = safe_number(HPS, "")
   MDP = safe_number(MDP, "")
-  QTM = safe_number(QTM, "")
-  ETM = safe_number(ETM, "")
-  GTM = safe_number(GTM, "")
-  JTM = safe_number(JTM, "")
+  QTM = safe_string(QTM, "")
+  ETM = safe_string(ETM, "")
+  GTM = safe_string(GTM, "")
+  JTM = safe_string(JTM, "")
   XPE = safe_number(XPE, "")
   QPE = safe_number(QPE, "")
   QTE = safe_number(QTE, "")
-  PLT = safe_number(PLT, "")
-  GJY = safe_number(GJY, "")
+  PLT = safe_string(PLT, "")
+  GJY = safe_string(GJY, "")
 
   -- Get player classes if needed
   if not ui.StartUp then
@@ -272,7 +272,7 @@ function UpdateStatus (event, LVL, FLV, NXP, GLD, QPS, HPS, MDP, QTM, ETM, GTM, 
   else cecho("ui.PlayerInfoMC", "<grey>Pilgrimage:<white>      "..PLT.."\n") end
   if GTM == "" then cecho("ui.PlayerInfoMC", "<grey>GlobalQuest:<cyan>   Inactive!\n")
   else cecho("ui.PlayerInfoMC", "<grey>GlobalQuest:<white>   "..GTM.."\n") end
-  if GTM == "" then cecho("ui.PlayerInfoMC", "<grey>GlobalJyard:<cyan>   Inactive!\n")
+  if GJY == "" then cecho("ui.PlayerInfoMC", "<grey>GlobalJyard:<cyan>   Inactive!\n")
   else cecho("ui.PlayerInfoMC", "<grey>GlobalJyard:<white>   "..GJY.."\n") end
   cecho("ui.PlayerInfoMC", "\n")
   
